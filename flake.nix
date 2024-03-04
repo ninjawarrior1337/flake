@@ -11,10 +11,12 @@
     home-manager.url = "github:nix-community/home-manager/release-23.11";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
+    spicetify-nix.url = "github:the-argus/spicetify-nix";
+
     deploy-rs.url = "github:serokell/deploy-rs";
   };
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, home-manager-unstable, deploy-rs }@inputs: 
+  outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, home-manager-unstable, deploy-rs, ... }@inputs: 
   let 
     system = "x86_64-linux";
     pkgs = import nixpkgs { inherit system; };
@@ -67,6 +69,7 @@
         {
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
+          home-manager.extraSpecialArgs = { inherit inputs system; };
           home-manager.users.ninjawarrior1337 = import ./configurations/treeputer-nix/home.nix;
         }
       ];

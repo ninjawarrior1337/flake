@@ -1,10 +1,14 @@
-{ config, pkgs, ... }:
+{ config, pkgs, inputs, ... }:
 
 {
   # Home Manager needs a bit of information about you and the
   # paths it should manage.
   home.username = "ninjawarrior1337";
   home.homeDirectory = "/home/ninjawarrior1337";
+
+  imports = [
+    ./spicetify.nix
+  ];
 
   # This value determines the Home Manager release that your
   # configuration is compatible with. This helps avoid breakage
