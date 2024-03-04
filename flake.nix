@@ -35,6 +35,7 @@
   in rec {
     nixosConfigurations.rpi3 = nixpkgs-unstable.lib.nixosSystem {
       system = "aarch64-linux";
+      specialArgs = {inherit inputs;};
       modules = [
         "${nixpkgs-unstable}/nixos/modules/installer/sd-card/sd-image-aarch64.nix"
         ./configurations/rpi3
