@@ -52,7 +52,7 @@
     };
 
 
-    nixosConfigurations.treeputer-nix = nixpkgs.lib.nixosSystem {
+    nixosConfigurations.treeputer = nixpkgs.lib.nixosSystem {
       inherit system;
       specialArgs = {inherit inputs;};
       modules = [
@@ -63,14 +63,14 @@
           }
         )
 
-        ./configurations/treeputer-nix/configuration.nix
+        ./configurations/treeputer/configuration.nix
         
         home-manager.nixosModules.home-manager
         {
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
           home-manager.extraSpecialArgs = { inherit inputs system; };
-          home-manager.users.ninjawarrior1337 = import ./configurations/treeputer-nix/home.nix;
+          home-manager.users.ninjawarrior1337 = import ./configurations/treeputer/home.nix;
         }
       ];
     };

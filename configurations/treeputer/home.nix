@@ -8,6 +8,7 @@
 
   imports = [
     ./spicetify.nix
+    ./chrome.nix
   ];
 
   # This value determines the Home Manager release that your
@@ -27,7 +28,7 @@
     armcord
     discord-screenaudio
     osu-lazer-bin
-    bambu-studio      
+    bambu-studio
 
     neofetch
     zip

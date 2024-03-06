@@ -21,7 +21,7 @@
     modesetting.enable = true;
     open = false;
     nvidiaSettings = true;
-    package = config.boot.kernelPackages.nvidiaPackages.stable;
+    package = config.boot.kernelPackages.nvidiaPackages.beta;
   };
 
   hardware.flipperzero.enable = true;
@@ -63,6 +63,14 @@
     LC_TIME = "en_US.UTF-8";
   };
 
+  i18n.inputMethod = {
+    enabled = "fcitx5";
+    fcitx5.addons = with pkgs; [
+        fcitx5-mozc
+        fcitx5-gtk
+    ];
+};
+
   # Enable the X11 windowing system.
   services.xserver.enable = true;
 
@@ -96,6 +104,19 @@
     #media-session.enable = true;
   };
 
+  environment.etc = let
+    json = pkgs.formats.json {};
+  in {
+    "pipewire/pipewire.d/91-raop-discover.conf".source = json.generate "91-raop-discover.conf" {
+    context.modules = [
+      {
+        name = "libpipewire-module-raop-discover";
+        args = { };
+      }
+    ];
+  };
+  };
+
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
 
@@ -114,7 +135,6 @@
   environment.systemPackages = with pkgs; [
   #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
     wget
-    unstable.google-chrome
     gnome.gnome-tweaks
     vscode
     vlc

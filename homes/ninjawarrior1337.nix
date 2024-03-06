@@ -2,7 +2,7 @@
 
 rec {
   home.username = "ninjawarrior1337";
-  home.homeDirectory = if stdenv.isDarwin then
+  home.homeDirectory = if pkgs.stdenv.isDarwin then
      "/Users/ninjawarrior1337"
     else
       "/home/${home.username}";
