@@ -9,6 +9,7 @@
   imports = [
     ./spicetify.nix
     ./chrome.nix
+    ./hacking.nix
   ];
 
   # This value determines the Home Manager release that your
@@ -27,8 +28,10 @@
   home.packages = with pkgs.unstable; [
     armcord
     discord-screenaudio
-    osu-lazer-bin
-    bambu-studio
+    # osu-lazer-bin
+    # bambu-studio
+    dolphin-emu
+    ryujinx
 
     neofetch
     zip
@@ -69,7 +72,9 @@
     telegram-desktop
     postman
     jetbrains-toolbox
-    nil  
+    openscad-unstable
+    nil
+    zoom-us
   ];
 
   programs.git = {

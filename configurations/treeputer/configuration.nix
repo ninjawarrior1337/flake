@@ -25,6 +25,7 @@
   };
 
   hardware.flipperzero.enable = true;
+  services.joycond.enable = true;
 
   imports =
     [ # Include the results of the hardware scan.
@@ -35,7 +36,7 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  networking.hostName = "treeputer-nix"; # Define your hostname.
+  networking.hostName = "treeputer"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Configure network proxy if necessary
@@ -64,10 +65,9 @@
   };
 
   i18n.inputMethod = {
-    enabled = "fcitx5";
-    fcitx5.addons = with pkgs; [
-        fcitx5-mozc
-        fcitx5-gtk
+    enabled = "ibus";
+    ibus.engines = with pkgs.ibus-engines; [
+        mozc
     ];
 };
 
@@ -149,7 +149,11 @@
   programs.steam = {
     enable = true;
     remotePlay.openFirewall = true;
+    gamescopeSession.enable = true;
   };
+
+  programs.gamescope.enable = true;
+  programs.gamemode.enable = true;
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
@@ -190,6 +194,8 @@
     options = "--delete-older-than 1w";
   };
   nix.settings.auto-optimise-store = true;
+
+  services.btrfs.autoScrub.enable = true;
 
   system.autoUpgrade = {
     enable = true;
