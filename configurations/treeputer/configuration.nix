@@ -107,7 +107,7 @@
   environment.etc = let
     json = pkgs.formats.json {};
   in {
-    "pipewire/pipewire.d/91-raop-discover.conf".source = json.generate "91-raop-discover.conf" {
+    "pipewire/pipewire.conf.d/91-raop-discover.conf".source = json.generate "91-raop-discover.conf" {
     context.modules = [
       {
         name = "libpipewire-module-raop-discover";
