@@ -11,6 +11,12 @@
     home-manager.url = "github:nix-community/home-manager/release-23.11";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
+    lanzaboote = {
+      url = "github:nix-community/lanzaboote/v0.3.0";
+
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     spicetify-nix.url = "github:the-argus/spicetify-nix";
   };
 
@@ -33,8 +39,10 @@
       modules = [
         ./configurations/treeputer/configuration.nix
         ./home-manager.nix
+        ./lanzaboote.nix
         
         home-manager.nixosModules.home-manager
+        inputs.lanzaboote.nixosModules.lanzaboote
 
         {
           nixpkgs.overlays = [overlay-unstable];
