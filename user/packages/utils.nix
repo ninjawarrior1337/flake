@@ -3,6 +3,7 @@
     audacity
     kdenlive
     obs-studio
+    bambu-studio
 
     # Productivity
     blender

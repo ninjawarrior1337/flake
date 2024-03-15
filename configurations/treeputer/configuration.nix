@@ -135,7 +135,6 @@
   environment.systemPackages = with pkgs; [
   #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
     wget
-    gnome.gnome-tweaks
     vscode
     vlc
     mpv
@@ -175,7 +174,11 @@
   networking.firewall.enable = false;
 
   virtualisation = {
-    docker.enable = true;
+    docker = {
+      enable = true;
+      enableNvidia = true;
+      storageDriver = "btrfs";
+    };
   };
 
   services.flatpak.enable = true;
