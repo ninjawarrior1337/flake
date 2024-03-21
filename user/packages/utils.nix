@@ -4,6 +4,7 @@
     kdenlive
     obs-studio
     bambu-studio
+    vscode
 
     # Productivity
     blender
