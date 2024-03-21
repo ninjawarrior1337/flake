@@ -11,6 +11,8 @@
     home-manager.url = "github:nix-community/home-manager/release-23.11";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
+    vscode-server.url = "github:nix-community/nixos-vscode-server";
+    
     lanzaboote = {
       url = "github:nix-community/lanzaboote/v0.3.0";
 
@@ -41,8 +43,13 @@
         ./home-manager.nix
         ./lanzaboote.nix
         
+        inputs.vscode-server.nixosModules.default
         home-manager.nixosModules.home-manager
         inputs.lanzaboote.nixosModules.lanzaboote
+
+        ({ config, pkgs, ... }: {
+          services.vscode-server.enable = true;
+        })
 
         {
           nixpkgs.overlays = [overlay-unstable];

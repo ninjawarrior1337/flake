@@ -9,6 +9,7 @@
     nodejs
     go
     deno
+    gcc
     # zsh-powerlevel10k
   ];
 }
