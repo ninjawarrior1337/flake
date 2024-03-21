@@ -16,6 +16,7 @@
     enable = true;
     userName = "ninjawarrior1337";
     userEmail = "me@treelar.xyz";
+    lfs.enable = true;
   };
 
   home.stateVersion = "23.11";
