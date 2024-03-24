@@ -6,7 +6,10 @@
       pypkgs.numpy
     ]))
     rustup
+    
     nodejs
+    corepack
+
     go
     deno
     gcc
