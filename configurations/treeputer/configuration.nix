@@ -25,6 +25,7 @@
   };
 
   hardware.flipperzero.enable = true;
+  hardware.ckb-next.enable = true;
   services.joycond.enable = true;
 
   imports =
