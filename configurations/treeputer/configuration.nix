@@ -3,9 +3,7 @@
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
 { config, lib, pkgs, inputs, ... }:
-{  
-  boot.kernelPackages = pkgs.unstable.linuxPackages;
-
+{
   nix.settings.experimental-features = ["nix-command" "flakes" ];
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
 
@@ -15,21 +13,14 @@
     driSupport32Bit = true;
   };
 
-  services.xserver.videoDrivers = ["nvidia"];
-
-  hardware.nvidia = {
-    modesetting.enable = true;
-    open = false;
-    nvidiaSettings = true;
-    package = config.boot.kernelPackages.nvidiaPackages.beta;
-  };
-
   hardware.flipperzero.enable = true;
   hardware.ckb-next.enable = true;
   services.joycond.enable = true;
 
   imports =
-    [ # Include the results of the hardware scan.
+    [
+      ../base.nix
+      ../../modules/nvidia.nix
       ./hardware-configuration.nix
     ];
 
@@ -70,7 +61,7 @@
     ibus.engines = with pkgs.ibus-engines; [
         mozc
     ];
-};
+  };
 
   # Enable the X11 windowing system.
   services.xserver.enable = true;
@@ -97,6 +88,7 @@
     alsa.enable = true;
     alsa.support32Bit = true;
     pulse.enable = true;
+    wireplumber.package = pkgs.unstable.wireplumber;
     # If you want to use JACK applications, uncomment this
     #jack.enable = true;
 
@@ -109,13 +101,32 @@
     json = pkgs.formats.json {};
   in {
     "pipewire/pipewire.conf.d/91-raop-discover.conf".source = json.generate "91-raop-discover.conf" {
-    context.modules = [
-      {
-        name = "libpipewire-module-raop-discover";
-        args = { };
-      }
-    ];
-  };
+      context.modules = [
+        {
+          name = "libpipewire-module-raop-discover";
+          args = { };
+        }
+      ];
+    };
+    "wireplumber/wireplumber.conf.d/51-suspend-timeout.conf" = {
+      text = ''
+      monitor.alsa.rules = [
+        {
+          matches = [
+            {
+              # Matches all sinks
+              node.name = "~alsa_output.*"
+            }
+          ]
+          actions = {
+            update-props = {
+              session.suspend-timeout-seconds = 0
+            }
+          }
+        }
+      ]
+      '';
+    };
   };
 
   # Enable touchpad support (enabled default in most desktopManager).
@@ -129,21 +140,9 @@
     shell = pkgs.zsh;
   };
 
-  programs.zsh.enable = true;
-
   # List packages installed in system profile. To search, run:
   # $ nix search wget
-  environment.systemPackages = with pkgs; [
-  #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-    wget
-    vlc
-    mpv
-    just
-  ];
 
-  services.tailscale = {
-    enable = true;
-  };
 
   programs.steam = {
     enable = true;
@@ -154,41 +153,13 @@
   programs.gamescope.enable = true;
   programs.gamemode.enable = true;
 
-  # Some programs need SUID wrappers, can be configured further or are
-  # started in user sessions.
-  # programs.mtr.enable = true;
-  # programs.gnupg.agent = {
-  #   enable = true;
-  #   enableSSHSupport = true;
-  # };
-
-  # List services that you want to enable:
-
-  # Enable the OpenSSH daemon.
-  services.openssh.enable = true;
-
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
   # networking.firewall.allowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.
   networking.firewall.enable = false;
 
-  virtualisation = {
-    docker = {
-      enable = true;
-      enableNvidia = true;
-      storageDriver = "btrfs";
-    };
-  };
-
-  services.flatpak.enable = true;
-
-  fonts.packages = with pkgs; [
-    noto-fonts
-    noto-fonts-cjk
-    jetbrains-mono
-    meslo-lgs-nf
-  ];
+  virtualisation.docker.storageDriver = "btrfs";
 
   boot.loader.systemd-boot.configurationLimit = 10;
   nix.gc = {

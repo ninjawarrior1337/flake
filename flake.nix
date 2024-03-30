@@ -37,10 +37,10 @@
   in rec {
     nixosConfigurations.treeputer = nixpkgs.lib.nixosSystem {
       inherit system;
-      specialArgs = {inherit inputs user;};
+      specialArgs = {inherit inputs user system;};
       modules = [
         ./configurations/treeputer/configuration.nix
-        ./home-manager.nix
+        ./home/base.nix
         ./lanzaboote.nix
         
         inputs.vscode-server.nixosModules.default
@@ -50,11 +50,19 @@
         ({ config, pkgs, ... }: {
           services.vscode-server.enable = true;
         })
+        { nixpkgs.config.allowUnfree = true; }
+      ];
+    };
 
-        {
-          nixpkgs.overlays = [overlay-unstable];
-          nixpkgs.config.allowUnfree = true;
-        }
+    nixosConfigurations.thisismycomputernow = nixpkgs-unstable.lib.nixosSystem {
+      inherit system;
+      specialArgs = {inherit inputs system; user = "nixos"; };
+      modules = [
+        "${nixpkgs-unstable}/nixos/modules/installer/cd-dvd/installation-cd-graphical-gnome.nix"
+        ./configurations/thisismycomputernow
+        ./home/base.nix
+        inputs.home-manager-unstable.nixosModules.home-manager
+        { nixpkgs.config.allowUnfree = true; }
       ];
     };
 
@@ -64,17 +72,15 @@
       modules = [
         "${nixpkgs-unstable}/nixos/modules/installer/sd-card/sd-image-aarch64.nix"
         ./configurations/rpi3
+        ./home/base.nix
 
         home-manager-unstable.nixosModules.home-manager
-        {
-          home-manager.useGlobalPkgs = true;
-          home-manager.useUserPackages = true;
-          home-manager.users.${user} = import ./homes/${user}.nix;
-        }
+        ({lib, ...}: {boot.supportedFilesystems = lib.mkForce [ "ext4" "vfat" ];})
       ];
     };
 
     images.rpi3 = nixosConfigurations.rpi3.config.system.build.sdImage;
+    images.thisismycomputernow = nixosConfigurations.thisismycomputernow.config.system.build.isoImage;
 
     packages."aarch64-linux" = {
       fm_transmitter = pkgs.callPackage ./packages/fm_transmitter {};
