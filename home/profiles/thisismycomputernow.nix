@@ -12,6 +12,7 @@
 
   home.packages = [
     pkgs.osu-lazer-bin
+    pkgs.prismlauncher
   ];
 
   home.stateVersion = "24.05";
