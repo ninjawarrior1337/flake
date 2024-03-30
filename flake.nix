@@ -27,13 +27,6 @@
     user = "ninjawarrior1337";
     system = "x86_64-linux";
     pkgs = import nixpkgs { inherit system; };
-
-    overlay-unstable = final: prev: {
-      unstable = import nixpkgs-unstable {
-        system = prev.system;
-        config.allowUnfree = true;
-      };
-    };
   in rec {
     nixosConfigurations.treeputer = nixpkgs.lib.nixosSystem {
       inherit system;
