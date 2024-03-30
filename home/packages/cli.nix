@@ -2,7 +2,7 @@
   home.packages = with pkgs.unstable; [
     neofetch
     zip
-    xz
+    # xz
     unzip
     p7zip
     
