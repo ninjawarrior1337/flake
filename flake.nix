@@ -34,11 +34,11 @@
       modules = [
         ./configurations/treeputer/configuration.nix
         ./home/base.nix
-        ./lanzaboote.nix
+        # ./lanzaboote.nix
         
         inputs.vscode-server.nixosModules.default
         home-manager.nixosModules.home-manager
-        inputs.lanzaboote.nixosModules.lanzaboote
+        # inputs.lanzaboote.nixosModules.lanzaboote
 
         ({ config, pkgs, ... }: {
           services.vscode-server.enable = true;
