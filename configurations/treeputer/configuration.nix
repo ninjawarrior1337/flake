@@ -144,11 +144,15 @@
   # $ nix search wget
 
 
-  programs.steam = {
-    enable = true;
-    remotePlay.openFirewall = true;
-    gamescopeSession.enable = true;
-  };
+  # programs.steam = {
+  #   enable = true;
+  #   package = pkgs.unstable.steam;
+  #   remotePlay.openFirewall = true;
+  #   gamescopeSession.enable = true;
+  #   extraCompatPackages = with pkgs; [
+  #     unstable.proton-ge-bin
+  #   ];
+  # };
 
   programs.gamescope.enable = true;
   programs.gamemode.enable = true;
@@ -184,6 +188,8 @@
     dates = "02:00";
     randomizedDelaySec = "45min";
   };
+
+  zramSwap.enable = true;
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
