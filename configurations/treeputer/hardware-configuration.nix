@@ -54,6 +54,12 @@
       "nodev"
       "nofail"
       "x-gvfs-show"
+      "uid=1000"
+      "gid=100"
+      "rw"
+      "user"
+      "exec"
+      "umask=000"
     ];
   };
 

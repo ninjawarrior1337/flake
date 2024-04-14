@@ -15,6 +15,10 @@ in
     driSupport32Bit = true;
   };
 
+  environment.systemPackages = with pkgs; [
+    nvtopPackages.full
+  ];
+
   hardware.nvidia = {
     modesetting.enable = true;
     powerManagement.enable = false;
