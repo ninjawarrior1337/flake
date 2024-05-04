@@ -19,6 +19,8 @@ in
     nvtopPackages.full
   ];
 
+  virtualisation.docker.enableNvidia = true;
+
   hardware.nvidia = {
     modesetting.enable = true;
     powerManagement.enable = false;

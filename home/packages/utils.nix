@@ -3,7 +3,7 @@
     audacity
     kdenlive
     obs-studio
-    bambu-studio
+    orca-slicer
     vscode
 
     # Productivity

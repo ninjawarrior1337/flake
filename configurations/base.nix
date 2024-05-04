@@ -5,7 +5,6 @@
   virtualisation = {
     docker = {
       enable = true;
-      enableNvidia = true;
     };
   };
 
@@ -28,6 +27,12 @@
     mpv
     just
   ];
+
+  services.pcscd.enable = true;
+  programs.gnupg.agent = {
+    enable = true;
+    pinentryFlavor = lib.mkDefault "curses";
+  };
 
   programs.zsh.enable = true;
 }
