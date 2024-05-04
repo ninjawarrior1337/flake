@@ -75,6 +75,10 @@
     images.rpi3 = nixosConfigurations.rpi3.config.system.build.sdImage;
     images.thisismycomputernow = nixosConfigurations.thisismycomputernow.config.system.build.isoImage;
 
+    packages."x86_64-linux" = {
+      flipper-pc-monitor-backend = pkgs.callPackage ./packages/flipper-pc-monitor-backend {};
+    };
+
     packages."aarch64-linux" = {
       fm_transmitter = pkgs.callPackage ./packages/fm_transmitter {};
     };

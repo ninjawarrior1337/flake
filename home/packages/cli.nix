@@ -15,7 +15,10 @@
     iftop
     iotop
 
-    lsof
+    lsof 
+    usbutils
+    pciutils
+    
     yt-dlp
     ffmpeg
   ];

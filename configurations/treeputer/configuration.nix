@@ -13,6 +13,8 @@
     driSupport32Bit = true;
   };
 
+  hardware.bluetooth.enable = true;
+  hardware.bluetooth.powerOnBoot = true;
   hardware.flipperzero.enable = true;
   hardware.ckb-next.enable = true;
   services.joycond.enable = true;
@@ -190,6 +192,10 @@
   };
 
   zramSwap.enable = true;
+
+  programs.gnupg.agent = {
+    pinentryFlavor = "gnome3";
+  };
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
