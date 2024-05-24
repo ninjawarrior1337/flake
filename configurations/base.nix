@@ -31,7 +31,7 @@
   services.pcscd.enable = true;
   programs.gnupg.agent = {
     enable = true;
-    pinentryFlavor = lib.mkDefault "curses";
+    pinentryPackage = lib.mkDefault pkgs.pinentry-curses;
   };
 
   programs.zsh.enable = true;
