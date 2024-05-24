@@ -74,8 +74,10 @@
 
   # Configure keymap in X11
   services.xserver = {
-    layout = "us";
-    xkbVariant = "";
+    xkb = {
+      layout = "us";
+      variant = "";
+    };
   };
 
   # Enable CUPS to print documents.
@@ -90,7 +92,38 @@
     alsa.enable = true;
     alsa.support32Bit = true;
     pulse.enable = true;
-    wireplumber.package = pkgs.unstable.wireplumber;
+    wireplumber = {
+      package = pkgs.unstable.wireplumber;
+      extraConfig = {
+        "suspend-audio-disable" = {
+          "monitor.alsa.rules" = [
+            {
+              matches = [
+                {
+                  # Matches all sinks
+                  "device.name" = "~alsa_output.*";
+                }
+              ];
+              actions = {
+                "update-props" = {
+                  "session.suspend-timeout-seconds" = 0;
+                };
+              };
+            }
+          ];
+        };
+      };
+    };
+    extraConfig.pipewire = {
+      "91-raop-discover" = {
+        context.modules = [
+          {
+            name = "libpipewire-module-raop-discover";
+            args = { };
+          }
+        ];
+      };
+    };
     # If you want to use JACK applications, uncomment this
     #jack.enable = true;
 
@@ -99,37 +132,37 @@
     #media-session.enable = true;
   };
 
-  environment.etc = let
-    json = pkgs.formats.json {};
-  in {
-    "pipewire/pipewire.conf.d/91-raop-discover.conf".source = json.generate "91-raop-discover.conf" {
-      context.modules = [
-        {
-          name = "libpipewire-module-raop-discover";
-          args = { };
-        }
-      ];
-    };
-    "wireplumber/wireplumber.conf.d/51-suspend-timeout.conf" = {
-      text = ''
-      monitor.alsa.rules = [
-        {
-          matches = [
-            {
-              # Matches all sinks
-              node.name = "~alsa_output.*"
-            }
-          ]
-          actions = {
-            update-props = {
-              session.suspend-timeout-seconds = 0
-            }
-          }
-        }
-      ]
-      '';
-    };
-  };
+  # environment.etc = let
+  #   json = pkgs.formats.json {};
+  # in {
+  #   "pipewire/pipewire.conf.d/91-raop-discover.conf".source = json.generate "91-raop-discover.conf" {
+  #     context.modules = [
+  #       {
+  #         name = "libpipewire-module-raop-discover";
+  #         args = { };
+  #       }
+  #     ];
+  #   };
+  #   "wireplumber/wireplumber.conf.d/51-suspend-timeout.conf" = {
+  #     text = ''
+  #     monitor.alsa.rules = [
+  #       {
+  #         matches = [
+  #           {
+  #             # Matches all sinks
+  #             node.name = "~alsa_output.*"
+  #           }
+  #         ]
+  #         actions = {
+  #           update-props = {
+  #             session.suspend-timeout-seconds = 0
+  #           }
+  #         }
+  #       }
+  #     ]
+  #     '';
+  #   };
+  # };
 
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
@@ -194,7 +227,7 @@
   zramSwap.enable = true;
 
   programs.gnupg.agent = {
-    pinentryFlavor = "gnome3";
+    pinentryPackage = pkgs.pinentry-gnome3;
   };
 
   # This value determines the NixOS release from which the default

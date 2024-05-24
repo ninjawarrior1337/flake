@@ -1,6 +1,5 @@
 {config, inputs, lib, system, pkgs, ...}:
 {
-  boot.kernelPackages = pkgs.linuxPackages;
   services.xserver.videoDrivers = ["nvidia"];
 
   hardware.opengl = {
