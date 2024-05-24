@@ -4,6 +4,7 @@
     (python3.withPackages (pypkgs: [
       pypkgs.pandas
       pypkgs.numpy
+      pypkgs.pip
     ]))
     rustup
     
@@ -12,6 +13,7 @@
 
     go
     deno
+    bun
     gcc
     # zsh-powerlevel10k
   ];
