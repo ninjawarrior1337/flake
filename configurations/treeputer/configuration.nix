@@ -7,6 +7,8 @@
   nix.settings.experimental-features = ["nix-command" "flakes" ];
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
 
+  hardware.nvidia.open = lib.mkForce true;
+
   hardware.opengl = {
     enable = true;
     driSupport = true;
@@ -22,8 +24,8 @@
   imports =
     [
       ../base.nix
-      ../../modules/nvidia.nix
       ./hardware-configuration.nix
+      ../../modules/nvidia.nix
     ];
 
   # Bootloader.
@@ -93,7 +95,6 @@
     alsa.support32Bit = true;
     pulse.enable = true;
     wireplumber = {
-      package = pkgs.unstable.wireplumber;
       extraConfig = {
         "suspend-audio-disable" = {
           "monitor.alsa.rules" = [
@@ -101,7 +102,7 @@
               matches = [
                 {
                   # Matches all sinks
-                  "device.name" = "~alsa_output.*";
+                  "node.name" = "~alsa_output.*";
                 }
               ];
               actions = {
