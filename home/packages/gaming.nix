@@ -4,5 +4,6 @@
     discord-screenaudio
     dolphin-emu
     ryujinx
+    heroic
   ];
 }
