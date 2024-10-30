@@ -1,4 +1,0 @@
-{
-  userPasswordHash = "***REMOVED***";
-  wifiPasswordHash = "***REMOVED***";
-}

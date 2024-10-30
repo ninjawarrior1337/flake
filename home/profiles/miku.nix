@@ -1,15 +1,13 @@
-{inputs, ...}:
-
-{
+{inputs, ...}: {
   imports = [
-    ../desktop/gnome.nix
     ../programs/chrome.nix
     ../programs/spicetify.nix
     ../programs/hacking.nix
+    ../modules/gtk-theme.nix
     ../shell.nix
     ../git.nix
     ../packages
   ];
 
-  home.stateVersion = "23.11";
+  home.stateVersion = "24.05";
 }

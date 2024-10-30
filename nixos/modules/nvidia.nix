@@ -1,18 +1,27 @@
-{config, inputs, lib, system, pkgs, ...}:
 {
+  config,
+  inputs,
+  lib,
+  system,
+  pkgs,
+  ...
+}: {
   services.xserver.videoDrivers = ["nvidia"];
 
-  hardware.opengl = {
+  hardware.graphics = {
     enable = true;
-    driSupport = true;
-    driSupport32Bit = true;
+    extraPackages = with pkgs; [
+      vaapiVdpau
+      libvdpau-va-gl
+    ];
   };
 
   environment.systemPackages = with pkgs; [
     nvtopPackages.full
+    nvidia-vaapi-driver
   ];
 
-  virtualisation.docker.enableNvidia = true;
+  hardware.nvidia-container-toolkit.enable = true;
 
   hardware.nvidia = {
     modesetting.enable = true;
@@ -20,6 +29,6 @@
     powerManagement.finegrained = false;
     open = false;
     nvidiaSettings = true;
-    package = config.boot.kernelPackages.nvidiaPackages.beta;
+    package = config.boot.kernelPackages.nvidiaPackages.stable;
   };
 }

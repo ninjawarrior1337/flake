@@ -1,38 +1,39 @@
 # Edit this configuration file to define what should be installed on
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
-
-{ config, lib, pkgs, inputs, ... }:
 {
-  nix.settings.experimental-features = ["nix-command" "flakes" ];
-  boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
-
-  hardware.nvidia.open = lib.mkForce true;
-
-  hardware.opengl = {
-    enable = true;
-    driSupport = true;
-    driSupport32Bit = true;
-  };
+  config,
+  lib,
+  pkgs,
+  inputs,
+  ...
+}: {
+  nix.settings.experimental-features = ["nix-command" "flakes"];
+  boot.binfmt.emulatedSystems = ["aarch64-linux"];
 
   hardware.bluetooth.enable = true;
   hardware.bluetooth.powerOnBoot = true;
+  services.blueman.enable = true;
+
   hardware.flipperzero.enable = true;
   hardware.ckb-next.enable = true;
   services.joycond.enable = true;
+  programs.nix-ld.enable = true;
 
-  imports =
-    [
-      ../base.nix
-      ./hardware-configuration.nix
-      ../../modules/nvidia.nix
-    ];
+  imports = [
+    ../base.nix
+    ./hardware-configuration.nix
+    ../../modules/nvidia.nix
+    ../../modules/gaming.nix
+    ../../modules/lanzaboote.nix
+    ../../modules/hyprland
+  ];
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  networking.hostName = "treeputer"; # Define your hostname.
+  networking.hostName = "miku"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Configure network proxy if necessary
@@ -61,18 +62,22 @@
   };
 
   i18n.inputMethod = {
-    enabled = "ibus";
-    ibus.engines = with pkgs.ibus-engines; [
-        mozc
+    enable = true;
+    type = "fcitx5";
+
+    fcitx5.addons = with pkgs; [
+      fcitx5-gtk # alternatively, kdePackages.fcitx5-qt
+      fcitx5-mozc
+      fcitx5-nord # a color theme
     ];
+    fcitx5.waylandFrontend = true;
   };
 
   # Enable the X11 windowing system.
   services.xserver.enable = true;
 
-  # Enable the GNOME Desktop Environment.
-  services.xserver.displayManager.gdm.enable = true;
-  services.xserver.desktopManager.gnome.enable = true;
+  programs.git.enable = true;
+  programs.starship.enable = true;
 
   # Configure keymap in X11
   services.xserver = {
@@ -86,7 +91,6 @@
   services.printing.enable = true;
 
   # Enable sound with pipewire.
-  sound.enable = true;
   hardware.pulseaudio.enable = false;
   security.rtkit.enable = true;
   services.pipewire = {
@@ -120,50 +124,12 @@
         context.modules = [
           {
             name = "libpipewire-module-raop-discover";
-            args = { };
+            args = {};
           }
         ];
       };
     };
-    # If you want to use JACK applications, uncomment this
-    #jack.enable = true;
-
-    # use the example session manager (no others are packaged yet so this is enabled by default,
-    # no need to redefine it in your config for now)
-    #media-session.enable = true;
   };
-
-  # environment.etc = let
-  #   json = pkgs.formats.json {};
-  # in {
-  #   "pipewire/pipewire.conf.d/91-raop-discover.conf".source = json.generate "91-raop-discover.conf" {
-  #     context.modules = [
-  #       {
-  #         name = "libpipewire-module-raop-discover";
-  #         args = { };
-  #       }
-  #     ];
-  #   };
-  #   "wireplumber/wireplumber.conf.d/51-suspend-timeout.conf" = {
-  #     text = ''
-  #     monitor.alsa.rules = [
-  #       {
-  #         matches = [
-  #           {
-  #             # Matches all sinks
-  #             node.name = "~alsa_output.*"
-  #           }
-  #         ]
-  #         actions = {
-  #           update-props = {
-  #             session.suspend-timeout-seconds = 0
-  #           }
-  #         }
-  #       }
-  #     ]
-  #     '';
-  #   };
-  # };
 
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
@@ -172,26 +138,13 @@
   users.users.ninjawarrior1337 = {
     isNormalUser = true;
     description = "Tyler Rothleder";
-    extraGroups = [ "networkmanager" "wheel" "docker" "dialout"];
+    extraGroups = ["networkmanager" "wheel" "docker" "dialout"];
     shell = pkgs.zsh;
+    hashedPassword = "$y$j9T$gkH1ilVgDIo3yWwk68QCF0$q0foSnCcKP8t9U0oZuwDyUMoY3k4Fjvl3hhE728lU4B";
   };
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
-
-
-  # programs.steam = {
-  #   enable = true;
-  #   package = pkgs.unstable.steam;
-  #   remotePlay.openFirewall = true;
-  #   gamescopeSession.enable = true;
-  #   extraCompatPackages = with pkgs; [
-  #     unstable.proton-ge-bin
-  #   ];
-  # };
-
-  programs.gamescope.enable = true;
-  programs.gamemode.enable = true;
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
@@ -201,7 +154,7 @@
 
   virtualisation.docker.storageDriver = "btrfs";
 
-  boot.loader.systemd-boot.configurationLimit = 10;
+  boot.loader.systemd-boot.configurationLimit = 3;
   nix.gc = {
     automatic = true;
     dates = "weekly";
@@ -227,9 +180,24 @@
 
   zramSwap.enable = true;
 
-  programs.gnupg.agent = {
-    pinentryPackage = pkgs.pinentry-gnome3;
+  systemd.user.services.alsa-disable-auto-mute = {
+    description = "Update charge control threshold";
+    script = ''
+      ${pkgs.alsa-utils}/bin/amixer -c "PCH" sset "Auto-Mute Mode" Disabled
+    '';
+    wantedBy = ["multi-user.target"]; # starts after login
   };
+
+  services.openiscsi = {
+    enable = true;
+    name = "iqn.2016-04.com.open-iscsi:778adaaf88f6";
+  };
+
+  services.flatpak.enable = true;
+
+  environment.systemPackages = with pkgs; [
+    openiscsi
+  ];
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions

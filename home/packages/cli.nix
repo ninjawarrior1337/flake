@@ -1,25 +1,28 @@
 {pkgs, ...}: {
   home.packages = with pkgs.unstable; [
-    neofetch
+    fastfetch
     zip
-    # xz
     unzip
     p7zip
-    
+
     jq
     file
     zstd
-    
+
     btop
     htop
     iftop
     iotop
 
-    lsof 
+    lsof
     usbutils
     pciutils
-    
+
     yt-dlp
     ffmpeg
+    iperf3
+
+    dua
+    duf
   ];
 }

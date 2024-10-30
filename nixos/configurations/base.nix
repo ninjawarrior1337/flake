@@ -1,5 +1,10 @@
-{config, lib, inputs, pkgs, ...}: 
 {
+  config,
+  lib,
+  inputs,
+  pkgs,
+  ...
+}: {
   services.openssh.enable = true;
 
   virtualisation = {
@@ -8,11 +13,9 @@
     };
   };
 
-  services.flatpak.enable = true;
-
   fonts.packages = with pkgs; [
     noto-fonts
-    noto-fonts-cjk
+    noto-fonts-cjk-sans
     jetbrains-mono
     meslo-lgs-nf
   ];
@@ -23,15 +26,13 @@
 
   environment.systemPackages = with pkgs; [
     wget
-    vlc
-    mpv
     just
+    micro
   ];
 
   services.pcscd.enable = true;
   programs.gnupg.agent = {
     enable = true;
-    pinentryPackage = lib.mkDefault pkgs.pinentry-curses;
   };
 
   programs.zsh.enable = true;

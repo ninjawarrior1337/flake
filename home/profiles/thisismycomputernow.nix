@@ -1,8 +1,9 @@
-{inputs, pkgs, ...}:
-
 {
+  inputs,
+  pkgs,
+  ...
+}: {
   imports = [
-    ../desktop/gnome.nix
     ../programs/chrome.nix
     ../programs/spicetify.nix
     ../shell.nix

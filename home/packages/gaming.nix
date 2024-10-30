@@ -1,7 +1,6 @@
 {pkgs, ...}: {
   home.packages = with pkgs.unstable; [
-    armcord
-    discord-screenaudio
+    vesktop
     dolphin-emu
     ryujinx
     heroic

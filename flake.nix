@@ -2,85 +2,78 @@
   description = "Treelar's Flake";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/release-24.05";
-    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
-    home-manager-unstable.url = "github:nix-community/home-manager";
-    home-manager-unstable.inputs.nixpkgs.follows = "nixpkgs-unstable";
-
-    home-manager.url = "github:nix-community/home-manager/release-24.05";
+    home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
-    vscode-server.url = "github:nix-community/nixos-vscode-server";
-    
     lanzaboote = {
-      url = "github:nix-community/lanzaboote/v0.3.0";
-
+      url = "github:nix-community/lanzaboote/v0.4.1";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    spicetify-nix.url = "github:the-argus/spicetify-nix";
+    spicetify-nix.url = "github:Gerg-L/spicetify-nix";
+
+    agenix.url = "github:ryantm/agenix";
+    agenix.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, home-manager-unstable, ... }@inputs: 
-  let 
+  outputs = {
+    self,
+    nixpkgs,
+    home-manager,
+    ...
+  } @ inputs: let
     user = "ninjawarrior1337";
     system = "x86_64-linux";
-    pkgs = import nixpkgs { inherit system; };
+
+    pkgs = nixpkgs.legacyPackages.${system};
   in rec {
-    nixosConfigurations.treeputer = nixpkgs.lib.nixosSystem {
+    nixosConfigurations.miku = nixpkgs.lib.nixosSystem {
       inherit system;
-      specialArgs = {inherit inputs user system;};
-      modules = [
-        ./configurations/treeputer/configuration.nix
-        ./home/base.nix
-        # ./lanzaboote.nix
-        
-        inputs.vscode-server.nixosModules.default
-        home-manager.nixosModules.home-manager
-        # inputs.lanzaboote.nixosModules.lanzaboote
-
-        ({ config, pkgs, ... }: {
-          services.vscode-server.enable = true;
-        })
-        { nixpkgs.config.allowUnfree = true; }
-      ];
-    };
-
-    nixosConfigurations.thisismycomputernow = nixpkgs-unstable.lib.nixosSystem {
-      inherit system;
-      specialArgs = {inherit inputs system; user = "nixos"; };
-      modules = [
-        "${nixpkgs-unstable}/nixos/modules/installer/cd-dvd/installation-cd-graphical-gnome.nix"
-        ./configurations/thisismycomputernow
-        ./home/base.nix
-        inputs.home-manager-unstable.nixosModules.home-manager
-        { nixpkgs.config.allowUnfree = true; }
-      ];
-    };
-
-    nixosConfigurations.rpi3 = nixpkgs-unstable.lib.nixosSystem {
-      system = "aarch64-linux";
       specialArgs = {inherit inputs user;};
       modules = [
-        "${nixpkgs-unstable}/nixos/modules/installer/sd-card/sd-image-aarch64.nix"
-        ./configurations/rpi3
-        ./home/base.nix
+        ./nixos/configurations/miku/configuration.nix
+        ./home/nixosModule.nix
 
-        home-manager-unstable.nixosModules.home-manager
-        ({lib, ...}: {boot.supportedFilesystems = lib.mkForce [ "ext4" "vfat" ];})
+        home-manager.nixosModules.home-manager
+
+        {
+          nixpkgs.config.allowUnfree = true;
+          nixpkgs.overlays = [
+            (final: prev: {
+              unstable = import nixpkgs {
+                inherit system;
+                config.allowUnfree = true;
+              };
+            })
+          ];
+        }
       ];
     };
 
-    images.rpi3 = nixosConfigurations.rpi3.config.system.build.sdImage;
-    images.thisismycomputernow = nixosConfigurations.thisismycomputernow.config.system.build.isoImage;
-
-    packages."x86_64-linux" = {
-      flipper-pc-monitor-backend = pkgs.callPackage ./packages/flipper-pc-monitor-backend {};
+    nixosConfigurations.thisismycomputernow = nixpkgs.lib.nixosSystem {
+      inherit system;
+      specialArgs = {
+        inherit inputs;
+        user = "nixos";
+      };
+      modules = [
+        "${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-graphical-gnome.nix"
+        ./nixos/configurations/thisismycomputernow
+        ./home/nixosModule.nix
+        home-manager.nixosModules.home-manager
+        {nixpkgs.config.allowUnfree = true;}
+      ];
     };
 
-    packages."aarch64-linux" = {
-      fm_transmitter = pkgs.callPackage ./packages/fm_transmitter {};
+    images.thisismycomputernow = nixosConfigurations.thisismycomputernow.config.system.build.isoImage;
+
+    devShells.x86_64-linux.default = pkgs.mkShell {
+      buildInputs = with pkgs; [
+        inputs.agenix.packages.${pkgs.system}.default
+        bfg-repo-cleaner
+      ];
     };
   };
 }

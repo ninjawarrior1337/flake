@@ -1,10 +1,12 @@
 {pkgs, ...}: {
   home.packages = with pkgs.unstable; [
     audacity
+    vlc
+    mpv
     kdenlive
     obs-studio
     orca-slicer
-    vscode
+    discordchatexporter-cli
 
     # Productivity
     blender
@@ -12,7 +14,6 @@
     obsidian
     telegram-desktop
     postman
-    jetbrains-toolbox
     openscad-unstable
     nil
     zoom-us

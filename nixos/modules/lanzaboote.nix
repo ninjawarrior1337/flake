@@ -1,7 +1,16 @@
-{pkgs, lib, ...}: {
+{
+  pkgs,
+  lib,
+  inputs,
+  ...
+}: {
   environment.systemPackages = [
     # For debugging and troubleshooting Secure Boot.
     pkgs.sbctl
+  ];
+
+  imports = [
+    inputs.lanzaboote.nixosModules.lanzaboote
   ];
 
   # Lanzaboote currently replaces the systemd-boot module.

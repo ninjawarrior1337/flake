@@ -1,13 +1,15 @@
 {pkgs, ...}: {
   home.packages = with pkgs.unstable; [
     # Devtools
-    (python3.withPackages (pypkgs: [
-      pypkgs.pandas
-      pypkgs.numpy
-      pypkgs.pip
-    ]))
+    (python3.withPackages (pypkgs:
+      with pypkgs; [
+        pandas
+        numpy
+        pip
+        virtualenv
+      ]))
     rustup
-    
+
     nodejs
     corepack
 
@@ -15,6 +17,12 @@
     deno
     bun
     gcc
-    # zsh-powerlevel10k
+
+    nil
+    alejandra
+    
+    jetbrains-toolbox
+    vscode
+    duckdb
   ];
 }
