@@ -160,24 +160,9 @@
     dates = "weekly";
     options = "--delete-older-than 1w";
   };
+
   nix.settings.auto-optimise-store = true;
-
   services.btrfs.autoScrub.enable = true;
-
-  system.autoUpgrade = {
-    enable = true;
-    flake = inputs.self.outPath;
-    flags = [
-      "--update-input"
-      "nixpkgs"
-      "--update-input"
-      "nixpkgs-unstable"
-      "-L" # print build logs
-    ];
-    dates = "02:00";
-    randomizedDelaySec = "45min";
-  };
-
   zramSwap.enable = true;
 
   systemd.user.services.alsa-disable-auto-mute = {
