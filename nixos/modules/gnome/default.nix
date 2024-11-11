@@ -7,12 +7,12 @@
 
   environment.sessionVariables.NIXOS_OZONE_WL = "1";
 
-  environment.systemPackages = with pkgs;
-    [gradience]
-    ++ (with pkgs; [
+  environment.systemPackages =
+    (with pkgs; [
       gnome-tweaks
       dconf-editor
       gnome-power-manager
+      gradience
     ])
     ++ (with pkgs.gnomeExtensions; [
       appindicator

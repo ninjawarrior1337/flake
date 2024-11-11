@@ -16,6 +16,9 @@
 
     agenix.url = "github:ryantm/agenix";
     agenix.inputs.nixpkgs.follows = "nixpkgs";
+
+    zen-browser.url = "github:MarceColl/zen-browser-flake";
+    zen-browser.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs = {
@@ -40,12 +43,16 @@
 
         {
           nixpkgs.config.allowUnfree = true;
+          nix.nixPath = [
+            "nixpkgs=${nixpkgs}"
+          ];
           nixpkgs.overlays = [
             (final: prev: {
               unstable = import nixpkgs {
                 inherit system;
                 config.allowUnfree = true;
               };
+              zen-browser = inputs.zen-browser.packages.${final.system};
             })
           ];
         }
@@ -63,7 +70,17 @@
         ./nixos/configurations/thisismycomputernow
         ./home/nixosModule.nix
         home-manager.nixosModules.home-manager
-        {nixpkgs.config.allowUnfree = true;}
+        {
+          nixpkgs.config.allowUnfree = true;
+          nixpkgs.overlays = [
+            (final: prev: {
+              unstable = import nixpkgs {
+                inherit system;
+                config.allowUnfree = true;
+              };
+            })
+          ];
+        }
       ];
     };
 

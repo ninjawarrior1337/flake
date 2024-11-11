@@ -8,6 +8,7 @@
         pip
         virtualenv
       ]))
+    poetry
     rustup
 
     nodejs
@@ -20,9 +21,10 @@
 
     nil
     alejandra
-    
+
     jetbrains-toolbox
     vscode
     duckdb
+    postgresql
   ];
 }

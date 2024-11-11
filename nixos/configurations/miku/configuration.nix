@@ -8,6 +8,17 @@
   inputs,
   ...
 }: {
+  imports = [
+    ../base.nix
+    ./hardware-configuration.nix
+    ../../modules/nvidia.nix
+    ../../modules/gaming.nix
+    ../../modules/lanzaboote.nix
+    ../../modules/hyprland
+  ];
+
+  boot.kernelPackages = pkgs.linuxPackages_zen;
+
   nix.settings.experimental-features = ["nix-command" "flakes"];
   boot.binfmt.emulatedSystems = ["aarch64-linux"];
 
@@ -19,15 +30,6 @@
   hardware.ckb-next.enable = true;
   services.joycond.enable = true;
   programs.nix-ld.enable = true;
-
-  imports = [
-    ../base.nix
-    ./hardware-configuration.nix
-    ../../modules/nvidia.nix
-    ../../modules/gaming.nix
-    ../../modules/lanzaboote.nix
-    ../../modules/hyprland
-  ];
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
@@ -59,18 +61,6 @@
     LC_PAPER = "en_US.UTF-8";
     LC_TELEPHONE = "en_US.UTF-8";
     LC_TIME = "en_US.UTF-8";
-  };
-
-  i18n.inputMethod = {
-    enable = true;
-    type = "fcitx5";
-
-    fcitx5.addons = with pkgs; [
-      fcitx5-gtk # alternatively, kdePackages.fcitx5-qt
-      fcitx5-mozc
-      fcitx5-nord # a color theme
-    ];
-    fcitx5.waylandFrontend = true;
   };
 
   # Enable the X11 windowing system.
@@ -162,15 +152,18 @@
   };
 
   nix.settings.auto-optimise-store = true;
+
+  nix.settings.trusted-users = ["root" "@wheel"];
+
   services.btrfs.autoScrub.enable = true;
   zramSwap.enable = true;
 
-  systemd.user.services.alsa-disable-auto-mute = {
+  systemd.services.alsa-disable-auto-mute = {
     description = "Update charge control threshold";
     script = ''
       ${pkgs.alsa-utils}/bin/amixer -c "PCH" sset "Auto-Mute Mode" Disabled
     '';
-    wantedBy = ["multi-user.target"]; # starts after login
+    wantedBy = ["graphical.target"]; # starts after login
   };
 
   services.openiscsi = {
@@ -178,10 +171,29 @@
     name = "iqn.2016-04.com.open-iscsi:778adaaf88f6";
   };
 
+  systemd.services.iscsi-login-miku-gd = let
+    tgt = "iqn.2024-07.xyz.treelar.maru:miku.gd";
+    host = "192.168.0.3";
+  in {
+    description = "Login to iSCSI target ${tgt}";
+    after = ["network.target" "iscsid.service"];
+    restartIfChanged = false;
+    wants = ["iscsid.service"];
+    serviceConfig = {
+      Type = "oneshot";
+      ExecStartPre = "${pkgs.openiscsi}/bin/iscsiadm -m discovery -t sendtargets -p ${host}";
+      ExecStart = "-${pkgs.openiscsi}/bin/iscsiadm -m node -T ${tgt} -p ${host} --login";
+      ExecStop = "${pkgs.openiscsi}/bin/iscsiadm -m node -T ${tgt} -p ${host} --logout";
+      RemainAfterExit = true;
+    };
+    wantedBy = ["multi-user.target"];
+  };
+
   services.flatpak.enable = true;
 
   environment.systemPackages = with pkgs; [
     openiscsi
+    distrobox
   ];
 
   # This value determines the NixOS release from which the default
