@@ -11,9 +11,10 @@
   imports = [
     ../base.nix
     ./hardware-configuration.nix
+    ../../modules/lanzaboote.nix
     ../../modules/nvidia.nix
     ../../modules/gaming.nix
-    ../../modules/lanzaboote.nix
+    ../../modules/ime.nix
     ../../modules/hyprland
   ];
 
