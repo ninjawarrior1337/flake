@@ -1,6 +1,9 @@
-{lib, stdenv, pkgs, fetchFromGitHub}:
-
-let
+{
+  lib,
+  stdenv,
+  pkgs,
+  fetchFromGitHub,
+}: let
   pname = "fm_transmitter";
   version = "0.9.6";
 
@@ -12,17 +15,16 @@ let
   };
 
   stdenv = pkgs.gcc10Stdenv;
+in
+  stdenv.mkDerivation {
+    inherit pname version src;
 
-in 
-stdenv.mkDerivation {
-  inherit pname version src;
+    buildInputs = with pkgs; [
+      libraspberrypi
+    ];
 
-  buildInputs = with pkgs; [
-    libraspberrypi
-  ];
-
-  installPhase = ''
-    mkdir -p $out/bin
-    cp ./fm_transmitter $out/bin/
-  '';
-}
+    installPhase = ''
+      mkdir -p $out/bin
+      cp ./fm_transmitter $out/bin/
+    '';
+  }

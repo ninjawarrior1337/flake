@@ -9,7 +9,6 @@
   };
 
   programs.waybar.enable = true;
-  services.displayManager.sddm.enable = true;
   services.gvfs.enable = true;
 
   environment.sessionVariables.NIXOS_OZONE_WL = "1";
@@ -38,6 +37,12 @@
     wantedBy = ["default.target"];
   };
 
+  services.displayManager.sddm = {
+    enable = true;
+    theme = "breeze";
+    wayland.enable = true;
+  };
+
   environment.systemPackages = with pkgs;
     [
       kitty
@@ -54,10 +59,17 @@
       networkmanagerapplet
       hyprls
       playerctl
+
+      kdePackages.breeze
     ]
     ++ (with pkgs; [
       gnome-tweaks
       gnome-text-editor
+      evince
+      eog
+      papers
+      seahorse
+      showtime
       dconf-editor
       nautilus
     ]);

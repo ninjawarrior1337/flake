@@ -1,7 +1,10 @@
-{config, lib, pkgs, ...}:
-
 {
-  nix.settings.experimental-features = ["nix-command" "flakes" ];
+  config,
+  lib,
+  pkgs,
+  ...
+}: {
+  nix.settings.experimental-features = ["nix-command" "flakes"];
   nixpkgs.config.allowUnfree = true;
   nix.settings.trusted-users = [
     "root"
@@ -56,7 +59,7 @@
   users.users.ninjawarrior1337 = {
     isNormalUser = true;
     description = "Treelar";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = ["networkmanager" "wheel"];
     openssh.authorizedKeys.keys = [
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIL3UOTTll5RiIo7GkGQSQatdS0oJr9kECRQENy2LRPpv ninjawarrior1337@nixos"
     ];

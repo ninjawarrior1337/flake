@@ -1,5 +1,10 @@
-{lib, stdenv, pkgs, fetchFromGitHub, rustPlatform}:
-
+{
+  lib,
+  stdenv,
+  pkgs,
+  fetchFromGitHub,
+  rustPlatform,
+}:
 rustPlatform.buildRustPackage rec {
   pname = "flipper-pc-monitor-backend";
   version = "master";
@@ -29,6 +34,6 @@ rustPlatform.buildRustPackage rec {
     description = "A fast line-oriented regex search tool, similar to ag and ack";
     homepage = "https://github.com/BurntSushi/ripgrep";
     license = licenses.mit;
-    maintainers = [ maintainers.tailhook ];
+    maintainers = [maintainers.tailhook];
   };
 }

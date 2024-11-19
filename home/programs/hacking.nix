@@ -1,5 +1,9 @@
-{config, pkgs, lib, ...}:
 {
+  config,
+  pkgs,
+  lib,
+  ...
+}: {
   home.packages = with pkgs.unstable; [
     ghidra
     aircrack-ng
@@ -9,5 +13,8 @@
     nmap
     masscan
     metasploit
+    (proxmark3.overrideAttrs {
+      withGeneric = true;
+    })
   ];
 }
