@@ -1,12 +1,11 @@
 {
   spotify,
   spotify-adblock,
-  spotifywm,
 }:
 spotify.overrideAttrs (
-  old: {
+  prev: {
     postInstall =
-      (old.postInstall or "")
+      (prev.postInstall or "")
       + ''
         # wrap spotify to use libspotifyadblock.so
         wrapProgram $out/bin/spotify \

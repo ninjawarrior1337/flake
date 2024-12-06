@@ -5,7 +5,7 @@
     mpv
     kdenlive
     obs-studio
-    orca-slicer
+    bambu-studio
     discordchatexporter-cli
 
     # Productivity

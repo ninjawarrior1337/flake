@@ -23,9 +23,11 @@
   nix.settings.experimental-features = ["nix-command" "flakes"];
   boot.binfmt.emulatedSystems = ["aarch64-linux"];
 
+  hardware.enableRedistributableFirmware = true;
   hardware.bluetooth.enable = true;
   hardware.bluetooth.powerOnBoot = true;
   services.blueman.enable = true;
+  hardware.nvidia.open = true;
 
   hardware.flipperzero.enable = true;
   hardware.ckb-next.enable = true;
@@ -144,12 +146,13 @@
   networking.firewall.enable = false;
 
   virtualisation.docker.storageDriver = "btrfs";
+  virtualisation.waydroid.enable = true;
 
   boot.loader.systemd-boot.configurationLimit = 3;
   nix.gc = {
     automatic = true;
     dates = "weekly";
-    options = "--delete-older-than 1w";
+    options = "--delete-older-than 7d";
   };
 
   nix.settings.auto-optimise-store = true;

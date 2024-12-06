@@ -18,6 +18,7 @@
     deno
     bun
     gcc
+    zulu
 
     nil
     alejandra
@@ -26,5 +27,9 @@
     vscode
     duckdb
     postgresql
+  ];
+
+  home.sessionPath = [
+    "$HOME/.cargo/bin"
   ];
 }

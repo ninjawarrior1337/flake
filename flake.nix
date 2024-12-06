@@ -2,7 +2,7 @@
   description = "Treelar's Flake";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable-small";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
     home-manager.url = "github:nix-community/home-manager/master";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
@@ -30,7 +30,17 @@
     user = "ninjawarrior1337";
     system = "x86_64-linux";
 
-    pkgs = nixpkgs.legacyPackages.${system};
+    pkgs_base = nixpkgs.legacyPackages.${system};
+    pkgs = import (pkgs_base.applyPatches {
+    	name = "manual_patches";
+    	src = nixpkgs;
+    	patches = [ 
+			# (pkgs_base.fetchpatch {
+			# 	url = "https://github.com/NixOS/nixpkgs/pull/358948.patch";
+			# 	hash = "sha256-CM0L1qAkhST17efLoGcZhm3NmocvdSmjWd6JqC91Yuw=";
+			# })
+    	];
+    }) {inherit system;};
   in rec {
     nixosConfigurations.miku = nixpkgs.lib.nixosSystem {
       inherit system;

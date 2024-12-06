@@ -14,12 +14,13 @@
     enableZshIntegration = true;
   };
 
-  programs.direnv = {
+  programs.zoxide = {
     enable = true;
     enableZshIntegration = true;
   };
 
-  home.sessionPath = [
-    "$HOME/.cargo/bin"
-  ];
+  programs.direnv = {
+    enable = true;
+    enableZshIntegration = true;
+  };
 }

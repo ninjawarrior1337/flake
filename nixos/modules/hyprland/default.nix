@@ -37,10 +37,24 @@
     wantedBy = ["default.target"];
   };
 
-  services.displayManager.sddm = {
-    enable = true;
-    theme = "breeze";
-    wayland.enable = true;
+  services.xserver.displayManager.gdm.enable = true;
+  services.displayManager = {
+    # sddm = {
+    #   enable = true;
+    #   package = pkgs.kdePackages.sddm;
+    #   theme = "breeze";
+    #   wayland.enable = true;
+    #   extraPackages = with pkgs.kdePackages; [
+    #     breeze
+    #     breeze-icons
+    #     kirigami
+    #     plasma5support
+    #     qtsvg
+    #     qtvirtualkeyboard
+    #   ];
+    # };
+    defaultSession = "hyprland";
+    
   };
 
   environment.systemPackages = with pkgs;
@@ -59,8 +73,6 @@
       networkmanagerapplet
       hyprls
       playerctl
-
-      kdePackages.breeze
     ]
     ++ (with pkgs; [
       gnome-tweaks
@@ -72,5 +84,9 @@
       showtime
       dconf-editor
       nautilus
+    ])
+    ++ (with pkgs.kdePackages; [
+      # contains the sddm breeze theme
+      # plasma-desktop
     ]);
 }
