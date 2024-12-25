@@ -14,6 +14,7 @@
       vaapiVdpau
       libvdpau-va-gl
     ];
+    enable32Bit = true;
   };
 
   environment.systemPackages = with pkgs; [

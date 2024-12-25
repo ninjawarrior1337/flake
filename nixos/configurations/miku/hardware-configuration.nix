@@ -17,7 +17,7 @@
   boot.kernelModules = ["kvm-intel"];
   boot.extraModulePackages = [];
   boot.loader.efi.efiSysMountPoint = "/boot/efi";
-  boot.kernelParams = ["acpi=force" "reboot=acpi"];
+  boot.kernelParams = ["acpi=off"];
 
   fileSystems."/" = {
     device = "/dev/disk/by-uuid/b6693e0c-4fdf-49d7-ba03-b71371f7863a";

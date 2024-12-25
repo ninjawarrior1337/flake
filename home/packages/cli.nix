@@ -17,9 +17,14 @@
     lsof
     usbutils
     pciutils
+    psmisc
+    smartmontools
+    fio
+    openssl
 
     yt-dlp
     ffmpeg
+    aria2
     iperf3
 
     dua

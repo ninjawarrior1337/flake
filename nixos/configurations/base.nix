@@ -18,6 +18,9 @@
     noto-fonts-cjk-sans
     jetbrains-mono
     meslo-lgs-nf
+    (pkgs.callPackage
+      (import ../../packages/fonts/corporate-logo.nix)
+      {})
   ];
 
   services.tailscale = {
