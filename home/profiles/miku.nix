@@ -1,6 +1,7 @@
 {inputs, ...}: {
   imports = [
     ../programs/chrome.nix
+    ../programs/firefox.nix
     ../programs/spicetify.nix
     ../programs/hacking.nix
     ../modules/gtk-theme.nix

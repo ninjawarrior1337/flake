@@ -3,6 +3,6 @@
     vesktop
     dolphin-emu
     ryujinx
-    heroic
+    # heroic
   ];
 }

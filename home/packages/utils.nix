@@ -5,7 +5,6 @@
     mpv
     kdenlive
     obs-studio
-    bambu-studio
     discordchatexporter-cli
 
     # Productivity
