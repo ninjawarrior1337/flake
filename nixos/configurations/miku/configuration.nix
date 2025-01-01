@@ -27,6 +27,7 @@
   hardware.bluetooth.enable = true;
   hardware.bluetooth.powerOnBoot = true;
   services.blueman.enable = true;
+  services.earlyoom.enable = true;
   hardware.nvidia.open = true;
 
   hardware.flipperzero.enable = true;
