@@ -54,7 +54,6 @@
     #   ];
     # };
     defaultSession = "hyprland";
-    
   };
 
   environment.systemPackages = with pkgs;
@@ -73,6 +72,7 @@
       networkmanagerapplet
       hyprls
       playerctl
+      ghostty
     ]
     ++ (with pkgs; [
       gnome-tweaks
