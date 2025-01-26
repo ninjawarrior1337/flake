@@ -8,7 +8,7 @@
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
     lanzaboote = {
-      url = "github:nix-community/lanzaboote/v0.4.1";
+      url = "github:nix-community/lanzaboote/v0.4.2";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -32,14 +32,14 @@
 
     pkgs_base = nixpkgs.legacyPackages.${system};
     pkgs = import (pkgs_base.applyPatches {
-    	name = "manual_patches";
-    	src = nixpkgs;
-    	patches = [ 
-			# (pkgs_base.fetchpatch {
-			# 	url = "https://github.com/NixOS/nixpkgs/pull/358948.patch";
-			# 	hash = "sha256-CM0L1qAkhST17efLoGcZhm3NmocvdSmjWd6JqC91Yuw=";
-			# })
-    	];
+      name = "manual_patches";
+      src = nixpkgs;
+      patches = [
+        # (pkgs_base.fetchpatch {
+        # 	url = "https://github.com/NixOS/nixpkgs/pull/358948.patch";
+        # 	hash = "sha256-CM0L1qAkhST17efLoGcZhm3NmocvdSmjWd6JqC91Yuw=";
+        # })
+      ];
     }) {inherit system;};
   in rec {
     nixosConfigurations.miku = nixpkgs.lib.nixosSystem {

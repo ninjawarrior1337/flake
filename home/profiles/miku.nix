@@ -4,7 +4,7 @@
     ../programs/firefox.nix
     ../programs/spicetify.nix
     ../programs/hacking.nix
-    ../modules/gtk-theme.nix
+    # ../modules/gtk-theme.nix
     ../shell.nix
     ../git.nix
     ../packages

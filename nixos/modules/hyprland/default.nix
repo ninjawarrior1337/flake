@@ -20,7 +20,7 @@
 
   programs.nautilus-open-any-terminal = {
     enable = true;
-    terminal = "kitty";
+    terminal = "ghostty";
   };
 
   services.gnome = {
@@ -38,23 +38,7 @@
   };
 
   services.xserver.displayManager.gdm.enable = true;
-  services.displayManager = {
-    # sddm = {
-    #   enable = true;
-    #   package = pkgs.kdePackages.sddm;
-    #   theme = "breeze";
-    #   wayland.enable = true;
-    #   extraPackages = with pkgs.kdePackages; [
-    #     breeze
-    #     breeze-icons
-    #     kirigami
-    #     plasma5support
-    #     qtsvg
-    #     qtvirtualkeyboard
-    #   ];
-    # };
-    defaultSession = "hyprland";
-  };
+  services.displayManager.defaultSession = "hyprland";
 
   environment.systemPackages = with pkgs;
     [

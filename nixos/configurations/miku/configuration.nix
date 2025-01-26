@@ -15,7 +15,7 @@
     ../../modules/nvidia.nix
     ../../modules/gaming.nix
     ../../modules/ime.nix
-    ../../modules/hyprland
+    ../../modules/plasma
   ];
 
   boot.kernelPackages = pkgs.linuxPackages_zen;
@@ -32,7 +32,6 @@
 
   hardware.flipperzero.enable = true;
   hardware.ckb-next.enable = true;
-  services.joycond.enable = true;
   programs.nix-ld.enable = true;
 
   # Bootloader.
@@ -85,7 +84,7 @@
   services.printing.enable = true;
 
   # Enable sound with pipewire.
-  hardware.pulseaudio.enable = false;
+  services.pulseaudio.enable = false;
   security.rtkit.enable = true;
   security.polkit.enable = true;
   services.pipewire = {
