@@ -31,6 +31,7 @@
     wget
     just
     micro
+    minicom
   ];
 
   services.pcscd.enable = true;

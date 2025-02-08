@@ -25,8 +25,9 @@
 
     jetbrains-toolbox
     vscode
-    duckdb
     postgresql
+
+    arduino-ide
   ];
 
   home.sessionPath = [

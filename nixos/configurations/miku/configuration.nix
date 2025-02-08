@@ -15,6 +15,7 @@
     ../../modules/nvidia.nix
     ../../modules/gaming.nix
     ../../modules/ime.nix
+    ../../modules/rtlsdr.nix
     ../../modules/plasma
   ];
 

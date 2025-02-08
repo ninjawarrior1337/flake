@@ -17,7 +17,7 @@
     agenix.url = "github:ryantm/agenix";
     agenix.inputs.nixpkgs.follows = "nixpkgs";
 
-    zen-browser.url = "github:MarceColl/zen-browser-flake";
+    zen-browser.url = "github:0xc000022070/zen-browser-flake";
     zen-browser.inputs.nixpkgs.follows = "nixpkgs";
   };
 
@@ -44,7 +44,7 @@
   in rec {
     nixosConfigurations.miku = nixpkgs.lib.nixosSystem {
       inherit system;
-      specialArgs = {inherit inputs user;};
+      specialArgs = {inherit inputs user system;};
       modules = [
         ./nixos/configurations/miku/configuration.nix
         ./home/nixosModule.nix
@@ -62,7 +62,7 @@
                 inherit system;
                 config.allowUnfree = true;
               };
-              zen-browser = inputs.zen-browser.packages.${final.system};
+              zen-browser = inputs.zen-browser.packages.${final.system}.default;
             })
           ];
         }
