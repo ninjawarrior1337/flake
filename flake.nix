@@ -19,12 +19,15 @@
 
     zen-browser.url = "github:0xc000022070/zen-browser-flake";
     zen-browser.inputs.nixpkgs.follows = "nixpkgs";
+
+    chaotic.url = "github:chaotic-cx/nyx/nyxpkgs-unstable";
   };
 
   outputs = {
     self,
     nixpkgs,
     home-manager,
+    chaotic,
     ...
   } @ inputs: let
     user = "ninjawarrior1337";
@@ -50,6 +53,7 @@
         ./home/nixosModule.nix
 
         home-manager.nixosModules.home-manager
+        chaotic.nixosModules.default
 
         {
           nixpkgs.config.allowUnfree = true;

@@ -21,6 +21,8 @@
     (pkgs.callPackage
       (import ../../packages/fonts/corporate-logo.nix)
       {})
+    inter
+    ibm-plex
   ];
 
   services.tailscale = {

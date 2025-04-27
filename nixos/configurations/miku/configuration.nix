@@ -15,11 +15,13 @@
     ../../modules/nvidia.nix
     ../../modules/gaming.nix
     ../../modules/ime.nix
-    ../../modules/rtlsdr.nix
+    # ../../modules/rtlsdr.nix
     ../../modules/plasma
   ];
 
-  boot.kernelPackages = pkgs.linuxPackages_zen;
+  boot.kernelPackages = pkgs.linuxPackages_cachyos;
+  services.scx.enable = true;
+  services.scx.scheduler = "scx_rusty";
 
   nix.settings.experimental-features = ["nix-command" "flakes"];
   boot.binfmt.emulatedSystems = ["aarch64-linux"];
@@ -157,9 +159,16 @@
     options = "--delete-older-than 7d";
   };
 
-  nix.settings.auto-optimise-store = true;
-
-  nix.settings.trusted-users = ["root" "@wheel"];
+  nix.settings = {
+    auto-optimise-store = true;
+    trusted-users = ["root" "@wheel"];
+    extra-substituters = [
+      "https://pebble.cachix.org"
+    ];
+    extra-trusted-public-keys = [
+      "pebble.cachix.org-1:aTqwT2hR6lGggw/rPISRcHZctDv2iF7ewsVxf3Hq6ow="
+    ];
+  };
 
   services.btrfs.autoScrub.enable = true;
   zramSwap.enable = true;

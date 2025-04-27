@@ -5,10 +5,18 @@
       with pypkgs; [
         pandas
         numpy
+        duckdb
+        polars
+        pyarrow
+        matplotlib
+        seaborn
         pip
         virtualenv
+        ipython
+        notebook
+        jupyter
       ]))
-    poetry
+    uv
     rustup
 
     nodejs
@@ -26,6 +34,7 @@
     jetbrains-toolbox
     vscode
     postgresql
+    duckdb
 
     arduino-ide
   ];

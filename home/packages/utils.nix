@@ -3,7 +3,7 @@
     audacity
     vlc
     mpv
-    kdenlive
+    kdePackages.kdenlive
     obs-studio
     discordchatexporter-cli
 
