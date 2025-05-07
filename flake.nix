@@ -33,21 +33,13 @@
     user = "ninjawarrior1337";
     system = "x86_64-linux";
 
-    pkgs_base = nixpkgs.legacyPackages.${system};
-    pkgs = import (pkgs_base.applyPatches {
-      name = "manual_patches";
-      src = nixpkgs;
-      patches = [
-        # (pkgs_base.fetchpatch {
-        # 	url = "https://github.com/NixOS/nixpkgs/pull/358948.patch";
-        # 	hash = "sha256-CM0L1qAkhST17efLoGcZhm3NmocvdSmjWd6JqC91Yuw=";
-        # })
-      ];
-    }) {inherit system;};
+    pkgs = nixpkgs.legacyPackages.${system};
   in rec {
     nixosConfigurations.miku = nixpkgs.lib.nixosSystem {
       inherit system;
-      specialArgs = {inherit inputs user system;};
+      specialArgs = {
+        inherit inputs user system;
+      };
       modules = [
         ./nixos/configurations/miku/configuration.nix
         ./home/nixosModule.nix
@@ -67,6 +59,10 @@
                 config.allowUnfree = true;
               };
               zen-browser = inputs.zen-browser.packages.${final.system}.default;
+
+              nebula-sans = final.callPackage ./packages/fonts/nebula-sans.nix {};
+              apple-fonts = final.callPackage ./packages/fonts/apple.nix {};
+              corporate-logo = final.callPackage ./packages/fonts/corporate-logo.nix {};
             })
           ];
         }
@@ -105,6 +101,12 @@
         inputs.agenix.packages.${pkgs.system}.default
         bfg-repo-cleaner
       ];
+    };
+
+    packages.x86_64-linux = {
+      nebula-sans = pkgs.callPackage ./packages/fonts/nebula-sans.nix {};
+      apple-fonts = pkgs.callPackage ./packages/fonts/apple.nix {};
+      corporate-logo = pkgs.callPackage ./packages/fonts/corporate-logo.nix {};
     };
 
     formatter.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.alejandra;

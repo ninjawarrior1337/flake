@@ -18,9 +18,9 @@
     noto-fonts-cjk-sans
     jetbrains-mono
     meslo-lgs-nf
-    (pkgs.callPackage
-      (import ../../packages/fonts/corporate-logo.nix)
-      {})
+    corporate-logo
+    apple-fonts
+    nebula-sans
     inter
     ibm-plex
   ];
