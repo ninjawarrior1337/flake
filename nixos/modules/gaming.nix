@@ -14,5 +14,11 @@
 
   environment.systemPackages = with pkgs.unstable; [
     osu-lazer-bin
+    lutris
+    heroic
+    protonup-qt
+    protonplus
+    mangohud
+    bottles
   ];
 }

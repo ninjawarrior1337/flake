@@ -3,9 +3,14 @@
   lib,
   inputs,
   pkgs,
+  user,
   ...
 }: {
   services.openssh.enable = true;
+
+  nix.settings = {
+    trusted-users = ["root" user];
+  };
 
   virtualisation = {
     docker = {
