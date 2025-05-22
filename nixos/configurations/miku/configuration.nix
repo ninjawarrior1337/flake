@@ -17,7 +17,6 @@
     ../../modules/ime.nix
     # ../../modules/rtlsdr.nix
     ../../modules/plasma
-    ../../modules/virtualbox.nix
   ];
 
   boot.kernelPackages = pkgs.linuxPackages_cachyos;
