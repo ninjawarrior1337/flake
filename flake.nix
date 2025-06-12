@@ -21,6 +21,8 @@
     zen-browser.inputs.nixpkgs.follows = "nixpkgs";
 
     chaotic.url = "github:chaotic-cx/nyx/nyxpkgs-unstable";
+
+    determinate.url = "https://flakehub.com/f/DeterminateSystems/determinate/*";
   };
 
   outputs = {
@@ -28,6 +30,7 @@
     nixpkgs,
     home-manager,
     chaotic,
+    determinate,
     ...
   } @ inputs: let
     user = "ninjawarrior1337";
@@ -46,6 +49,7 @@
 
         home-manager.nixosModules.home-manager
         chaotic.nixosModules.default
+        determinate.nixosModules.default
 
         {
           nixpkgs.config.allowUnfree = true;
@@ -53,16 +57,13 @@
             "nixpkgs=${nixpkgs}"
           ];
           nixpkgs.overlays = [
+            self.overlays.default
             (final: prev: {
               unstable = import nixpkgs {
                 inherit system;
                 config.allowUnfree = true;
               };
               zen-browser = inputs.zen-browser.packages.${final.system}.default;
-
-              nebula-sans = final.callPackage ./packages/fonts/nebula-sans.nix {};
-              apple-fonts = final.callPackage ./packages/fonts/apple.nix {};
-              corporate-logo = final.callPackage ./packages/fonts/corporate-logo.nix {};
             })
           ];
         }
@@ -101,6 +102,14 @@
         inputs.agenix.packages.${pkgs.system}.default
         bfg-repo-cleaner
       ];
+    };
+
+    overlays = {
+      default = final: prev: {
+        nebula-sans = final.callPackage ./packages/fonts/nebula-sans.nix {};
+        apple-fonts = final.callPackage ./packages/fonts/apple.nix {};
+        corporate-logo = final.callPackage ./packages/fonts/corporate-logo.nix {};
+      };
     };
 
     packages.x86_64-linux = {

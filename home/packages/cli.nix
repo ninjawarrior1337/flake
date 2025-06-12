@@ -29,5 +29,8 @@
 
     dua
     duf
+
+    step-cli
+    step-kms-plugin
   ];
 }

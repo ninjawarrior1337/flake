@@ -1,4 +1,8 @@
-{inputs, ...}: {
+{
+  inputs,
+  pkgs,
+  ...
+}: {
   imports = [
     ../programs/chrome.nix
     ../programs/firefox.nix
@@ -9,6 +13,10 @@
     ../shell.nix
     ../git.nix
     ../packages
+  ];
+
+  home.packages = with pkgs; [
+    bisq2
   ];
 
   home.stateVersion = "24.05";

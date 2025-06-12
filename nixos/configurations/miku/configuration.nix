@@ -16,12 +16,13 @@
     ../../modules/gaming.nix
     ../../modules/ime.nix
     # ../../modules/rtlsdr.nix
-    ../../modules/plasma
+    ../../modules/gnome
+    # ../../modules/plasma
   ];
 
   boot.kernelPackages = pkgs.linuxPackages_cachyos;
   services.scx.enable = true;
-  services.scx.scheduler = "scx_rusty";
+  services.scx.scheduler = "scx_lavd";
 
   nix.settings.experimental-features = ["nix-command" "flakes"];
   boot.binfmt.emulatedSystems = ["aarch64-linux"];
@@ -151,6 +152,18 @@
 
   virtualisation.docker.storageDriver = "btrfs";
   virtualisation.waydroid.enable = true;
+
+  virtualisation = {
+    podman = {
+      enable = true;
+      defaultNetwork.settings.dns_enabled = true;
+    };
+    containers.storage.settings = {
+      storage = {
+        driver = "btrfs";
+      };
+    };
+  };
 
   boot.loader.systemd-boot.configurationLimit = 3;
   nix.gc = {

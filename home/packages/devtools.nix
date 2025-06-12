@@ -37,6 +37,9 @@
     duckdb
 
     arduino-ide
+    podman-desktop
+
+    k6
   ];
 
   home.sessionPath = [

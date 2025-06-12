@@ -10,11 +10,12 @@
     # Productivity
     blender
     gimp
-    obsidian
+    inkscape
     telegram-desktop
     postman
     openscad-unstable
     nil
     zoom-us
+    thunderbird
   ];
 }
