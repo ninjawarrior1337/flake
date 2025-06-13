@@ -22,6 +22,9 @@
 
     chaotic.url = "github:chaotic-cx/nyx/nyxpkgs-unstable";
 
+    nix-darwin.url = "github:LnL7/nix-darwin";
+    nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
+
     determinate.url = "https://flakehub.com/f/DeterminateSystems/determinate/*";
   };
 
@@ -31,6 +34,7 @@
     home-manager,
     chaotic,
     determinate,
+    nix-darwin,
     ...
   } @ inputs: let
     user = "ninjawarrior1337";
@@ -95,6 +99,27 @@
       ];
     };
 
+    darwinConfigurations."shiki" = nix-darwin.lib.darwinSystem {
+      specialArgs = {inherit inputs user;};
+      modules = [
+        ./nixos/configurations/shiki
+
+        home-manager.darwinModules.home-manager
+        ./home/nixosModule.nix
+        
+        {
+          nix.nixPath = [
+            "nixpkgs=${nixpkgs}"
+          ];
+          nixpkgs = {
+            overlays = [
+              inputs.self.overlays.default
+            ];
+          };
+        }
+      ];
+    };
+
     images.thisismycomputernow = nixosConfigurations.thisismycomputernow.config.system.build.isoImage;
 
     devShells.x86_64-linux.default = pkgs.mkShell {
@@ -109,6 +134,7 @@
         nebula-sans = final.callPackage ./packages/fonts/nebula-sans.nix {};
         apple-fonts = final.callPackage ./packages/fonts/apple.nix {};
         corporate-logo = final.callPackage ./packages/fonts/corporate-logo.nix {};
+        agenix = inputs.agenix.packages.${final.hostPlatform.system}.default;
       };
     };
 
