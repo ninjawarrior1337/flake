@@ -19,7 +19,6 @@
       "fmkadmapgofadopljbjfkapdkoienihi" # react dev tools
       "gbmdgpbipfallnflgajpaliibnhdgobh" # json viewer
       "ammjkodgmmoknidbanneddgankgfejfh" # 7tv
-      "bkkjeefjfjcfdfifddmkdmcpmaakmelp" # truffle
     ];
   };
 }

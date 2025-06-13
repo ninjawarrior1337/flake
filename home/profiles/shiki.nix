@@ -6,17 +6,14 @@
 }: {
   imports = [
     ../shell.nix
+    ../git.nix
+    ../packages/cli.nix
+    ../packages/devtools.nix
   ];
 
   home.packages = with pkgs; [
-    just
-    jq
-    wrk
-    nil
-    alejandra
     vesktop
     osu-lazer-bin
-    micro
   ];
 
   home.stateVersion = "24.11";

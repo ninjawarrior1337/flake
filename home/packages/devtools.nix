@@ -1,46 +1,54 @@
 {pkgs, ...}: {
-  home.packages = with pkgs.unstable; [
-    # Devtools
-    (python3.withPackages (pypkgs:
-      with pypkgs; [
-        pandas
-        numpy
-        duckdb
-        polars
-        pyarrow
-        matplotlib
-        seaborn
-        pip
-        virtualenv
-        ipython
-        notebook
-        jupyter
-      ]))
-    uv
-    rustup
+  home.packages = with pkgs.unstable;
+    [
+      uv
+      rustup
 
-    nodejs
-    corepack
+      nodejs
+      corepack
 
-    go
-    deno
-    bun
-    gcc
-    zulu
+      postgresql
 
-    nil
-    alejandra
+      go
+      deno
+      bun
+      zulu
+      gleam
 
-    jetbrains-toolbox
-    vscode
-    postgresql
-    duckdb
+      nil
+      alejandra
 
-    arduino-ide
-    podman-desktop
+      wrk
+      k6
+    ]
+    ++ lib.optionals (pkgs.stdenv.isDarwin) [
+      python3
+    ]
+    ++ lib.optionals (pkgs.stdenv.isLinux) [
+      arduino-ide
 
-    k6
-  ];
+      podman-desktop
+      jetbrains-toolbox
+      vscode
+      duckdb
+      gcc
+
+      (python3.withPackages (pypkgs:
+        with pypkgs; [
+          pandas
+          numpy
+          duckdb
+          polars
+          pyarrow
+          matplotlib
+          seaborn
+          pip
+          virtualenv
+          ipython
+          notebook
+          jupyter
+        ]))
+    ];
 
   home.sessionPath = [
     "$HOME/.cargo/bin"

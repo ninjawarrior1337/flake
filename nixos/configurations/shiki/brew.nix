@@ -31,30 +31,20 @@ _: {
     ];
     brews = [
       "aircrack-ng"
-      "aria2"
       "asdf"
       {
         name = "backrest";
         restart_service = "changed";
       }
-      "btop"
       "duckdb"
       "cloudflared"
       "cowsay"
       "croc"
-      "curl"
       "dex2jar"
-      "deno"
       "fdroidserver"
-      "ffmpeg"
       "flyctl"
-      "git"
-      "git-lfs"
-      "grep"
-      "htop"
       "huhnitor"
       "imagemagick"
-      "iperf3"
       "lame"
       "llvm"
       "lsusb"
@@ -68,7 +58,6 @@ _: {
       "netcat"
       "nmap"
       "ntfs-3g-mac"
-      "openjdk"
       "pinentry-mac"
       "postgrest"
       {
@@ -80,10 +69,7 @@ _: {
       "smartmontools"
       "tesseract"
       "typst"
-      "wget"
       "ykman"
-      "yt-dlp"
-      "zstd"
     ];
     casks = [
       "arc"

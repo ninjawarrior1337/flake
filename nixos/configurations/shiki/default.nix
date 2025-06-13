@@ -1,29 +1,13 @@
-{pkgs, inputs, user, ...}: {
+{
+  pkgs,
+  inputs,
+  user,
+  ...
+}: {
   imports = [
     ./brew.nix
     ../../modules/darwin
     ../../modules/fonts.nix
-  ];
-  environment.systemPackages = with pkgs; [
-    postgresql
-
-    bun
-
-    nodejs
-    corepack
-
-    gleam
-
-    python3
-    poetry
-    uv
-
-    rustup
-
-    dua
-    duf
-
-    step-cli
   ];
 
   networking.hostName = "shiki";
@@ -45,14 +29,14 @@
       protocol = "ssh";
       sshKey = "/Users/${user}/.ssh/id_ed25519";
       sshUser = "ninjawarrior1337";
-      systems = [ "x86_64-linux" ];
+      systems = ["x86_64-linux"];
     }
     {
       hostName = "miku";
       protocol = "ssh";
       sshKey = "/Users/${user}/.ssh/id_ed25519";
       sshUser = "ninjawarrior1337";
-      systems = [ "x86_64-linux" ];
+      systems = ["x86_64-linux"];
     }
   ];
 

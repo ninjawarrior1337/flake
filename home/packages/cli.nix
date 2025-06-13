@@ -1,36 +1,48 @@
-{pkgs, lib, ...}: {
-  home.packages = with pkgs.unstable; [
-    fastfetch
-    zip
-    unzip
-    p7zip
+{
+  pkgs,
+  lib,
+  ...
+}: {
+  home.packages = with pkgs.unstable;
+    [
+      micro
+      fastfetch
+      zip
+      unzip
+      p7zip
 
-    jq
-    file
-    zstd
+      jq
+      file
+      just
+      zstd
 
-    btop
-    htop
-    iftop
-    iotop
+      btop
+      htop
 
-    lsof
-    usbutils
-    pciutils
-    psmisc
-    smartmontools
-    fio
-    openssl
+      openssl
 
-    yt-dlp
-    ffmpeg
-    aria2
-    iperf3
+      yt-dlp
+      ffmpeg
+      aria2
+      iperf3
 
-    dua
-    duf
+      dua
+      duf
 
-    step-cli
-    step-kms-plugin
-  ];
+      step-cli
+      spoof
+    ]
+    ++ lib.optionals (pkgs.stdenv.isLinux) [
+      step-kms-plugin
+
+      lsof
+      usbutils
+      pciutils
+      psmisc
+      smartmontools
+      fio
+
+      iftop
+      iotop
+    ];
 }

@@ -14,7 +14,6 @@
     telegram-desktop
     postman
     openscad-unstable
-    nil
     zoom-us
     thunderbird
   ];

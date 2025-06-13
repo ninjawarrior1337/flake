@@ -1,10 +1,12 @@
+nix-management-cmd := if os() == "macos" {"darwin-rebuild"} else {"nixos-rebuild"}
+
 switch:
     git add .
-    sudo nixos-rebuild --flake .# switch
+    sudo {{nix-management-cmd}} --flake .# switch
 
 boot:
     git add .
-    sudo nixos-rebuild --flake .# boot
+    sudo {{nix-management-cmd}} --flake .# boot
 
 update:
     nix flake update
