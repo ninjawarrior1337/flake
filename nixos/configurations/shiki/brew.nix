@@ -31,7 +31,6 @@ _: {
     ];
     brews = [
       "aircrack-ng"
-      "asdf"
       {
         name = "backrest";
         restart_service = "changed";
@@ -72,7 +71,6 @@ _: {
       "ykman"
     ];
     casks = [
-      "arc"
       "aegisub"
       "android-file-transfer"
       "android-platform-tools"
