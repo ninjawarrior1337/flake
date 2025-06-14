@@ -33,6 +33,8 @@
     zstd
     zip
     unzip
+    curl
+    dig
   ];
 
   programs.zsh.enable = true;
