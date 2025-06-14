@@ -5,6 +5,7 @@
   ...
 }: {
   imports = [
+    ../base.nix
     ./brew.nix
     ../../modules/darwin
     ../../modules/fonts.nix
@@ -13,14 +14,6 @@
   networking.hostName = "shiki";
   # Auto upgrade nix package and the daemon service.
   nix.enable = true;
-
-  # Necessary for using flakes on this system.
-  nix.settings.experimental-features = "nix-command flakes";
-
-  nix.settings.trusted-users = [
-    "root"
-    user
-  ];
 
   nix.distributedBuilds = true;
   nix.buildMachines = [

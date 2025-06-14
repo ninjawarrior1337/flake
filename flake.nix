@@ -38,12 +38,9 @@
     ...
   } @ inputs: let
     user = "ninjawarrior1337";
-    system = "x86_64-linux";
-
-    pkgs = nixpkgs.legacyPackages.${system};
   in rec {
-    nixosConfigurations.miku = nixpkgs.lib.nixosSystem {
-      inherit system;
+    nixosConfigurations.miku = nixpkgs.lib.nixosSystem rec {
+      system = "x86_64-linux";
       specialArgs = {
         inherit inputs user system;
       };
@@ -67,15 +64,14 @@
                 inherit system;
                 config.allowUnfree = true;
               };
-              zen-browser = inputs.zen-browser.packages.${final.system}.default;
             })
           ];
         }
       ];
     };
 
-    nixosConfigurations.thisismycomputernow = nixpkgs.lib.nixosSystem {
-      inherit system;
+    nixosConfigurations.thisismycomputernow = nixpkgs.lib.nixosSystem rec {
+      system = "x86_64-linux";
       specialArgs = {
         inherit inputs;
         user = "nixos";
@@ -88,6 +84,7 @@
         {
           nixpkgs.config.allowUnfree = true;
           nixpkgs.overlays = [
+            inputs.self.overlays.default
             (final: prev: {
               unstable = import nixpkgs {
                 inherit system;
@@ -106,7 +103,7 @@
 
         home-manager.darwinModules.home-manager
         ./home/nixosModule.nix
-        
+
         {
           nix.nixPath = [
             "nixpkgs=${nixpkgs}"
@@ -122,23 +119,33 @@
 
     images.thisismycomputernow = nixosConfigurations.thisismycomputernow.config.system.build.isoImage;
 
-    devShells.x86_64-linux.default = pkgs.mkShell {
-      buildInputs = with pkgs; [
-        inputs.agenix.packages.${pkgs.system}.default
-        bfg-repo-cleaner
-      ];
-    };
+    devShells.x86_64-linux.default = let
+      pkgs = import nixpkgs {
+        system = "x86_64-linux";
+      };
+    in
+      pkgs.mkShell {
+        buildInputs = with pkgs; [
+          inputs.agenix.packages.${pkgs.system}.default
+          bfg-repo-cleaner
+        ];
+      };
 
     overlays = {
       default = final: prev: {
         nebula-sans = final.callPackage ./packages/fonts/nebula-sans.nix {};
         apple-fonts = final.callPackage ./packages/fonts/apple.nix {};
         corporate-logo = final.callPackage ./packages/fonts/corporate-logo.nix {};
-        agenix = inputs.agenix.packages.${final.hostPlatform.system}.default;
+        agenix = inputs.agenix.packages.${final.system}.default;
+        zen-browser = inputs.zen-browser.packages.${final.system}.default;
       };
     };
 
-    packages.x86_64-linux = {
+    packages.x86_64-linux = let
+      pkgs = import nixpkgs {
+        system = "x86_64-linux";
+      };
+    in {
       nebula-sans = pkgs.callPackage ./packages/fonts/nebula-sans.nix {};
       apple-fonts = pkgs.callPackage ./packages/fonts/apple.nix {};
       corporate-logo = pkgs.callPackage ./packages/fonts/corporate-logo.nix {};

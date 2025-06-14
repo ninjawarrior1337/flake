@@ -9,33 +9,35 @@
   imports = [
     ../modules/fonts.nix
   ];
+
   services.openssh.enable = true;
 
   nix.settings = {
     trusted-users = ["root" user];
-  };
-
-  virtualisation = {
-    docker = {
-      enable = true;
-    };
-  };
-
-  services.tailscale = {
-    enable = true;
+    experimental-features = ["nix-command" "flakes"];
   };
 
   environment.systemPackages = with pkgs; [
     wget
     just
+    fastfetch
+    dua
+    duf
     micro
     minicom
+    htop
+    btop
+    p7zip
+    jq
+    file
+    zstd
+    zip
+    unzip
   ];
 
-  services.pcscd.enable = true;
-  programs.gnupg.agent = {
-    enable = true;
-  };
-
   programs.zsh.enable = true;
+
+  security.pki.certificateFiles = [
+    "${inputs.self}/EikyuuRootA1.pem"
+  ];
 }

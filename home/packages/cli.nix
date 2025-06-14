@@ -5,29 +5,12 @@
 }: {
   home.packages = with pkgs;
     [
-      micro
-      fastfetch
-      zip
-      unzip
-      p7zip
-
-      jq
-      file
-      just
-      zstd
-
-      btop
-      htop
-
       openssl
 
       yt-dlp
       ffmpeg
       aria2
       iperf3
-
-      dua
-      duf
 
       step-cli
       spoof

@@ -8,7 +8,7 @@
     ../programs/spicetify.nix
     ../shell.nix
     ../git.nix
-    ../packages
+    ../packages/cli.nix
   ];
 
   home.packages = [

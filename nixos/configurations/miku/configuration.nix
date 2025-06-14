@@ -6,6 +6,7 @@
   lib,
   pkgs,
   inputs,
+  user,
   ...
 }: {
   imports = [
@@ -24,7 +25,6 @@
   services.scx.enable = true;
   services.scx.scheduler = "scx_lavd";
 
-  nix.settings.experimental-features = ["nix-command" "flakes"];
   boot.binfmt.emulatedSystems = ["aarch64-linux"];
 
   hardware.enableRedistributableFirmware = true;
@@ -133,7 +133,7 @@
   # services.xserver.libinput.enable = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.users.ninjawarrior1337 = {
+  users.users.${user} = {
     isNormalUser = true;
     description = "Tyler Rothleder";
     extraGroups = ["networkmanager" "wheel" "docker" "dialout"];
@@ -145,15 +145,16 @@
   # $ nix search wget
 
   # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ... ];
+  networking.firewall.allowedTCPPorts = [22];
   # networking.firewall.allowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.
-  networking.firewall.enable = false;
-
-  virtualisation.docker.storageDriver = "btrfs";
-  virtualisation.waydroid.enable = true;
+  networking.firewall.enable = true;
 
   virtualisation = {
+    docker = {
+      enable = true;
+      storageDriver = "btrfs";
+    };
     podman = {
       enable = true;
       defaultNetwork.settings.dns_enabled = true;
@@ -163,6 +164,7 @@
         driver = "btrfs";
       };
     };
+    waydroid.enable = true;
   };
 
   boot.loader.systemd-boot.configurationLimit = 3;
@@ -217,12 +219,18 @@
     wantedBy = ["multi-user.target"];
   };
 
-  services.flatpak.enable = true;
-
   environment.systemPackages = with pkgs; [
     openiscsi
     distrobox
   ];
+
+  services.pcscd.enable = true;
+  programs.gnupg.agent = {
+    enable = true;
+  };
+
+  services.flatpak.enable = true;
+  services.tailscale.enable = true;
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
