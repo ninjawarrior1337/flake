@@ -145,8 +145,8 @@
   # $ nix search wget
 
   # Open ports in the firewall.
-  networking.firewall.allowedTCPPorts = [22];
-  # networking.firewall.allowedUDPPorts = [ ... ];
+  networking.firewall.allowedTCPPorts = [22 53317];
+  networking.firewall.allowedUDPPorts = [53317];
   # Or disable the firewall altogether.
   networking.firewall.enable = true;
 
