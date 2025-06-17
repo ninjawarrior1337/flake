@@ -13,7 +13,6 @@
       deno
       bun
       zulu
-      gleam
 
       nil
       alejandra
