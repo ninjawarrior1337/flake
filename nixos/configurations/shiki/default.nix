@@ -60,6 +60,11 @@
   system.primaryUser = user;
   security.pam.services.sudo_local.touchIdAuth = true;
 
+  system.activationScripts.extraActivation.text = ''
+    ln -sf "${pkgs.zulu}" "/Library/Java/JavaVirtualMachines/zulu-21.jdk"
+  '';
+
+
   # The platform the configuration will be used on.
   nixpkgs.hostPlatform = "aarch64-darwin";
   nix.extraOptions = ''
