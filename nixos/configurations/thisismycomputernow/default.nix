@@ -5,7 +5,6 @@
   user,
   ...
 }: {
-  nix.settings.experimental-features = ["nix-command" "flakes"];
   isoImage.squashfsCompression = "zstd";
 
   users.users.${user} = {
