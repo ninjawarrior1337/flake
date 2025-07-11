@@ -13,7 +13,7 @@
     nmap
     masscan
     metasploit
-    (proxmark3.overrideAttrs {
+    (proxmark3.override {
       withGeneric = true;
     })
   ];

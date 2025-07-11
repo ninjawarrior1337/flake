@@ -24,5 +24,7 @@
       blur-my-shell
       caffeine
       vitals
+      paperwm
+      kimpanel
     ]);
 }
