@@ -182,7 +182,7 @@
 
   system.autoUpgrade = {
     enable = true;
-    flake = "git+ssh://git@github.com/ninjawarrior1337/flake?ref=main";
+    flake = "git+ssh://git@github.com/ninjawarrior1337/flake?ref=master";
     dates = "3:00";
 
     allowReboot = true;
