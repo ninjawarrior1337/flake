@@ -135,7 +135,7 @@
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.${user} = {
     isNormalUser = true;
-    description = "Tyler Rothleder";
+    description = "Treelar";
     extraGroups = ["networkmanager" "wheel" "docker" "dialout"];
     shell = pkgs.zsh;
     hashedPassword = "$y$j9T$gkH1ilVgDIo3yWwk68QCF0$q0foSnCcKP8t9U0oZuwDyUMoY3k4Fjvl3hhE728lU4B";
@@ -168,6 +168,7 @@
   };
 
   boot.loader.systemd-boot.configurationLimit = 3;
+
   nix.gc = {
     automatic = true;
     dates = "weekly";
@@ -177,12 +178,18 @@
   nix.settings = {
     auto-optimise-store = true;
     trusted-users = ["root" "@wheel"];
-    extra-substituters = [
-      "https://pebble.cachix.org"
-    ];
-    extra-trusted-public-keys = [
-      "pebble.cachix.org-1:aTqwT2hR6lGggw/rPISRcHZctDv2iF7ewsVxf3Hq6ow="
-    ];
+  };
+
+  system.autoUpgrade = {
+    enable = true;
+    flake = "git+ssh://git@github.com/ninjawarrior1337/flake?ref=main";
+    dates = "3:00";
+
+    allowReboot = true;
+    rebootWindow = {
+      lower = "02:00";
+      upper = "05:00";
+    };
   };
 
   services.btrfs.autoScrub.enable = true;
