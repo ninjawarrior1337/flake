@@ -17,6 +17,7 @@
       gnome-power-manager
       gradience
       ptyxis
+      foliate
     ])
     ++ (with pkgs.gnomeExtensions; [
       appindicator
