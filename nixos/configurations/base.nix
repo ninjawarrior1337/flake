@@ -35,6 +35,7 @@
     unzip
     curl
     dig
+    comma
   ];
 
   programs.zsh.enable = true;
