@@ -14,6 +14,8 @@
 
       step-cli
       spoof
+      restic
+      rclone
     ]
     ++ lib.optionals (pkgs.stdenv.isLinux) [
       step-kms-plugin

@@ -64,7 +64,6 @@ _: {
         args = ["with-generic"];
       }
       "python@3.12"
-      "restic"
       "smartmontools"
       "tesseract"
       "typst"
