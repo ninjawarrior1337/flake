@@ -43,6 +43,7 @@
   boot.loader.efi.canTouchEfiVariables = true;
 
   networking.hostName = "miku"; # Define your hostname.
+  networking.hostId = "66cf12fc";
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Configure network proxy if necessary
