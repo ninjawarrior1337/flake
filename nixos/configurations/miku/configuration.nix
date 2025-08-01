@@ -12,7 +12,7 @@
   imports = [
     ../base.nix
     ./hardware-configuration.nix
-    # ../../modules/lanzaboote.nix
+    ../../modules/lanzaboote.nix
     ../../modules/nvidia.nix
     ../../modules/gaming.nix
     ../../modules/ime.nix
