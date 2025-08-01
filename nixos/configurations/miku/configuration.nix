@@ -12,7 +12,7 @@
   imports = [
     ../base.nix
     ./hardware-configuration.nix
-    ../../modules/lanzaboote.nix
+    # ../../modules/lanzaboote.nix
     ../../modules/nvidia.nix
     ../../modules/gaming.nix
     ../../modules/ime.nix
@@ -22,6 +22,7 @@
   ];
 
   boot.kernelPackages = pkgs.linuxPackages_cachyos;
+  boot.zfs.package = pkgs.zfs_cachyos;
   services.scx.enable = true;
   services.scx.scheduler = "scx_lavd";
 
@@ -154,16 +155,11 @@
   virtualisation = {
     docker = {
       enable = true;
-      storageDriver = "btrfs";
+      storageDriver = "zfs";
     };
     podman = {
       enable = true;
       defaultNetwork.settings.dns_enabled = true;
-    };
-    containers.storage.settings = {
-      storage = {
-        driver = "btrfs";
-      };
     };
     waydroid.enable = true;
   };
@@ -193,7 +189,8 @@
     };
   };
 
-  services.btrfs.autoScrub.enable = true;
+  services.zfs.autoScrub.enable = true;
+  services.zfs.trim.enable = true;
   zramSwap.enable = true;
 
   systemd.services.alsa-disable-auto-mute = {
@@ -239,6 +236,11 @@
 
   services.flatpak.enable = true;
   services.tailscale.enable = true;
+
+  # Drop a link to the current system configuration flake in to /etc.
+  # That way we can tell what configuration built the current
+  # system version.
+  environment.etc."current-system-flake".source = inputs.self;
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
