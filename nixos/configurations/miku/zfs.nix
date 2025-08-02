@@ -19,7 +19,7 @@
     enable = true;
     sshKey = "/home/${user}/.ssh/id_rsa";
     commonArgs = [
-      "--compress zstd-fast"
+      "--compress=zstd-fast"
     ];
 
     commands."zpool/home" = {
