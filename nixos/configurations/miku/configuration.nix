@@ -18,6 +18,7 @@
     ../../modules/ime.nix
     # ../../modules/rtlsdr.nix
     ../../modules/gnome
+    ./zfs.nix
     # ../../modules/plasma
   ];
 
