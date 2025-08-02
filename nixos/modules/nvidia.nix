@@ -13,6 +13,9 @@
     extraPackages = with pkgs; [
       vaapiVdpau
       libvdpau-va-gl
+      vulkan-loader
+      vulkan-validation-layers
+      vulkan-extension-layer
     ];
     enable32Bit = true;
   };
