@@ -25,7 +25,7 @@
   boot.kernelPackages = pkgs.linuxPackages_cachyos;
   boot.zfs.package = pkgs.zfs_cachyos;
   services.scx.enable = true;
-  services.scx.scheduler = "scx_lavd";
+  services.scx.scheduler = "scx_bpfland";
 
   boot.binfmt.emulatedSystems = ["aarch64-linux"];
 
