@@ -7,7 +7,7 @@
     enable = true;
     templates.backup = {
       hourly = 2;
-      daily = 30;
+      daily = 7;
       monthly = 3;
 
       autoprune = true;
