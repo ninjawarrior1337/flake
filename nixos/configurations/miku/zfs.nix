@@ -19,6 +19,10 @@
     };
   };
 
+  boot.extraModprobeConfig = ''
+    options zfs l2arc_noprefetch=0
+  '';
+
   systemd.services.syncoid-nas = {
     description = "Syncoid backup to nas server";
     after = ["sanoid.service"];
