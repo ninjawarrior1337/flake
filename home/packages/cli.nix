@@ -16,6 +16,7 @@
       spoof
       restic
       rclone
+      ansible
     ]
     ++ lib.optionals (pkgs.stdenv.isLinux) [
       step-kms-plugin
