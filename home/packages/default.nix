@@ -2,7 +2,7 @@ _: {
   imports = [
     ./gaming.nix
     ./cli.nix
-    ./devtools.nix
+    (import ./devtools.nix {})
     ./gaming.nix
     ./utils.nix
   ];

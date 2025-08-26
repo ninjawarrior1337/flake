@@ -1,55 +1,80 @@
-{pkgs, ...}: {
-  home.packages = with pkgs;
-    [
-      uv
-      rustup
+{kind ? "full"}: {
+  pkgs,
+  lib,
+  ...
+}: {
+  config = lib.mkMerge [
+    {
+      assertions = [
+        {
+          assertion = lib.asserts.assertOneOf "kind" kind ["full" "minimal"];
+        }
+      ];
 
-      nodejs
-      corepack
+      home.packages = with pkgs; [
+        uv
+        rustup
 
-      postgresql
+        nodejs
+        corepack
 
-      go
-      deno
-      bun
-      zulu
+        go
+        deno
+        bun
+        zulu
 
-      nil
-      alejandra
+        nil
+        alejandra
 
-      wrk
-      k6
-    ]
-    ++ lib.optionals (pkgs.stdenv.isDarwin) [
-      python3
-    ]
-    ++ lib.optionals (pkgs.stdenv.isLinux) [
-      arduino-ide
+        wrk
+        k6
+      ];
 
-      podman-desktop
-      jetbrains-toolbox
-      vscode
-      duckdb
-      gcc
+      home.sessionPath = [
+        "$HOME/.cargo/bin"
+      ];
+    }
 
-      (python3.withPackages (pypkgs:
-        with pypkgs; [
-          pandas
-          numpy
-          duckdb
-          polars
-          pyarrow
-          matplotlib
-          seaborn
-          pip
-          virtualenv
-          ipython
-          notebook
-          jupyter
-        ]))
-    ];
+    (lib.mkIf pkgs.stdenv.isDarwin {
+      home.packages = with pkgs; [
+        python3
+        postgresql
+      ];
+    })
 
-  home.sessionPath = [
-    "$HOME/.cargo/bin"
+    (lib.mkIf pkgs.stdenv.isLinux {
+      home.packages = with pkgs; [
+        (python3.withPackages (pypkgs:
+          with pypkgs; [
+            pandas
+            numpy
+            duckdb
+            polars
+            pyarrow
+            matplotlib
+            seaborn
+            pip
+            virtualenv
+            ipython
+            notebook
+            jupyter
+          ]))
+
+        duckdb
+        gcc
+      ];
+    })
+
+    (lib.mkIf (kind
+      == "full"
+      && pkgs.stdenv.isLinux) {
+      home.packages = with pkgs; [
+        postgresql
+        arduino-ide
+        podman-desktop
+        jetbrains-toolbox
+        vscode
+      ];
+    })
   ];
 }

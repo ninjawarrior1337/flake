@@ -8,7 +8,7 @@
     ../shell.nix
     ../git.nix
     ../packages/cli.nix
-    ../packages/devtools.nix
+    (import ../packages/devtools.nix {})
   ];
 
   home.packages = with pkgs; [
