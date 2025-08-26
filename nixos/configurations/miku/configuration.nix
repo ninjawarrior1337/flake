@@ -17,9 +17,9 @@
     ../../modules/gaming.nix
     ../../modules/ime.nix
     # ../../modules/rtlsdr.nix
-    ../../modules/gnome
+    # ../../modules/gnome
     ./zfs.nix
-    # ../../modules/plasma
+    ../../modules/plasma
   ];
 
   boot.kernelPackages = pkgs.linuxPackages_cachyos;
