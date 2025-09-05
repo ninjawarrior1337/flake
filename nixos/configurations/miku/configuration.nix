@@ -22,8 +22,7 @@
     ../../modules/plasma
   ];
 
-  boot.kernelPackages = pkgs.linuxPackages_cachyos;
-  boot.zfs.package = pkgs.zfs_cachyos;
+  boot.kernelPackages = pkgs.linuxPackages_zen;
   services.scx.enable = true;
   services.scx.scheduler = "scx_bpfland";
 
