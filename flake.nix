@@ -50,7 +50,7 @@
 
         home-manager.nixosModules.home-manager
         chaotic.nixosModules.default
-        determinate.nixosModules.default
+        # determinate.nixosModules.default
 
         {
           nixpkgs.config.allowUnfree = true;
