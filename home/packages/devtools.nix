@@ -28,6 +28,8 @@
 
         wrk
         k6
+
+        typst
       ];
 
       home.sessionPath = [
