@@ -16,7 +16,7 @@
   ];
 
   home.packages = with pkgs; [
-    bisq2
+    helium
   ];
 
   home.stateVersion = "24.05";

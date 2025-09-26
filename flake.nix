@@ -130,6 +130,7 @@
         corporate-logo = final.callPackage ./packages/fonts/corporate-logo.nix {};
         agenix = inputs.agenix.packages.${final.system}.default;
         zen-browser = inputs.zen-browser.packages.${final.system}.default;
+        helium = final.callPackage ./packages/helium.nix {};
       };
     };
 
@@ -141,6 +142,7 @@
       nebula-sans = pkgs.callPackage ./packages/fonts/nebula-sans.nix {};
       apple-fonts = pkgs.callPackage ./packages/fonts/apple.nix {};
       corporate-logo = pkgs.callPackage ./packages/fonts/corporate-logo.nix {};
+      helium = pkgs.callPackage ./packages/helium.nix {};
     };
 
     formatter.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.alejandra;
