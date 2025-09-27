@@ -36,7 +36,6 @@
   hardware.nvidia.open = true;
 
   hardware.flipperzero.enable = true;
-  hardware.ckb-next.enable = true;
   programs.nix-ld.enable = true;
 
   # Bootloader.
