@@ -234,6 +234,10 @@
   environment.systemPackages = with pkgs; [
     openiscsi
     distrobox
+
+    # flatpak stuff
+    flatpak-builder
+    appstream
   ];
 
   services.pcscd.enable = true;
