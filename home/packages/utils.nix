@@ -17,5 +17,6 @@
     openscad-unstable
     zoom-us
     thunderbird
+    ente-auth
   ];
 }
