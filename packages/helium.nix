@@ -8,7 +8,7 @@
 
   src = fetchurl {
     url = "https://github.com/imputnet/helium-linux/releases/download/${version}/helium-${version}-x86_64.AppImage";
-    hash = "sha256-kSGaTnhtugig06AKit7owqnY9gwYAXwzyp+IMdP5Wys=";
+    hash = "sha256-3h0GMMl58NX+PuZRwmksOvlwPuZZwiQJdM5YXkaxlDk=";
   };
   appimageContents = appimageTools.extract {inherit pname version src;};
 in
