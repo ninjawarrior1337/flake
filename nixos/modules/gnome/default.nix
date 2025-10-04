@@ -15,9 +15,10 @@
       gnome-tweaks
       dconf-editor
       gnome-power-manager
-      gradience
       ptyxis
       foliate
+      pinta
+      gradia
     ])
     ++ (with pkgs.gnomeExtensions; [
       appindicator
