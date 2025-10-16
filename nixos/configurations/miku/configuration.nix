@@ -22,9 +22,9 @@
     ./zfs.nix
   ];
 
-  boot.kernelPackages = pkgs.linuxPackages_zen;
+  # boot.kernelPackages = pkgs.linuxPackages_zen;
   services.scx.enable = true;
-  services.scx.scheduler = "scx_bpfland";
+  services.scx.scheduler = "scx_lavd";
 
   boot.binfmt.emulatedSystems = ["aarch64-linux"];
 
@@ -32,7 +32,6 @@
   hardware.bluetooth.enable = true;
   hardware.bluetooth.powerOnBoot = true;
   services.blueman.enable = true;
-  services.earlyoom.enable = true;
   hardware.nvidia.open = true;
 
   hardware.flipperzero.enable = true;

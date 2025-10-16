@@ -8,7 +8,7 @@
       openssl
 
       yt-dlp
-      ffmpeg
+      ffmpeg-full
       aria2
       iperf3
 
@@ -19,7 +19,7 @@
       ansible
     ]
     ++ lib.optionals (pkgs.stdenv.isLinux) [
-      step-kms-plugin
+      # step-kms-plugin
 
       lsof
       usbutils
