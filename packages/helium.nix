@@ -3,12 +3,12 @@
   appimageTools,
   fetchurl,
 }: let
-  version = "0.5.5.2";
+  version = "0.5.7.1";
   pname = "helium";
 
   src = fetchurl {
     url = "https://github.com/imputnet/helium-linux/releases/download/${version}/helium-${version}-x86_64.AppImage";
-    hash = "sha256-2f/veXeUMr/chh0YSBLD862nv5RtJy5qlaA7fhurWoA=";
+    hash = "sha256-A+fNcW7ujbeYqOb+gxzQ0p19J14csfFyok0RVRFxo60=";
   };
   appimageContents = appimageTools.extract {inherit pname version src;};
 in
