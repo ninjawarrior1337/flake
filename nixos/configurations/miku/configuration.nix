@@ -19,6 +19,7 @@
     # ../../modules/rtlsdr.nix
     ../../modules/gnome
     # ../../modules/plasma
+    ./nix-ld.nix
     ./zfs.nix
   ];
 
@@ -35,7 +36,6 @@
   hardware.nvidia.open = true;
 
   hardware.flipperzero.enable = true;
-  programs.nix-ld.enable = true;
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;

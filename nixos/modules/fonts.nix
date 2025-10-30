@@ -17,5 +17,7 @@
     ++ lib.optionals (!pkgs.stdenv.isDarwin) [
       corporate-logo
       apple-fonts
+      corefonts
+      vista-fonts
     ];
 }
