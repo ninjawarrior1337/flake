@@ -1,8 +1,12 @@
 _: {
   programs.git = {
     enable = true;
-    userName = "ninjawarrior1337";
-    userEmail = "me@treelar.xyz";
+    settings = {
+      user = {
+        name = "ninjawarrior1337";
+        email = "me@treelar.xyz";
+      };
+    };
     lfs.enable = true;
     signing = {
       key = "0EF8F87BCB6BDB63";
