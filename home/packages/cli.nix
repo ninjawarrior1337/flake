@@ -13,7 +13,6 @@
       iperf3
 
       step-cli
-      spoof
       restic
       rclone
       ansible
