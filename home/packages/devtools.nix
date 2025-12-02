@@ -16,7 +16,6 @@
         rustup
 
         nodejs
-        corepack
 
         go
         deno
