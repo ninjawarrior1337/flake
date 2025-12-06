@@ -118,7 +118,7 @@
     in
       pkgs.mkShell {
         buildInputs = with pkgs; [
-          inputs.agenix.packages.${pkgs.system}.default
+          inputs.agenix.packages.${pkgs.stdenv.hostPlatform.system}.default
           bfg-repo-cleaner
         ];
       };
