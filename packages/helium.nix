@@ -3,7 +3,7 @@
   appimageTools,
   fetchurl,
 }: let
-  version = "0.7.1.1";
+  version = "0.7.4.1";
   pname = "helium";
 
   src = fetchurl {
