@@ -69,12 +69,16 @@
     (lib.mkIf (kind
       == "full"
       && pkgs.stdenv.isLinux) {
+      programs.vscode = {
+        enable = true;
+        package = pkgs.vscode.fhsWithPackages (ps: with ps; [rustup zlib openssl.dev pkg-config]);
+      };
+
       home.packages = with pkgs; [
         postgresql
         arduino-ide
         podman-desktop
         jetbrains-toolbox
-        vscode
       ];
     })
   ];

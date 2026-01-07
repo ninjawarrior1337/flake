@@ -17,8 +17,8 @@
     ../../modules/gaming.nix
     ../../modules/ime.nix
     # ../../modules/rtlsdr.nix
-    ../../modules/gnome
-    # ../../modules/plasma
+    # ../../modules/gnome
+    ../../modules/plasma
     ./nix-ld.nix
     ./zfs.nix
   ];
@@ -163,7 +163,7 @@
       enable = true;
       defaultNetwork.settings.dns_enabled = true;
     };
-    waydroid.enable = true;
+    # waydroid.enable = true;
   };
 
   boot.loader.systemd-boot.configurationLimit = 3;
@@ -227,6 +227,8 @@
   };
 
   environment.systemPackages = with pkgs; [
+    helium
+
     openiscsi
     distrobox
 

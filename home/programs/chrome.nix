@@ -6,7 +6,7 @@
 }: {
   programs.chromium = {
     enable = true;
-    package = pkgs.unstable.chromium;
+    package = pkgs.chromium;
     commandLineArgs = [
       "--enable-wayland-ime"
     ];

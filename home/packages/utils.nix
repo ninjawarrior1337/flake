@@ -13,7 +13,7 @@
     gimp
     inkscape
     telegram-desktop
-    postman
+    yaak
     openscad-unstable
     zoom-us
     thunderbird

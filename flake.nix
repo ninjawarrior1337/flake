@@ -51,12 +51,6 @@
           ];
           nixpkgs.overlays = [
             self.overlays.default
-            (final: prev: {
-              unstable = import nixpkgs {
-                inherit system;
-                config.allowUnfree = true;
-              };
-            })
           ];
         }
       ];

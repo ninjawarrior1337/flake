@@ -4,7 +4,7 @@
   ...
 }: {
   imports = [
-    ../programs/chrome.nix
+    # ../programs/chrome.nix
     ../programs/firefox.nix
     ../programs/spicetify.nix
     # ../programs/spotify.nix
@@ -16,7 +16,7 @@
   ];
 
   home.packages = with pkgs; [
-    helium
+    vesktop
   ];
 
   home.stateVersion = "24.05";
