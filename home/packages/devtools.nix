@@ -71,7 +71,7 @@
       && pkgs.stdenv.isLinux) {
       programs.vscode = {
         enable = true;
-        package = pkgs.vscode.fhsWithPackages (ps: with ps; [rustup zlib openssl.dev pkg-config]);
+        package = pkgs.vscode.fhsWithPackages (ps: with ps; [rustup zlib openssl.dev pkg-config dotnet-sdk_10]);
       };
 
       home.packages = with pkgs; [
