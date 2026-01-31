@@ -18,7 +18,8 @@
     ../../modules/ime.nix
     # ../../modules/rtlsdr.nix
     # ../../modules/gnome
-    ../../modules/plasma
+    # ../../modules/plasma
+    ../../modules/hyprland
     ./nix-ld.nix
     ./zfs.nix
   ];
@@ -94,7 +95,7 @@
     pulse.enable = true;
     wireplumber = {
       extraConfig = {
-        "suspend-audio-disable" = {
+        "91-suspend-audio-disable" = {
           "monitor.alsa.rules" = [
             {
               matches = [

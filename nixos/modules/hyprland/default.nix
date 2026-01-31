@@ -8,7 +8,6 @@
     xwayland.enable = true;
   };
 
-  programs.waybar.enable = true;
   services.gvfs.enable = true;
 
   environment.sessionVariables.NIXOS_OZONE_WL = "1";
@@ -28,32 +27,40 @@
     gnome-keyring.enable = true;
   };
 
-  systemd.user.services.playerctld = {
-    description = "playerctld last player tracking";
-    serviceConfig = {
-      Type = "oneshot";
-      ExecStart = "${pkgs.playerctl}/bin/playerctld daemon";
-    };
-    wantedBy = ["default.target"];
-  };
+  # systemd.user.services.playerctld = {
+  #   description = "playerctld last player tracking";
+  #   serviceConfig = {
+  #     Type = "oneshot";
+  #     ExecStart = "${pkgs.playerctl}/bin/playerctld daemon";
+  #   };
+  #   wantedBy = ["default.target"];
+  # };
 
-  services.xserver.displayManager.gdm.enable = true;
+  services.displayManager.gdm.enable = true;
   services.displayManager.defaultSession = "hyprland";
+
+  programs.dms-shell = {
+    enable = true;
+    # Core features
+    enableSystemMonitoring = true; # System monitoring widgets (dgop)
+    enableDynamicTheming = true; # Wallpaper-based theming (matugen)
+    enableAudioWavelength = true; # Audio visualizer (cava)
+  };
 
   environment.systemPackages = with pkgs;
     [
-      kitty
+      capitaine-cursors
       hyprpaper
+      wiremix
+      satty
 
       wl-clipboard
-      fuzzel
       pavucontrol
       cliphist
       hyprpicker
       slurp
       grim
       blueman
-      networkmanagerapplet
       hyprls
       playerctl
       ghostty
@@ -68,9 +75,5 @@
       showtime
       dconf-editor
       nautilus
-    ])
-    ++ (with pkgs.kdePackages; [
-      # contains the sddm breeze theme
-      # plasma-desktop
     ]);
 }
