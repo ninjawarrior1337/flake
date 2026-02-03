@@ -8,6 +8,8 @@
     xwayland.enable = true;
   };
 
+  programs.niri.enable = true;
+
   services.gvfs.enable = true;
 
   environment.sessionVariables.NIXOS_OZONE_WL = "1";

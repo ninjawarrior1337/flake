@@ -119,7 +119,6 @@
 
     overlays = {
       default = final: prev: {
-        nebula-sans = final.callPackage ./packages/fonts/nebula-sans.nix {};
         apple-fonts = final.callPackage ./packages/fonts/apple.nix {};
         corporate-logo = final.callPackage ./packages/fonts/corporate-logo.nix {};
         agenix = inputs.agenix.packages.${final.system}.default;
