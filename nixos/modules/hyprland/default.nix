@@ -16,7 +16,7 @@
 
   xdg.portal = {
     enable = true;
-    extraPortals = with pkgs; [xdg-desktop-portal-hyprland xdg-desktop-portal-gtk];
+    extraPortals = with pkgs; [xdg-desktop-portal-hyprland xdg-desktop-portal-gnome];
   };
 
   programs.nautilus-open-any-terminal = {
@@ -55,6 +55,7 @@
       hyprpaper
       wiremix
       satty
+      xwayland-satellite
 
       wl-clipboard
       pavucontrol
