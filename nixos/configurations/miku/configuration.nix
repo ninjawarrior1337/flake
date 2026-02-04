@@ -134,7 +134,7 @@
     isNormalUser = true;
     description = "Treelar";
     extraGroups = ["networkmanager" "wheel" "docker" "dialout"];
-    shell = pkgs.zsh;
+    shell = pkgs.nushell;
     hashedPassword = "$y$j9T$gkH1ilVgDIo3yWwk68QCF0$q0foSnCcKP8t9U0oZuwDyUMoY3k4Fjvl3hhE728lU4B";
   };
 

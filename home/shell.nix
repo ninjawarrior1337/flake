@@ -1,6 +1,6 @@
 {pkgs, ...}: {
   programs.zsh = {
-    enable = true;
+    enable = false;
     enableCompletion = true;
     syntaxHighlighting.enable = true;
     oh-my-zsh = {
@@ -9,19 +9,26 @@
     };
   };
 
+  programs.nushell = {
+    enable = true;
+  };
+
   programs.starship = {
     enable = true;
     enableZshIntegration = true;
+    enableNushellIntegration = true;
   };
 
   programs.zoxide = {
     enable = true;
     enableZshIntegration = true;
+    enableNushellIntegration = true;
   };
 
   programs.direnv = {
     enable = true;
     enableZshIntegration = true;
+    enableNushellIntegration = true;
     nix-direnv.enable = true;
   };
 
