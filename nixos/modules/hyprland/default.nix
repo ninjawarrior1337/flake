@@ -3,21 +3,16 @@
   pkgs,
   ...
 }: {
-  programs.hyprland = {
-    enable = true;
-    xwayland.enable = true;
-  };
+  # programs.hyprland = {
+  #   enable = true;
+  #   xwayland.enable = true;
+  # };
 
   programs.niri.enable = true;
 
   services.gvfs.enable = true;
 
   environment.sessionVariables.NIXOS_OZONE_WL = "1";
-
-  xdg.portal = {
-    enable = true;
-    extraPortals = with pkgs; [xdg-desktop-portal-hyprland xdg-desktop-portal-gnome xdg-desktop-portal-gtk];
-  };
 
   programs.nautilus-open-any-terminal = {
     enable = true;
@@ -39,7 +34,7 @@
   # };
 
   services.displayManager.gdm.enable = true;
-  services.displayManager.defaultSession = "hyprland";
+  services.displayManager.defaultSession = "niri";
 
   programs.dms-shell = {
     enable = true;

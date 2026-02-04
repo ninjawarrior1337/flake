@@ -15,9 +15,5 @@
     ../packages
   ];
 
-  home.packages = with pkgs; [
-    vesktop
-  ];
-
   home.stateVersion = "24.05";
 }
