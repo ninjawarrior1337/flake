@@ -12,7 +12,6 @@
   ];
 
   home.packages = with pkgs; [
-    vesktop
     osu-lazer-bin
   ];
 
