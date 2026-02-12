@@ -240,6 +240,10 @@
 
   services.flatpak.enable = true;
   services.tailscale.enable = true;
+  services.mullvad-vpn = {
+    enable = true;
+    package = pkgs.mullvad-vpn;
+  };
 
   # Drop a link to the current system configuration flake in to /etc.
   # That way we can tell what configuration built the current
