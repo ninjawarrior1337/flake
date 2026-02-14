@@ -62,6 +62,7 @@
       hyprls
       playerctl
       ghostty
+      vicinae
     ]
     ++ (with pkgs; [
       gnome-tweaks
