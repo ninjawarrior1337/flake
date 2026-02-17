@@ -3,24 +3,22 @@
   appimageTools,
   fetchurl,
 }: let
-  version = "0.8.5.1";
+  version = "0.9.2.1";
   pname = "helium";
 
   src = fetchurl {
     url = "https://github.com/imputnet/helium-linux/releases/download/${version}/helium-${version}-x86_64.AppImage";
-    hash = "sha256-jFSLLDsHB/NiJqFmn8S+JpdM8iCy3Zgyq+8l4RkBecM=";
+    hash = "sha256-guDBIr8NOD0GtjWznsVXlvb6llvdWHxREfDvXeP4m/w=";
   };
   appimageContents = appimageTools.extract {inherit pname version src;};
 in
-  appimageTools.wrapType2 rec {
+  appimageTools.wrapType2 {
     inherit pname version src;
 
     extraInstallCommands = ''
       install -m 444 -D ${appimageContents}/helium.desktop $out/share/applications/helium.desktop
       install -m 444 -D ${appimageContents}/usr/share/icons/hicolor/256x256/apps/helium.png \
         $out/share/icons/hicolor/256x256/apps/helium.png
-      substituteInPlace $out/share/applications/${pname}.desktop \
-        --replace-fail 'Exec=AppRun' 'Exec=${pname}'
     '';
 
     meta = {
