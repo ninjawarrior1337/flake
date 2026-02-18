@@ -16,7 +16,7 @@
 
   programs.nautilus-open-any-terminal = {
     enable = true;
-    terminal = "ghostty";
+    terminal = "kitty";
   };
 
   services.gnome = {
@@ -61,7 +61,7 @@
       blueman
       hyprls
       playerctl
-      ghostty
+      kitty
       vicinae
     ]
     ++ (with pkgs; [
