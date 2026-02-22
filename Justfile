@@ -8,7 +8,10 @@ boot:
     git add .
     sudo {{nix-management-cmd}} --flake .# boot
 
-update:
+update-helium:
+    nix run .#update-helium
+
+update: update-helium
     nix flake update
 
 up: update boot

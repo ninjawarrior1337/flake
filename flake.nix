@@ -136,6 +136,11 @@
       apple-fonts = pkgs.callPackage ./packages/fonts/apple.nix {};
       corporate-logo = pkgs.callPackage ./packages/fonts/corporate-logo.nix {};
       helium = pkgs.callPackage ./packages/helium.nix {};
+      update-helium = pkgs.writeShellApplication {
+        name = "update-helium";
+        runtimeInputs = with pkgs; [jq curl gnused];
+        text = builtins.readFile scripts/update-helium.sh;
+      };
     };
 
     formatter.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.alejandra;
