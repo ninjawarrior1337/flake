@@ -27,6 +27,7 @@
 
         wrk
         k6
+        hyperfine
 
         typst
       ];
