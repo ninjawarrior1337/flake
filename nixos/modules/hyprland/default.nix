@@ -3,10 +3,10 @@
   pkgs,
   ...
 }: {
-  # programs.hyprland = {
-  #   enable = true;
-  #   xwayland.enable = true;
-  # };
+  programs.hyprland = {
+    enable = true;
+    xwayland.enable = true;
+  };
 
   programs.niri.enable = true;
 
@@ -16,7 +16,7 @@
 
   programs.nautilus-open-any-terminal = {
     enable = true;
-    terminal = "kitty";
+    terminal = "ghostty";
   };
 
   services.gnome = {
@@ -62,6 +62,7 @@
       hyprls
       playerctl
       kitty
+      ghostty
       vicinae
     ]
     ++ (with pkgs; [
