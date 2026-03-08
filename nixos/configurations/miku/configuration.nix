@@ -135,7 +135,6 @@
     description = "Treelar";
     extraGroups = ["networkmanager" "wheel" "docker" "dialout"];
     shell = pkgs.nushell;
-    hashedPassword = "$y$j9T$gkH1ilVgDIo3yWwk68QCF0$q0foSnCcKP8t9U0oZuwDyUMoY3k4Fjvl3hhE728lU4B";
   };
 
   # List packages installed in system profile. To search, run:
@@ -240,10 +239,7 @@
 
   services.flatpak.enable = true;
   services.tailscale.enable = true;
-  services.mullvad-vpn = {
-    enable = true;
-    package = pkgs.mullvad-vpn;
-  };
+  services.mullvad-vpn.enable = true;
 
   # Drop a link to the current system configuration flake in to /etc.
   # That way we can tell what configuration built the current
