@@ -4,8 +4,7 @@
   ...
 }: {
   imports = [
-    # ../programs/chrome.nix
-    ../programs/firefox.nix
+    ../programs/chrome.nix
     ../programs/spicetify.nix
     # ../programs/spotify.nix
     ../programs/hacking.nix
