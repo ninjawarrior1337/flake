@@ -12,6 +12,9 @@
       ];
 
       home.packages = with pkgs; [
+        neovim
+        tree-sitter
+
         uv
         rustup
 
