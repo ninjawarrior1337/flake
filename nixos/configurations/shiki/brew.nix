@@ -5,7 +5,7 @@ _: {
       cleanup = "uninstall";
     };
     caskArgs = {
-      no_quarantine = true;
+      no_quarantine = false;
     };
     taps = [
       "apple/apple"
