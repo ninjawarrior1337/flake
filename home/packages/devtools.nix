@@ -14,6 +14,7 @@
       home.packages = with pkgs; [
         neovim
         tree-sitter
+        ripgrep
 
         uv
         rustup
