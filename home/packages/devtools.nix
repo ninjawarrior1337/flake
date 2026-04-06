@@ -16,6 +16,8 @@
         tree-sitter
         ripgrep
 
+        jujutsu
+
         uv
         rustup
 
