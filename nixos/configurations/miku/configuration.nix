@@ -38,6 +38,12 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
+  # Reduce shutdown watchdog timeout to prevent hanging
+  systemd.extraConfig = ''
+    ShutdownWatchdogSec=30s
+  '';
+  boot.kernelParams = ["reboot=efi" "libata.noacpi=1"];
+
   networking.hostName = "miku"; # Define your hostname.
   networking.hostId = "66cf12fc";
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.

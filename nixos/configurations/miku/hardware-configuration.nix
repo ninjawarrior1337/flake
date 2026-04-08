@@ -16,7 +16,6 @@
   boot.initrd.kernelModules = [];
   boot.kernelModules = ["kvm-intel" "ntsync"];
   boot.extraModulePackages = [];
-  boot.kernelParams = ["reboot=acpi" "libata.noacpi=1"];
 
   fileSystems."/" = {
     device = "zpool/root";
