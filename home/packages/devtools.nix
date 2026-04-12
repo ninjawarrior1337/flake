@@ -86,6 +86,7 @@
         arduino-ide
         podman-desktop
         jetbrains-toolbox
+        lmstudio
       ];
     })
   ];

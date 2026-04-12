@@ -17,9 +17,6 @@
     agenix.url = "github:ryantm/agenix";
     agenix.inputs.nixpkgs.follows = "nixpkgs";
 
-    zen-browser.url = "github:0xc000022070/zen-browser-flake";
-    zen-browser.inputs.nixpkgs.follows = "nixpkgs";
-
     nix-darwin.url = "github:LnL7/nix-darwin";
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
   };
@@ -132,6 +129,7 @@
         system = "x86_64-linux";
       };
     in {
+      miku = nixosConfigurations.miku.config.system.build.toplevel;
       nebula-sans = pkgs.callPackage ./packages/fonts/nebula-sans.nix {};
       apple-fonts = pkgs.callPackage ./packages/fonts/apple.nix {};
       corporate-logo = pkgs.callPackage ./packages/fonts/corporate-logo.nix {};
