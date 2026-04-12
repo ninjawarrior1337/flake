@@ -55,3 +55,7 @@ else
 fi
 
 echo "Update complete."
+
+# Stage and commit the changes
+git add "$PKG_FILE"
+git commit -m "update helium: ${current_version} -> ${latest_version}"
