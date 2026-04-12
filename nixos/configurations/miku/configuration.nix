@@ -39,9 +39,9 @@
   boot.loader.efi.canTouchEfiVariables = true;
 
   # Reduce shutdown watchdog timeout to prevent hanging
-  systemd.extraConfig = ''
-    ShutdownWatchdogSec=30s
-  '';
+  systemd.settings.Manager = {
+    ShutdownWatchdogSec = "30s";
+  };
   boot.kernelParams = ["reboot=efi" "libata.noacpi=1"];
 
   networking.hostName = "miku"; # Define your hostname.

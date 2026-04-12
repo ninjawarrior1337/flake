@@ -11,6 +11,7 @@ _: {
     signing = {
       key = "0EF8F87BCB6BDB63";
       signByDefault = true;
+      format = "openpgp";
     };
   };
 }
