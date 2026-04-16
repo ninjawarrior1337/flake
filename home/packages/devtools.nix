@@ -45,7 +45,7 @@
 
     (lib.mkIf pkgs.stdenv.isDarwin {
       home.packages = with pkgs; [
-        python3
+        ( python3.withPackages (pypkgs: with pypkgs; [pypdf pytesseract]))
         postgresql
       ];
     })
