@@ -17,6 +17,7 @@
       rclone
       ansible
       opencode
+      nh
     ]
     ++ lib.optionals (pkgs.stdenv.isLinux) [
       # step-kms-plugin

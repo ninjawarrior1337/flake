@@ -166,12 +166,6 @@
 
   boot.loader.systemd-boot.configurationLimit = 3;
 
-  nix.gc = {
-    automatic = true;
-    dates = "weekly";
-    options = "--delete-older-than 7d";
-  };
-
   nix.settings = {
     auto-optimise-store = true;
     trusted-users = ["root" "@wheel"];
@@ -192,6 +186,16 @@
   services.zfs.autoScrub.enable = true;
   services.zfs.trim.enable = true;
   zramSwap.enable = true;
+
+  programs.nh = {
+    enable = true;
+    flake = "${config.users.users.${user}.home}/flake";
+    clean = {
+      enable = true;
+      dates = "weekly";
+      extraArgs = "--keep-since 4d --keep 3";
+    };
+  };
 
   systemd.services.alsa-disable-auto-mute = {
     description = "Update charge control threshold";
