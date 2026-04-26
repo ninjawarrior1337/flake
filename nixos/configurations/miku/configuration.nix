@@ -240,6 +240,12 @@
     # flatpak stuff
     flatpak-builder
     appstream
+
+    (pkgs.writeShellApplication {
+      name = "toggle-output";
+      runtimeInputs = with pkgs; [pipewire jq];
+      text = builtins.readFile "${inputs.self}/scripts/toggle-output.sh";
+    })
   ];
 
   services.pcscd.enable = true;
