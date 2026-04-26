@@ -19,6 +19,11 @@
 
     nix-darwin.url = "github:LnL7/nix-darwin";
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
+
+    opencode.url = "github:anomalyco/opencode";
+
+    niri.url = "github:niri-wm/niri/v26.04";
+    niri.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs = {
