@@ -1,6 +1,7 @@
 {
   config,
   pkgs,
+  inputs,
   ...
 }: {
   programs.hyprland = {
@@ -8,7 +9,10 @@
     xwayland.enable = true;
   };
 
-  programs.niri.enable = true;
+  programs.niri = {
+    enable = true;
+    package = inputs.niri.packages.${pkgs.system}.niri;
+  };
 
   services.gvfs.enable = true;
 
@@ -24,14 +28,14 @@
     gnome-keyring.enable = true;
   };
 
-  # systemd.user.services.playerctld = {
-  #   description = "playerctld last player tracking";
-  #   serviceConfig = {
-  #     Type = "oneshot";
-  #     ExecStart = "${pkgs.playerctl}/bin/playerctld daemon";
-  #   };
-  #   wantedBy = ["default.target"];
-  # };
+  systemd.user.services.playerctld = {
+    description = "playerctld last player tracking";
+    serviceConfig = {
+      Type = "oneshot";
+      ExecStart = "${pkgs.playerctl}/bin/playerctld daemon";
+    };
+    wantedBy = ["default.target"];
+  };
 
   services.displayManager.gdm.enable = true;
   services.displayManager.defaultSession = "niri";
