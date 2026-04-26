@@ -1,6 +1,7 @@
 {
   pkgs,
   lib,
+  inputs,
   ...
 }: {
   home.packages = with pkgs;
@@ -16,7 +17,9 @@
       restic
       rclone
       ansible
-      opencode
+
+      inputs.opencode.packages.${pkgs.system}.opencode
+
       nh
     ]
     ++ lib.optionals (pkgs.stdenv.isLinux) [
