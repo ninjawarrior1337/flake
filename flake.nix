@@ -20,7 +20,7 @@
     nix-darwin.url = "github:LnL7/nix-darwin";
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
 
-    opencode.url = "github:anomalyco/opencode";
+    llm-agents.url = "github:numtide/llm-agents.nix";
 
     niri.url = "github:niri-wm/niri/v26.04";
     niri.inputs.nixpkgs.follows = "nixpkgs";
@@ -31,6 +31,7 @@
     nixpkgs,
     home-manager,
     nix-darwin,
+    llm-agents,
     ...
   } @ inputs: let
     user = "ninjawarrior1337";
@@ -53,6 +54,7 @@
           ];
           nixpkgs.overlays = [
             self.overlays.default
+            llm-agents.overlays.default
           ];
         }
       ];

@@ -18,7 +18,7 @@
       rclone
       ansible
 
-      inputs.opencode.packages.${pkgs.system}.opencode
+      llm-agents.opencode
 
       nh
     ]
