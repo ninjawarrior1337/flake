@@ -19,6 +19,7 @@
       ansible
 
       llm-agents.opencode
+      llm-agents.pi
 
       nh
     ]
