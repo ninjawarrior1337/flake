@@ -101,6 +101,7 @@
           nixpkgs = {
             overlays = [
               inputs.self.overlays.default
+              inputs.llm-agents.overlays.default
             ];
           };
         }
