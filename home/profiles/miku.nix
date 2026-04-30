@@ -1,8 +1,4 @@
-{
-  inputs,
-  pkgs,
-  ...
-}: {
+_: {
   imports = [
     ../programs/chrome.nix
     ../programs/spicetify.nix

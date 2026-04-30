@@ -3,12 +3,12 @@
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 {
   config,
-  lib,
   pkgs,
   inputs,
   user,
   ...
-}: {
+}:
+{
   imports = [
     ../base.nix
     ./hardware-configuration.nix
@@ -24,7 +24,7 @@
     ./zfs.nix
   ];
 
-  boot.binfmt.emulatedSystems = ["aarch64-linux"];
+  boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
 
   hardware.enableRedistributableFirmware = true;
   hardware.bluetooth.enable = true;
@@ -42,7 +42,10 @@
   systemd.settings.Manager = {
     ShutdownWatchdogSec = "30s";
   };
-  boot.kernelParams = ["reboot=efi" "libata.noacpi=1"];
+  boot.kernelParams = [
+    "reboot=efi"
+    "libata.noacpi=1"
+  ];
 
   networking.hostName = "miku"; # Define your hostname.
   networking.hostId = "66cf12fc";
@@ -125,7 +128,7 @@
         context.modules = [
           {
             name = "libpipewire-module-raop-discover";
-            args = {};
+            args = { };
           }
         ];
       };
@@ -139,7 +142,12 @@
   users.users.${user} = {
     isNormalUser = true;
     description = "Treelar";
-    extraGroups = ["networkmanager" "wheel" "docker" "dialout"];
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+      "docker"
+      "dialout"
+    ];
     shell = pkgs.nushell;
   };
 
@@ -147,8 +155,11 @@
   # $ nix search wget
 
   # Open ports in the firewall.
-  networking.firewall.allowedTCPPorts = [22 53317];
-  networking.firewall.allowedUDPPorts = [53317];
+  networking.firewall.allowedTCPPorts = [
+    22
+    53317
+  ];
+  networking.firewall.allowedUDPPorts = [ 53317 ];
   # Or disable the firewall altogether.
   networking.firewall.enable = true;
 
@@ -168,7 +179,10 @@
 
   nix.settings = {
     auto-optimise-store = true;
-    trusted-users = ["root" "@wheel"];
+    trusted-users = [
+      "root"
+      "@wheel"
+    ];
   };
 
   system.autoUpgrade = {
@@ -202,7 +216,7 @@
     script = ''
       ${pkgs.alsa-utils}/bin/amixer -c "PCH" sset "Auto-Mute Mode" Disabled
     '';
-    wantedBy = ["graphical.target"]; # starts after login
+    wantedBy = [ "graphical.target" ]; # starts after login
   };
 
   services.openiscsi = {
@@ -210,23 +224,28 @@
     name = "iqn.2016-04.com.open-iscsi:778adaaf88f6";
   };
 
-  systemd.services.iscsi-login-miku-gd = let
-    tgt = "iqn.2024-07.xyz.treelar.maru:miku.gd";
-    host = "192.168.0.3";
-  in {
-    description = "Login to iSCSI target ${tgt}";
-    after = ["network.target" "iscsid.service"];
-    restartIfChanged = false;
-    wants = ["iscsid.service"];
-    serviceConfig = {
-      Type = "oneshot";
-      ExecStartPre = "${pkgs.openiscsi}/bin/iscsiadm -m discovery -t sendtargets -p ${host}";
-      ExecStart = "-${pkgs.openiscsi}/bin/iscsiadm -m node -T ${tgt} -p ${host} --login";
-      ExecStop = "${pkgs.openiscsi}/bin/iscsiadm -m node -T ${tgt} -p ${host} --logout";
-      RemainAfterExit = true;
+  systemd.services.iscsi-login-miku-gd =
+    let
+      tgt = "iqn.2024-07.xyz.treelar.maru:miku.gd";
+      host = "192.168.0.3";
+    in
+    {
+      description = "Login to iSCSI target ${tgt}";
+      after = [
+        "network.target"
+        "iscsid.service"
+      ];
+      restartIfChanged = false;
+      wants = [ "iscsid.service" ];
+      serviceConfig = {
+        Type = "oneshot";
+        ExecStartPre = "${pkgs.openiscsi}/bin/iscsiadm -m discovery -t sendtargets -p ${host}";
+        ExecStart = "-${pkgs.openiscsi}/bin/iscsiadm -m node -T ${tgt} -p ${host} --login";
+        ExecStop = "${pkgs.openiscsi}/bin/iscsiadm -m node -T ${tgt} -p ${host} --logout";
+        RemainAfterExit = true;
+      };
+      wantedBy = [ "multi-user.target" ];
     };
-    wantedBy = ["multi-user.target"];
-  };
 
   environment.systemPackages = with pkgs; [
     helium
@@ -243,7 +262,10 @@
 
     (pkgs.writeShellApplication {
       name = "toggle-output";
-      runtimeInputs = with pkgs; [pipewire jq];
+      runtimeInputs = with pkgs; [
+        pipewire
+        jq
+      ];
       text = builtins.readFile "${inputs.self}/scripts/toggle-output.sh";
     })
   ];

@@ -1,13 +1,20 @@
-{kind ? "full"}: {
+{
+  kind ? "full",
+}:
+{
   pkgs,
   lib,
   ...
-}: {
+}:
+{
   config = lib.mkMerge [
     {
       assertions = [
         {
-          assertion = lib.asserts.assertOneOf "kind" kind ["full" "minimal"];
+          assertion = lib.asserts.assertOneOf "kind" kind [
+            "full"
+            "minimal"
+          ];
         }
       ];
 
@@ -28,8 +35,9 @@
         bun
         zulu
 
-        nil
+        nixd
         alejandra
+        nixfmt
 
         wrk
         k6
@@ -45,15 +53,20 @@
 
     (lib.mkIf pkgs.stdenv.isDarwin {
       home.packages = with pkgs; [
-        (python3.withPackages (pypkgs: with pypkgs; [pypdf pytesseract]))
+        (python3.withPackages (
+          pypkgs: with pypkgs; [
+            pypdf
+            pytesseract
+          ]
+        ))
         postgresql
       ];
     })
 
     (lib.mkIf pkgs.stdenv.isLinux {
       home.packages = with pkgs; [
-        (python3.withPackages (pypkgs:
-          with pypkgs; [
+        (python3.withPackages (
+          pypkgs: with pypkgs; [
             pandas
             numpy
             duckdb
@@ -66,19 +79,42 @@
             ipython
             notebook
             jupyter
-          ]))
+          ]
+        ))
 
         duckdb
         gcc
       ];
     })
 
-    (lib.mkIf (kind
-      == "full"
-      && pkgs.stdenv.isLinux) {
+    (lib.mkIf (kind == "full" && pkgs.stdenv.isLinux) {
       programs.vscode = {
         enable = true;
-        package = pkgs.vscode.fhsWithPackages (ps: with ps; [rustup zlib openssl.dev pkg-config dotnet-sdk_10]);
+        package = pkgs.vscode.fhsWithPackages (
+          ps: with ps; [
+            rustup
+            zlib
+            openssl.dev
+            pkg-config
+            dotnet-sdk_10
+          ]
+        );
+      };
+
+      programs.zed-editor = {
+        enable = true;
+        installRemoteServer = true;
+        extensions = [
+          "html"
+          "toml"
+          "sql"
+          "nix"
+          "kotlin"
+          "dockerfile"
+          "java"
+          "typst"
+          "go"
+        ];
       };
 
       home.packages = with pkgs; [
@@ -87,6 +123,7 @@
         podman-desktop
         jetbrains-toolbox
         lmstudio
+        zed-editor
       ];
     })
   ];
