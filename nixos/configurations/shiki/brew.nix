@@ -59,7 +59,7 @@ _: {
       "postgrest"
       {
         name = "rfidresearchgroup/proxmark3/proxmark3";
-        args = ["with-generic"];
+        args = [ "with-generic" ];
       }
       "python@3.12"
       "smartmontools"
@@ -143,7 +143,7 @@ _: {
       "xquartz"
       "yubico-authenticator"
       "zen"
-      "zed"
+      "zed@preview"
       "zoom"
       "zulu"
     ];

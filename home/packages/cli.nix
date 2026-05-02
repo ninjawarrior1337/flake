@@ -11,7 +11,6 @@
       openssl
 
       yt-dlp
-      ffmpeg-full
       aria2
       iperf3
 
@@ -25,6 +24,9 @@
 
       nh
     ]
+    ++ lib.optionals (pkgs.stdenv.isDarwin) [
+      ffmpeg
+    ]
     ++ lib.optionals (pkgs.stdenv.isLinux) [
       # step-kms-plugin
 
@@ -34,6 +36,7 @@
       psmisc
       smartmontools
       fio
+      ffmpeg-full
 
       iftop
       iotop
