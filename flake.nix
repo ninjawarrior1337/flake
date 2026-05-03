@@ -32,6 +32,7 @@
     home-manager,
     nix-darwin,
     llm-agents,
+    niri,
     ...
   } @ inputs: let
     user = "ninjawarrior1337";
@@ -55,6 +56,7 @@
           nixpkgs.overlays = [
             self.overlays.default
             llm-agents.overlays.default
+            niri.overlays.default
           ];
         }
       ];
@@ -119,6 +121,8 @@
         buildInputs = with pkgs; [
           inputs.agenix.packages.${pkgs.stdenv.hostPlatform.system}.default
           bfg-repo-cleaner
+          nh
+          just
         ];
       };
 
@@ -144,7 +148,11 @@
       helium = pkgs.callPackage ./packages/helium.nix {};
       update-helium = pkgs.writeShellApplication {
         name = "update-helium";
-        runtimeInputs = with pkgs; [jq curl gnused];
+        runtimeInputs = with pkgs; [
+          jq
+          curl
+          gnused
+        ];
         text = builtins.readFile scripts/update-helium.sh;
       };
     };

@@ -1,0 +1,20 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "nix": {
+    "managerFilePatterns": ["/(^|/)flake\\.nix$/"],
+    "commitMessageTopic": "nix",
+    "commitMessageExtra": "to {{newValue}}",
+    "enabled": true,
+    "lockFileMaintenance": {
+      "enabled": true,
+      "recreateWhen": "always",
+      "rebaseStalePrs": true,
+      "branchTopic": "lock-file-maintenance",
+      "commitMessageAction": "Lock file maintenance",
+      "schedule": ["before 4am"],
+      "prBodyDefinitions": {
+        "Change": "All locks refreshed"
+      }
+    }
+  }
+}
