@@ -1,12 +1,12 @@
-nix-management-cmd := if os() == "macos" {"nh darwin"} else {"nh os"}
+nix-management-cmd := if os() == "macos" { "nh darwin" } else { "nh os" }
 
 switch:
     git add .
-    sudo {{nix-management-cmd}} switch .
+    {{ nix-management-cmd }} switch .
 
 boot:
     git add .
-    sudo {{nix-management-cmd}} boot .
+    {{ nix-management-cmd }} boot .
 
 update-helium:
     nix run .#update-helium
