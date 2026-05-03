@@ -1,16 +1,13 @@
 {
-  "lsp": {
-    "nil": {
-      "initialization_options": {
-        "formatting": {
-          "command": ["alejandra", "--quiet", "--"],
-        },
-      },
-    },
-  },
   "languages": {
     "Nix": {
-      "language_servers": ["nixd"],
+      "formatter": {
+        "external": {
+          "command": "alejandra",
+          "arguments": ["--quiet", "--"],
+        },
+      },
+      "language_servers": ["nixd", "!nil"],
     },
   },
 }

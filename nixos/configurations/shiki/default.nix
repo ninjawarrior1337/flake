@@ -64,7 +64,6 @@
     ln -sf "${pkgs.zulu}" "/Library/Java/JavaVirtualMachines/zulu-21.jdk"
   '';
 
-
   # The platform the configuration will be used on.
   nixpkgs.hostPlatform = "aarch64-darwin";
   nix.extraOptions = ''

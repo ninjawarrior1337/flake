@@ -7,8 +7,7 @@
   inputs,
   user,
   ...
-}:
-{
+}: {
   imports = [
     ../base.nix
     ./hardware-configuration.nix
@@ -24,7 +23,7 @@
     ./zfs.nix
   ];
 
-  boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
+  boot.binfmt.emulatedSystems = ["aarch64-linux"];
 
   hardware.enableRedistributableFirmware = true;
   hardware.bluetooth.enable = true;
@@ -128,7 +127,7 @@
         context.modules = [
           {
             name = "libpipewire-module-raop-discover";
-            args = { };
+            args = {};
           }
         ];
       };
@@ -159,7 +158,7 @@
     22
     53317
   ];
-  networking.firewall.allowedUDPPorts = [ 53317 ];
+  networking.firewall.allowedUDPPorts = [53317];
   # Or disable the firewall altogether.
   networking.firewall.enable = true;
 
@@ -216,7 +215,7 @@
     script = ''
       ${pkgs.alsa-utils}/bin/amixer -c "PCH" sset "Auto-Mute Mode" Disabled
     '';
-    wantedBy = [ "graphical.target" ]; # starts after login
+    wantedBy = ["graphical.target"]; # starts after login
   };
 
   services.openiscsi = {
@@ -224,28 +223,26 @@
     name = "iqn.2016-04.com.open-iscsi:778adaaf88f6";
   };
 
-  systemd.services.iscsi-login-miku-gd =
-    let
-      tgt = "iqn.2024-07.xyz.treelar.maru:miku.gd";
-      host = "192.168.0.3";
-    in
-    {
-      description = "Login to iSCSI target ${tgt}";
-      after = [
-        "network.target"
-        "iscsid.service"
-      ];
-      restartIfChanged = false;
-      wants = [ "iscsid.service" ];
-      serviceConfig = {
-        Type = "oneshot";
-        ExecStartPre = "${pkgs.openiscsi}/bin/iscsiadm -m discovery -t sendtargets -p ${host}";
-        ExecStart = "-${pkgs.openiscsi}/bin/iscsiadm -m node -T ${tgt} -p ${host} --login";
-        ExecStop = "${pkgs.openiscsi}/bin/iscsiadm -m node -T ${tgt} -p ${host} --logout";
-        RemainAfterExit = true;
-      };
-      wantedBy = [ "multi-user.target" ];
+  systemd.services.iscsi-login-miku-gd = let
+    tgt = "iqn.2024-07.xyz.treelar.maru:miku.gd";
+    host = "192.168.0.3";
+  in {
+    description = "Login to iSCSI target ${tgt}";
+    after = [
+      "network.target"
+      "iscsid.service"
+    ];
+    restartIfChanged = false;
+    wants = ["iscsid.service"];
+    serviceConfig = {
+      Type = "oneshot";
+      ExecStartPre = "${pkgs.openiscsi}/bin/iscsiadm -m discovery -t sendtargets -p ${host}";
+      ExecStart = "-${pkgs.openiscsi}/bin/iscsiadm -m node -T ${tgt} -p ${host} --login";
+      ExecStop = "${pkgs.openiscsi}/bin/iscsiadm -m node -T ${tgt} -p ${host} --logout";
+      RemainAfterExit = true;
     };
+    wantedBy = ["multi-user.target"];
+  };
 
   environment.systemPackages = with pkgs; [
     helium

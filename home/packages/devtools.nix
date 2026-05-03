@@ -1,12 +1,8 @@
-{
-  kind ? "full",
-}:
-{
+{kind ? "full"}: {
   pkgs,
   lib,
   ...
-}:
-{
+}: {
   config = lib.mkMerge [
     {
       assertions = [
@@ -54,10 +50,11 @@
     (lib.mkIf pkgs.stdenv.isDarwin {
       home.packages = with pkgs; [
         (python3.withPackages (
-          pypkgs: with pypkgs; [
-            pypdf
-            pytesseract
-          ]
+          pypkgs:
+            with pypkgs; [
+              pypdf
+              pytesseract
+            ]
         ))
         postgresql
       ];
@@ -66,20 +63,21 @@
     (lib.mkIf pkgs.stdenv.isLinux {
       home.packages = with pkgs; [
         (python3.withPackages (
-          pypkgs: with pypkgs; [
-            pandas
-            numpy
-            duckdb
-            polars
-            pyarrow
-            matplotlib
-            seaborn
-            pip
-            virtualenv
-            ipython
-            notebook
-            jupyter
-          ]
+          pypkgs:
+            with pypkgs; [
+              pandas
+              numpy
+              duckdb
+              polars
+              pyarrow
+              matplotlib
+              seaborn
+              pip
+              virtualenv
+              ipython
+              notebook
+              jupyter
+            ]
         ))
 
         duckdb
@@ -91,13 +89,14 @@
       programs.vscode = {
         enable = true;
         package = pkgs.vscode.fhsWithPackages (
-          ps: with ps; [
-            rustup
-            zlib
-            openssl.dev
-            pkg-config
-            dotnet-sdk_10
-          ]
+          ps:
+            with ps; [
+              rustup
+              zlib
+              openssl.dev
+              pkg-config
+              dotnet-sdk_10
+            ]
         );
       };
 
