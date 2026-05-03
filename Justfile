@@ -8,6 +8,10 @@ boot:
     git add .
     {{ nix-management-cmd }} boot .
 
+build:
+    git add .
+    {{ nix-management-cmd }} build .
+
 update-helium:
     nix run .#update-helium
 
