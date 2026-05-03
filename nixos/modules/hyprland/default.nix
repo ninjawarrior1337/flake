@@ -11,7 +11,6 @@
 
   programs.niri = {
     enable = true;
-    package = inputs.niri.packages.${pkgs.system}.niri;
   };
 
   services.gvfs.enable = true;
