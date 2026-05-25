@@ -3,6 +3,8 @@
   pkgs,
   ...
 }: {
+  boot.zfs.forceImportRoot = false;
+
   services.sanoid = {
     enable = true;
     templates.backup = {

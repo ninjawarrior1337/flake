@@ -21,9 +21,6 @@
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
 
     llm-agents.url = "github:numtide/llm-agents.nix";
-
-    niri.url = "github:niri-wm/niri/v26.04";
-    niri.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs = {
@@ -32,7 +29,6 @@
     home-manager,
     nix-darwin,
     llm-agents,
-    niri,
     ...
   } @ inputs: let
     user = "ninjawarrior1337";
@@ -56,7 +52,6 @@
           nixpkgs.overlays = [
             self.overlays.default
             llm-agents.overlays.default
-            niri.overlays.default
           ];
         }
       ];
