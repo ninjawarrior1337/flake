@@ -2,6 +2,7 @@
   config,
   pkgs,
   inputs,
+  user,
   ...
 }: {
   programs.hyprland = {
@@ -36,9 +37,12 @@
     wantedBy = ["default.target"];
   };
 
-  services.displayManager.gdm.enable = true;
-  services.displayManager.defaultSession = "niri";
+  # services.displayManager.gdm.enable = true;
+  # services.displayManager.defaultSession = "niri";
 
+  services.displayManager.plasma-login-manager.enable = true;
+  services.displayManager.defaultSession = "niri";
+  
   programs.dms-shell = {
     enable = true;
     # Core features
