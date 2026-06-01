@@ -1,4 +1,7 @@
-_: {
+{
+  pkgs,
+  ...
+}: {
   imports = [
     ../programs/chrome.nix
     ../programs/spicetify.nix
@@ -8,6 +11,10 @@ _: {
     ../shell.nix
     ../git.nix
     ../packages
+  ];
+
+  home.packages = with pkgs; [
+    kagi-mcp
   ];
 
   home.stateVersion = "24.05";

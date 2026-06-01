@@ -128,6 +128,7 @@
         agenix = inputs.agenix.packages.${final.system}.default;
         zen-browser = inputs.zen-browser.packages.${final.system}.default;
         helium = final.callPackage ./packages/helium.nix {};
+        kagi-mcp = final.callPackage ./packages/kagi-cli {};
       };
     };
 
