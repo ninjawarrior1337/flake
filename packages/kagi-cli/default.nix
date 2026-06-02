@@ -4,14 +4,14 @@
   fetchFromGitHub,
 }:
 rustPlatform.buildRustPackage rec {
-  pname = "kagi-mcp";
-  version = "0.1.0";
+  pname = "kagi";
+  version = "0.9.0";
 
   src = fetchFromGitHub {
     owner = "Microck";
-    repo = "kagi-mcp";
-    rev = "c669f6bfb27d93f5c92299e760c4fb4ea67b3f2e";
-    hash = "sha256-wCdBHpB74hdSe5Euhf7DdstEGPVtoGLB4QRJZ6kqXCU=";
+    repo = "kagi-cli";
+    rev = "v0.9.0";
+    hash = "sha256-d5eej1ZhMN3ogrLix8KFIt/z1eFcdYDT5g2kxuE/IZQ=";
   };
 
   cargoLock.lockFile = "${src}/Cargo.lock";
@@ -21,8 +21,8 @@ rustPlatform.buildRustPackage rec {
   doCheck = false;
 
   meta = with lib; {
-    description = "Tiny MCP server built on top of kagi-cli";
-    homepage = "https://github.com/Microck/kagi-mcp";
+    description = "Agent-native CLI for Kagi subscribers with JSON-first search output";
+    homepage = "https://github.com/Microck/kagi-cli";
     license = licenses.mit;
     maintainers = [ maintainers.ryantm ];
     platforms = platforms.linux;

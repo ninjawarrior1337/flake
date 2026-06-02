@@ -128,7 +128,7 @@
         agenix = inputs.agenix.packages.${final.system}.default;
         zen-browser = inputs.zen-browser.packages.${final.system}.default;
         helium = final.callPackage ./packages/helium.nix {};
-        kagi-mcp = final.callPackage ./packages/kagi-cli {};
+        kagi = final.callPackage ./packages/kagi-cli {};
       };
     };
 
@@ -142,6 +142,7 @@
       apple-fonts = pkgs.callPackage ./packages/fonts/apple.nix {};
       corporate-logo = pkgs.callPackage ./packages/fonts/corporate-logo.nix {};
       helium = pkgs.callPackage ./packages/helium.nix {};
+      kagi-cli = pkgs.callPackage ./packages/kagi-cli {};
       update-helium = pkgs.writeShellApplication {
         name = "update-helium";
         runtimeInputs = with pkgs; [

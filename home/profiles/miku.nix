@@ -14,7 +14,7 @@
   ];
 
   home.packages = with pkgs; [
-    kagi-mcp
+    kagi
   ];
 
   home.stateVersion = "24.05";
