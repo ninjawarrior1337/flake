@@ -33,6 +33,15 @@
 
   hardware.flipperzero.enable = true;
 
+  # Sunshine game streaming
+  hardware.uinput.enable = true;
+  services.sunshine = {
+    enable = true;
+    autoStart = true;
+    capSysAdmin = true; # needed for Wayland/KMS screen capture
+    openFirewall = true;
+  };
+
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -146,6 +155,7 @@
       "wheel"
       "docker"
       "dialout"
+      "uinput"
     ];
     shell = pkgs.nushell;
   };
