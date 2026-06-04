@@ -112,6 +112,7 @@ _: {
       "microsoft-teams"
       "middleclick"
       "mochi-diffusion"
+      "moonlight"
       "mounty"
       "notion"
       "obs"
