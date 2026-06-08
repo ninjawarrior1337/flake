@@ -1,9 +1,11 @@
 _: {
   homebrew = {
     enable = true;
-    onActivation = {
-      cleanup = "uninstall";
-    };
+    # onActivation = {
+    #   # extraFlags = [
+    #   #   "--force-cleanup"
+    #   # ];
+    # };
     caskArgs = {
       no_quarantine = false;
     };
@@ -88,6 +90,7 @@ _: {
       "duplicati"
       "ente-auth"
       "flutter"
+      "ghostty"
       "gimp"
       "gitkraken"
       "google-chrome"
@@ -100,7 +103,6 @@ _: {
       "iina"
       "inkscape"
       "ipatool"
-      "iterm2"
       "jetbrains-toolbox"
       "jordanbaird-ice@beta"
       "keka"
@@ -143,7 +145,6 @@ _: {
       "wireshark-app"
       "xquartz"
       "yubico-authenticator"
-      "zen"
       "zed@preview"
       "zoom"
       "zulu"
