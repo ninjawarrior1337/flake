@@ -6,6 +6,9 @@
   "nix": {
     "enabled": true
   },
+  "lockFileMaintenance": {
+    "enabled": true
+  },
   "packageRules": [
     {
       "description": "Group all nix flake input lock updates into one PR (matching existing workflow behavior)",
