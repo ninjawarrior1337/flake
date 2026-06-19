@@ -1,0 +1,33 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["config:recommended"],
+  "labels": ["dependencies", "automated"],
+  "schedule": ["before 4am on Friday"],
+  "nix": {
+    "enabled": true
+  },
+  "packageRules": [
+    {
+      "description": "Group all nix flake input lock updates into one PR (matching existing workflow behavior)",
+      "matchManagers": ["nix"],
+      "matchUpdateTypes": ["digest", "patch", "minor", "major"],
+      "groupName": "Nix flake inputs",
+      "labels": ["dependencies", "automated"]
+    }
+  ],
+  "customManagers": [
+    {
+      "customType": "regex",
+      "description": "Update the zed-editor version pin in flake.nix",
+      "fileMatch": ["^flake\\.nix$"],
+      "matchStrings": [
+        "url = \"github:(?<depName>zed-industries/zed)\\?ref=(?<currentValue>v[0-9]+\\.[0-9]+\\.[0-9]+)\""
+      ],
+      "datasourceTemplate": "github-tags",
+      "versioningTemplate": "semver"
+    }
+  ],
+  "enabledManagers": ["nix", "regex"],
+  "prHourlyLimit": 4,
+  "prConcurrentLimit": 10
+}
