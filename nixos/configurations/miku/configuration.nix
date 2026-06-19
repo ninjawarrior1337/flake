@@ -198,6 +198,9 @@
     enable = true;
     flake = "github:ninjawarrior1337/flake";
     dates = "3:00";
+    flags = [
+      "--accept-flake-config"
+    ];
 
     allowReboot = true;
     rebootWindow = {

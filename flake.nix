@@ -21,6 +21,19 @@
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
 
     llm-agents.url = "github:numtide/llm-agents.nix";
+
+    zed-editor = {
+      url = "github:zed-industries/zed?ref=v1.7.2";
+    };
+  };
+
+  nixConfig = {
+    extra-substituters = [
+      "https://zed.cachix.org"
+    ];
+    extra-trusted-public-keys = [
+      "zed.cachix.org-1:/pHQ6dpMsAZk2DiP4WCL0p9YDNKWj2Q5FL20bNmw1cU="
+    ];
   };
 
   outputs = {
@@ -129,6 +142,7 @@
         zen-browser = inputs.zen-browser.packages.${final.system}.default;
         helium = final.callPackage ./packages/helium.nix {};
         kagi = final.callPackage ./packages/kagi-cli {};
+        zed-editor = inputs.zed-editor.packages.${final.system}.default;
       };
     };
 
