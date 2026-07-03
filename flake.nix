@@ -23,7 +23,7 @@
     llm-agents.url = "github:numtide/llm-agents.nix";
 
     zed-editor = {
-      url = "github:zed-industries/zed?ref=v1.8.2";
+      url = "github:zed-industries/zed?ref=v1.9.0";
     };
   };
 
