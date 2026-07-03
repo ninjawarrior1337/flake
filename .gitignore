@@ -2,3 +2,4 @@ result
 secrets.*
 .direnv
 .DS_Store
+.reasonix
