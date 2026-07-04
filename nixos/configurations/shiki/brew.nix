@@ -141,6 +141,7 @@ _: {
       "vlc"
       "vnc-viewer"
       "vorta"
+      "warp"
       "whisky"
       "wireshark-app"
       "xquartz"
