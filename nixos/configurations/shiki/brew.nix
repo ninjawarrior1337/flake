@@ -1,33 +1,29 @@
 _: {
   homebrew = {
     enable = true;
-    # onActivation = {
-    #   # extraFlags = [
-    #   #   "--force-cleanup"
-    #   # ];
-    # };
+    onActivation = {
+      autoUpdate = true;
+      upgrade = true;
+      cleanup = "uninstall";
+      # extraFlags = [
+      #   "--force-cleanup"
+      # ];
+    };
     caskArgs = {
       no_quarantine = false;
     };
     taps = [
-      "apple/apple"
-      "borgbackup/tap"
-      "clockworklabs/tap"
-      "emqx/mqttx"
-      "gcenx/wine"
-      "gromgit/fuse"
+      { name = "apple/apple"; trusted = true; }
+      { name = "borgbackup/tap"; trusted = true; }
+      { name = "emqx/mqttx"; trusted = true; }
       "homebrew/cask"
       "homebrew/core"
       "homebrew/services"
-      "hpedrorodrigues/tools"
-      "localsend/localsend"
-      "majd/repo"
-      "nrlquaker/createzap"
-      "oven-sh/bun"
-      "playcover/playcover"
-      "spacehuhntech/huhnitor"
-      "RfidResearchGroup/proxmark3"
-      "garethgeorge/homebrew-backrest-tap"
+      { name = "hpedrorodrigues/tools"; trusted = true; }
+      { name = "localsend/localsend"; trusted = true; }
+      { name = "oven-sh/bun"; trusted = true; }
+      { name = "RfidResearchGroup/proxmark3"; trusted = true; }
+      { name = "garethgeorge/homebrew-backrest-tap"; trusted = true; }
     ];
     brews = [
       "aircrack-ng"
@@ -56,7 +52,6 @@ _: {
       "mpg123"
       "netcat"
       "nmap"
-      "ntfs-3g-mac"
       "pinentry-mac"
       "postgrest"
       {
@@ -102,7 +97,6 @@ _: {
       "hiddenbar"
       "iina"
       "inkscape"
-      "ipatool"
       "jetbrains-toolbox"
       "jordanbaird-ice@beta"
       "keka"
@@ -112,7 +106,6 @@ _: {
       "macfuse"
       "macs-fan-control"
       "microsoft-teams"
-      "middleclick"
       "mochi-diffusion"
       "moonlight"
       "mounty"
@@ -122,7 +115,6 @@ _: {
       "openscad@snapshot"
       "orcaslicer"
       "parsec"
-      "playcover-community"
       "prismlauncher"
       "postman"
       "raycast"

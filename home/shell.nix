@@ -12,6 +12,13 @@
       enable = true;
       plugins = [];
     };
+    # Set up Homebrew environment for login shells
+    profileExtra = ''
+      # Homebrew
+      if [[ -x /opt/homebrew/bin/brew ]]; then
+        eval "$(/opt/homebrew/bin/brew shellenv)"
+      fi
+    '';
   };
 
   programs.nushell = {
