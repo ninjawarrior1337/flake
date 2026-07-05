@@ -157,7 +157,7 @@
       "dialout"
       "uinput"
     ];
-    shell = pkgs.nushell;
+    shell = pkgs.zsh;
   };
 
   # List packages installed in system profile. To search, run:

@@ -15,6 +15,7 @@
 
   home.packages = with pkgs; [
     kagi
+    warp-terminal
   ];
 
   home.stateVersion = "24.05";
