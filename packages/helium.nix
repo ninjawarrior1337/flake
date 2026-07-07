@@ -2,6 +2,9 @@
   lib,
   appimageTools,
   fetchurl,
+  makeWrapper,
+  runCommand,
+  commandLineArgs ? [],
 }: let
   version = "0.13.2.1";
   pname = "helium";
@@ -11,8 +14,7 @@
     hash = "sha256-I9VqXE20FNjEz9FyvcCZ8ZqRZbPIU+QtGPblAdwJRk8=";
   };
   appimageContents = appimageTools.extract {inherit pname version src;};
-in
-  appimageTools.wrapType2 {
+  unwrapped = appimageTools.wrapType2 {
     inherit pname version src;
 
     extraInstallCommands = ''
@@ -27,4 +29,30 @@ in
       sourceProvenance = with lib.sourceTypes; [binaryNativeCode];
       platforms = ["x86_64-linux"];
     };
-  }
+  };
+in
+  if commandLineArgs == []
+  then unwrapped
+  else
+    runCommand "${pname}-${version}" {
+      nativeBuildInputs = [makeWrapper];
+      inherit (unwrapped) meta;
+    } ''
+      mkdir -p $out/bin
+      makeWrapper ${unwrapped}/bin/helium $out/bin/helium \
+        --add-flags ${lib.escapeShellArg (lib.concatStringsSep " " commandLineArgs)}
+
+      # Symlink other top-level directories from the unwrapped package
+      for dir in ${unwrapped}/*; do
+        if [ "$(basename "$dir")" != "bin" ]; then
+          ln -s "$dir" $out/
+        fi
+      done
+
+      # Symlink any other binaries from the unwrapped package
+      for f in ${unwrapped}/bin/*; do
+        if [ "$(basename "$f")" != "helium" ]; then
+          ln -s "$f" $out/bin/
+        fi
+      done
+    ''

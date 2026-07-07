@@ -260,7 +260,17 @@
   environment.variables.SSL_CERT_FILE = "/etc/ssl/certs/ca-certificates.crt";
 
   environment.systemPackages = with pkgs; [
-    helium
+    (pkgs.helium.override {
+      commandLineArgs = [
+        "--ozone-platform=wayland"
+        "--use-gl=desktop"
+        "--enable-features=AcceleratedVideoDecodeLinuxGL,AcceleratedVideoDecodeLinuxZeroCopyGL,VaapiOnNvidiaGPUs,VaapiIgnoreDriverChecks,AcceleratedVideoEncoder"
+        "--ignore-gpu-blocklist"
+        "--enable-zero-copy"
+        "--enable-gpu-rasterization"
+        "--disable-gpu-driver-bug-workaround"
+      ];
+    })
     (discord.override {
       withVencord = true;
     })
