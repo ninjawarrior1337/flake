@@ -262,13 +262,12 @@
   environment.systemPackages = with pkgs; [
     (pkgs.helium.override {
       commandLineArgs = [
+        # Force native Wayland (avoid XWayland), but do NOT force desktop GL.
+        # --use-gl=desktop is the main cause of stutter/dropped frames on NVIDIA Wayland.
         "--ozone-platform=wayland"
-        "--use-gl=desktop"
-        "--enable-features=AcceleratedVideoDecodeLinuxGL,AcceleratedVideoDecodeLinuxZeroCopyGL,VaapiOnNvidiaGPUs,VaapiIgnoreDriverChecks,AcceleratedVideoEncoder"
+        "--enable-features=WaylandLinuxDrmSyncobj,WaylandWindowDecorations,AcceleratedVideoDecodeLinuxGL,AcceleratedVideoDecodeLinuxZeroCopyGL,VaapiOnNvidiaGPUs,VaapiIgnoreDriverChecks"
         "--ignore-gpu-blocklist"
-        "--enable-zero-copy"
         "--enable-gpu-rasterization"
-        "--disable-gpu-driver-bug-workaround"
       ];
     })
     (discord.override {

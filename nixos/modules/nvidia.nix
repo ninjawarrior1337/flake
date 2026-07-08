@@ -27,6 +27,12 @@
 
   hardware.nvidia-container-toolkit.enable = true;
 
+  # Required for nvidia-vaapi-driver to be picked up by Chromium/Firefox.
+  environment.sessionVariables = {
+    LIBVA_DRIVER_NAME = "nvidia";
+    NVD_BACKEND = "direct";
+  };
+
   hardware.nvidia = {
     modesetting.enable = true;
     powerManagement.enable = false;
