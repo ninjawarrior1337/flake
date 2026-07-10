@@ -262,12 +262,28 @@
   environment.systemPackages = with pkgs; [
     (pkgs.helium.override {
       commandLineArgs = [
-        # Force native Wayland (avoid XWayland), but do NOT force desktop GL.
-        # --use-gl=desktop is the main cause of stutter/dropped frames on NVIDIA Wayland.
+        # Native Wayland — avoid XWayland latency
         "--ozone-platform=wayland"
-        "--enable-features=WaylandLinuxDrmSyncobj,WaylandWindowDecorations,AcceleratedVideoDecodeLinuxGL,AcceleratedVideoDecodeLinuxZeroCopyGL,VaapiOnNvidiaGPUs,VaapiIgnoreDriverChecks"
-        "--ignore-gpu-blocklist"
-        "--enable-gpu-rasterization"
+
+        # Use native desktop GL instead of ANGLE to avoid the GBM pixmap /
+        # OzoneImageBacking crash path that breaks the GPU process on the
+        # NVIDIA open kernel module (eglCreateImage/modifier failures).
+        "--use-gl=desktop"
+
+        # Skia renderer is incompatible with NVIDIA VA-API and causes
+        # texture corruption / artifacts on heavy GPU-composited sites
+        # like Twitter. Disable it so Chromium falls back to Ganesh.
+        "--disable-features=UseSkiaRenderer"
+
+        # Enable hardware video decode via VA-API, but ONLY the non-zero-copy
+        # path.  Zero-copy (AcceleratedVideoDecodeLinuxZeroCopyGL) causes GPU
+        # process hangs and visual corruption on NVIDIA open driver + Wayland.
+        "--enable-features=AcceleratedVideoDecodeLinuxGL,VaapiOnNvidiaGPUs"
+
+        # Disable GPU-memory-buffer video frames.  On NVIDIA Wayland this
+        # avoids a known buffer-creation bug that leads to flickering and
+        # modifier-related shared-image failures.
+        "--disable-gpu-memory-buffer-video-frames"
       ];
     })
     (discord.override {
