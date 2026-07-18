@@ -262,28 +262,33 @@
   environment.systemPackages = with pkgs; [
     (pkgs.helium.override {
       commandLineArgs = [
-        # Native Wayland — avoid XWayland latency
+        # Native Wayland — avoid XWayland latency.
         "--ozone-platform=wayland"
 
-        # Use native desktop GL instead of ANGLE to avoid the GBM pixmap /
-        # OzoneImageBacking crash path that breaks the GPU process on the
-        # NVIDIA open kernel module (eglCreateImage/modifier failures).
-        "--use-gl=desktop"
+        # NVIDIA GPUs are blocklisted by Chromium; override so the GPU
+        # process actually starts on Wayland.
+        "--ignore-gpu-blocklist"
 
-        # Skia renderer is incompatible with NVIDIA VA-API and causes
-        # texture corruption / artifacts on heavy GPU-composited sites
-        # like Twitter. Disable it so Chromium falls back to Ganesh.
+        # GPU rasterization keeps compositing on the GPU instead of
+        # software-rasterizing on the CPU.
+        "--enable-gpu-rasterization"
+
+        # Enable DMA-BUF zero-copy for video frames.  Works with recent
+        # nvidia-vaapi-driver (direct backend) and driver >= 610.
+        "--enable-zero-copy"
+
+        # Hardware video decode via VA-API on NVIDIA:
+        # - AcceleratedVideoDecodeLinuxGL: VA-API decode on the GL path.
+        # - AcceleratedVideoDecodeLinuxZeroCopyGL: DMA-BUF zero-copy decode.
+        # - VaapiOnNvidiaGPUs: Chromium gate that defaults to off for NVIDIA.
+        # - VaapiIgnoreDriverChecks: skip the built-in driver blocklist so
+        #   nvidia-vaapi-driver is allowed to initialize.
+        "--enable-features=AcceleratedVideoDecodeLinuxGL,AcceleratedVideoDecodeLinuxZeroCopyGL,VaapiOnNvidiaGPUs,VaapiIgnoreDriverChecks"
+
+        # Fall back to the Ganesh compositor instead of Skia.  Skia +
+        # NVIDIA VA-API still causes texture corruption on some heavy
+        # GPU-composited sites.  Remove this if Skia is stable for you.
         "--disable-features=UseSkiaRenderer"
-
-        # Enable hardware video decode via VA-API, but ONLY the non-zero-copy
-        # path.  Zero-copy (AcceleratedVideoDecodeLinuxZeroCopyGL) causes GPU
-        # process hangs and visual corruption on NVIDIA open driver + Wayland.
-        "--enable-features=AcceleratedVideoDecodeLinuxGL,VaapiOnNvidiaGPUs"
-
-        # Disable GPU-memory-buffer video frames.  On NVIDIA Wayland this
-        # avoids a known buffer-creation bug that leads to flickering and
-        # modifier-related shared-image failures.
-        "--disable-gpu-memory-buffer-video-frames"
       ];
     })
     (discord.override {
