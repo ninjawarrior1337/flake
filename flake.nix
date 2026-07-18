@@ -64,7 +64,7 @@
           ];
           nixpkgs.overlays = [
             self.overlays.default
-            llm-agents.overlays.default
+            llm-agents.overlays.shared-nixpkgs
           ];
         }
       ];
@@ -111,7 +111,7 @@
           nixpkgs = {
             overlays = [
               inputs.self.overlays.default
-              inputs.llm-agents.overlays.default
+              inputs.llm-agents.overlays.shared-nixpkgs
             ];
           };
         }
