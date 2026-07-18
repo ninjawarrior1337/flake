@@ -29,7 +29,11 @@
             --set ANTHROPIC_API_KEY "sk-ant-dummy-key" \
             --set ANTHROPIC_DEFAULT_OPUS_MODEL "kimi-k2.7-code" \
             --set ANTHROPIC_DEFAULT_SONNET_MODEL "deepseek-v4-pro" \
-            --set ANTHROPIC_DEFAULT_HAIKU_MODEL "deepseek-v4-flash"
+            --set ANTHROPIC_DEFAULT_HAIKU_MODEL "deepseek-v4-flash" \
+            --set CLAUDE_DEFAULT_SUBAGENT_MODEL "deepseek-v4-flash" \
+            --set CLAUDE_ENABLE_EFFORT "1" \
+            --set CLAUDE_MAX_TOOL_CONCURRENCY "3" \
+            --set CLAUDE_ENABLE_TOOL_SEARCH "false"
         '';
       })
 
