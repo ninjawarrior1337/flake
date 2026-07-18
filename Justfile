@@ -1,16 +1,16 @@
-nix-management-cmd := if os() == "macos" { "nh darwin" } else { "nh os" }
+nix-management-cmd := if os() == "macos" { "sudo darwin-rebuild" } else { "sudo nixos-rebuild" }
 
 switch:
     git add .
-    {{ nix-management-cmd }} switch .
+    {{ nix-management-cmd }} switch --flake .
 
 boot:
     git add .
-    {{ nix-management-cmd }} boot .
+    {{ nix-management-cmd }} boot --flake .
 
 build:
     git add .
-    {{ nix-management-cmd }} build .
+    {{ nix-management-cmd }} build --flake .
 
 update-helium:
     nix run .#update-helium

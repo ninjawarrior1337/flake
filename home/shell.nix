@@ -8,6 +8,19 @@
     initContent = lib.mkOrder 790 ''
       plugins=(git sudo docker)
     '';
+    shellAliases = {
+      xclaude = ''
+        ANTHROPIC_BASE_URL=https://cliproxyapi.tail5158.ts.net \
+        ANTHROPIC_AUTH_TOKEN=sk-dummy \
+        ANTHROPIC_DEFAULT_OPUS_MODEL=kimi-k2.7-code \
+        ANTHROPIC_DEFAULT_SONNET_MODEL=deepseek-v4-pro \
+        ANTHROPIC_DEFAULT_HAIKU_MODEL=deepseek-v4-flash \
+        CLAUDE_CODE_ALWAYS_ENABLE_EFFORT=1 \
+        CLAUDE_CODE_MAX_TOOL_USE_CONCURRENCY=3 \
+        ENABLE_TOOL_SEARCH=false \
+        claude
+      '';
+    };
     oh-my-zsh = {
       enable = true;
       plugins = [];
