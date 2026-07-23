@@ -15,7 +15,7 @@
     inkscape
     telegram-desktop
     yaak
-    openscad-unstable
+    # openscad-unstable
     zoom-us
     thunderbird
     ente-auth
