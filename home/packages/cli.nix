@@ -21,6 +21,7 @@
       claude-code
 
       nh
+      herdr
     ]
     ++ lib.optionals (pkgs.stdenv.isDarwin) [
       ffmpeg
