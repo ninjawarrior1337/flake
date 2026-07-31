@@ -14,31 +14,31 @@ This repository is a **Nix flake** for managing NixOS, nix-darwin, and home-mana
 
 ## NixOS — Build, Switch, Boot
 
-All commands use **[nh](https://github.com/viperML/nh)** for a nicer UX. The Justfile auto-detects OS:
+The Justfile auto-detects OS and wraps `nixos-rebuild` / `darwin-rebuild`:
 
 ```
-nix-management-cmd := if os() == "macos" { "nh darwin" } else { "nh os" }
+nix-management-cmd := if os() == "macos" { "sudo darwin-rebuild" } else { "sudo nixos-rebuild" }
 ```
 
 ### Build only (does not activate)
 
 ```bash
 just build
-# Equivalent: nh os build .
+# Equivalent: sudo nixos-rebuild build --flake .
 ```
 
 ### Switch (build + activate, add to bootloader)
 
 ```bash
 just switch
-# Equivalent: nh os switch .
+# Equivalent: sudo nixos-rebuild switch --flake .
 ```
 
 ### Boot (build + set as default boot entry, activate next boot)
 
 ```bash
 just boot
-# Equivalent: nh os boot .
+# Equivalent: sudo nixos-rebuild boot --flake .
 ```
 
 ### Build a specific flake output directly
@@ -60,13 +60,13 @@ Run these **on the Mac (shiki)**:
 
 ```bash
 # Build only
-nh darwin build .
+sudo darwin-rebuild build --flake .
 
 # Switch (build + activate)
-nh darwin switch .
+sudo darwin-rebuild switch --flake .
 
 # Rollback
-nh darwin switch . --rollback
+sudo darwin-rebuild switch --rollback
 ```
 
 ---
@@ -85,12 +85,13 @@ just up
 
 ## Important Notes
 
-- **Always `git add .` before building** — Nix flakes only see tracked files. The Justfile does this automatically.
+- **`build`, `switch`, and `boot` targets `git add .` first** — Nix flakes only see tracked files, so this is done automatically by the Justfile.
 - **Agenix secrets** are managed via [agenix](https://github.com/ryantm/agenix). Ensure secrets are decrypted before building.
 - **`system.autoUpgrade`** is enabled on `miku` — it auto-updates from `github:ninjawarrior1337/flake` at 3:00 AM daily with reboot window 2:00–5:00 AM.
 - **`nh clean`** runs weekly on `miku` to garbage-collect old system generations (`--keep-since 4d --keep 3`).
 - **Lanzaboote** is used on `miku` for Secure Boot support (`nixos/modules/lanzaboote.nix`).
-- **nix-darwin on shiki** is configured to use `miku` and `maru` as remote builders (SSH).
+- **nix-darwin on shiki** is configured to use `miku` and `maru` as remote builders (SSH, `nix.buildMachines`).
+- **`nh` is installed via `home.packages`** (see `home/packages/cli.nix`) and enabled on `miku` via `programs.nh` (points at the flake checkout in the home directory).
 
 ---
 
@@ -102,7 +103,13 @@ Flake/
 ├── flake.lock
 ├── Justfile                   # Convenience targets (build, switch, boot, update)
 ├── home/                      # Home-manager module (shared)
-│   └── nixosModule.nix
+│   ├── nixosModule.nix        # Entry point imported by each host
+│   ├── packages/              # cli.nix, devtools.nix, utils.nix, default.nix
+│   ├── programs/              # chrome, firefox, spicetify, spotify, hacking
+│   ├── profiles/              # Per-host package sets (miku, shiki, rpi-nix, thisismycomputernow)
+│   ├── modules/               # gtk-theme.nix
+│   ├── shell.nix
+│   └── git.nix
 ├── nixos/
 │   ├── configurations/
 │   │   ├── base.nix           # Shared NixOS module
@@ -114,14 +121,22 @@ Flake/
 │   │   ├── shiki/             # Shiki (macOS) config
 │   │   │   ├── default.nix
 │   │   │   └── brew.nix
-│   │   └── thisismycomputernow/ # ISO installer config
+│   │   ├── rpi3/              # Raspberry Pi 3 config
+│   │   │   ├── default.nix
+│   │   │   └── hardware-configuration.nix
+│   │   └── thisismycomputernow/ # ISO installer config (default.nix)
 │   └── modules/               # Reusable NixOS modules
+│       ├── darwin/
+│       ├── fonts.nix
 │       ├── gaming.nix
+│       ├── gnome/
 │       ├── hyprland/
 │       ├── ime.nix
 │       ├── lanzaboote.nix
 │       ├── nvidia.nix
-│       └── ...
+│       ├── plasma/
+│       ├── rtlsdr.nix
+│       └── virtualbox.nix
 ├── packages/                  # Custom packages
 └── scripts/                   # Misc scripts
 ```
