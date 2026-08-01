@@ -259,6 +259,12 @@
 
   environment.variables.SSL_CERT_FILE = "/etc/ssl/certs/ca-certificates.crt";
 
+  # Zed bundles its own libxkbcommon built with the default keymap include
+  # path /usr/share/X11/xkb, which doesn't exist on NixOS. Point it at the
+  # real xkeyboard-config path so the standalone ~/.local/zed.app doesn't
+  # segfault when the compositor sends it a keyboard keymap.
+  environment.sessionVariables.XKB_CONFIG_ROOT = "${pkgs.xkeyboard-config}/share/X11/xkb";
+
   environment.systemPackages = with pkgs; [
     (pkgs.helium.override {
       commandLineArgs = [
