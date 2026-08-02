@@ -10,11 +10,9 @@
     discordchatexporter-cli
 
     # Productivity
-    blender
     gimp
     inkscape
     telegram-desktop
-    yaak
     # openscad-unstable
     zoom-us
     thunderbird

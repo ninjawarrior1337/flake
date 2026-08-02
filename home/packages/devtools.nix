@@ -15,28 +15,14 @@
       ];
 
       home.packages = with pkgs; [
-        neovim
-        tree-sitter
         ripgrep
-
         jujutsu
-
-        uv
-        rustup
-
-        nodejs
-
-        go
-        deno
-        bun
-        zulu
+        gh
 
         nixd
         alejandra
-        nixfmt
 
         wrk
-        k6
         hyperfine
 
         typst
@@ -45,6 +31,27 @@
       home.sessionPath = [
         "$HOME/.cargo/bin"
       ];
+
+      programs.mise = {
+        enable = true;
+        enableZshIntegration = true;
+        # On NixOS mise defaults to all_compile = true, forcing node/python/ruby/erlang
+        # to build from source. miku has nix-ld, so precompiled glibc binaries run fine.
+        globalConfig = {
+          settings.all_compile = false;
+          # mise owns these (rust backend = rustup under the hood; toolchains in ~/.rustup)
+          tools = {
+            uv = "latest";
+            go = "latest";
+            rust = "latest"; # stable
+            opencode = "latest";
+            node = "lts";
+            claude = "latest"; # claude-code (registry alias)
+            pi = "latest";
+            java = "temurin-25"; # Temurin LTS (mise sets JAVA_HOME on activate)
+          };
+        };
+      };
     }
 
     (lib.mkIf pkgs.stdenv.isDarwin {
@@ -62,44 +69,11 @@
 
     (lib.mkIf pkgs.stdenv.isLinux {
       home.packages = with pkgs; [
-        (python3.withPackages (
-          pypkgs:
-            with pypkgs; [
-              pandas
-              numpy
-              duckdb
-              polars
-              pyarrow
-              matplotlib
-              seaborn
-              pip
-              virtualenv
-              ipython
-              notebook
-              jupyter
-            ]
-        ))
-
-        duckdb
         gcc
       ];
     })
 
     (lib.mkIf (kind == "full" && pkgs.stdenv.isLinux) {
-      programs.vscode = {
-        enable = true;
-        package = pkgs.vscode.fhsWithPackages (
-          ps:
-            with ps; [
-              rustup
-              zlib
-              openssl.dev
-              pkg-config
-              dotnet-sdk_10
-            ]
-        );
-      };
-
       programs.zed-editor = {
         enable = true;
         installRemoteServer = true;
@@ -122,7 +96,6 @@
         podman-desktop
         jetbrains-toolbox
         lmstudio
-        zed-editor
       ];
     })
   ];

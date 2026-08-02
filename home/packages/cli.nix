@@ -14,13 +14,7 @@
       step-cli
       restic
       rclone
-      ansible
 
-      llm-agents.opencode
-      llm-agents.pi
-      claude-code
-
-      nh
       herdr
     ]
     ++ lib.optionals (pkgs.stdenv.isDarwin) [

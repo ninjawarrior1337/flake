@@ -15,6 +15,7 @@
 
   home.packages = with pkgs; [
     kagi
+    t3code.unwrapped
   ];
 
   home.stateVersion = "24.05";
