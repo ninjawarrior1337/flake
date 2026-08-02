@@ -76,6 +76,7 @@
     (lib.mkIf (kind == "full" && pkgs.stdenv.isLinux) {
       programs.zed-editor = {
         enable = true;
+        package = null;
         installRemoteServer = true;
         extensions = [
           "html"
