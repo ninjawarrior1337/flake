@@ -16,6 +16,7 @@
   home.packages = with pkgs; [
     kagi
     t3code.unwrapped
+    zen-browser
   ];
 
   home.stateVersion = "24.05";
