@@ -100,6 +100,7 @@ _: {
       "jetbrains-toolbox"
       "jordanbaird-ice@beta"
       "keka"
+      "keepassxc"
       "linearmouse"
       "localsend"
       "maccy"
