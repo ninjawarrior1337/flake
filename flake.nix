@@ -128,8 +128,8 @@
       default = final: prev: {
         apple-fonts = final.callPackage ./packages/fonts/apple.nix {};
         corporate-logo = final.callPackage ./packages/fonts/corporate-logo.nix {};
-        agenix = inputs.agenix.packages.${final.system}.default;
-        zen-browser = inputs.zen-browser.packages.${final.system}.default;
+        agenix = inputs.agenix.packages.${final.stdenv.hostPlatform.system}.default;
+        zen-browser = inputs.zen-browser.packages.${final.stdenv.hostPlatform.system}.default;
         helium = final.callPackage ./packages/helium.nix {};
         kagi = final.callPackage ./packages/kagi-cli {};
       };

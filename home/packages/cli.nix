@@ -17,10 +17,10 @@
 
       herdr
     ]
-    ++ lib.optionals (pkgs.stdenv.isDarwin) [
+    ++ lib.optionals (pkgs.stdenv.hostPlatform.isDarwin) [
       ffmpeg
     ]
-    ++ lib.optionals (pkgs.stdenv.isLinux) [
+    ++ lib.optionals (pkgs.stdenv.hostPlatform.isLinux) [
       # step-kms-plugin
 
       lsof

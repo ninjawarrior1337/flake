@@ -54,7 +54,7 @@
       };
     }
 
-    (lib.mkIf pkgs.stdenv.isDarwin {
+    (lib.mkIf pkgs.stdenv.hostPlatform.isDarwin {
       home.packages = with pkgs; [
         (python3.withPackages (
           pypkgs:
@@ -67,13 +67,13 @@
       ];
     })
 
-    (lib.mkIf pkgs.stdenv.isLinux {
+    (lib.mkIf pkgs.stdenv.hostPlatform.isLinux {
       home.packages = with pkgs; [
         gcc
       ];
     })
 
-    (lib.mkIf (kind == "full" && pkgs.stdenv.isLinux) {
+    (lib.mkIf (kind == "full" && pkgs.stdenv.hostPlatform.isLinux) {
       programs.zed-editor = {
         enable = true;
         package = null;
