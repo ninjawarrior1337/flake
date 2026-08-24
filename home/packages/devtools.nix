@@ -97,7 +97,7 @@
         podman-desktop
         jetbrains-toolbox
         lmstudio
-        vm-curator
+        pkgs.vm-curator
       ];
     })
   ];
