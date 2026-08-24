@@ -97,6 +97,7 @@
         podman-desktop
         jetbrains-toolbox
         lmstudio
+        vm-curator
       ];
     })
   ];
