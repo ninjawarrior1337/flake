@@ -15,6 +15,7 @@
     ../../modules/nvidia.nix
     ../../modules/gaming.nix
     ../../modules/ime.nix
+    ../../modules/virtualisation.nix
     # ../../modules/rtlsdr.nix
     # ../../modules/gnome
     ../../modules/plasma
