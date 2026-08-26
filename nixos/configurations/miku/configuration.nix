@@ -18,7 +18,7 @@
     ../../modules/virtualisation.nix
     # ../../modules/rtlsdr.nix
     # ../../modules/gnome
-    ../../modules/plasma
+    # ../../modules/plasma
     ../../modules/hyprland
     ./nix-ld.nix
     ./zfs.nix
