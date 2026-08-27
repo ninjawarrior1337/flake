@@ -41,11 +41,16 @@
   services.displayManager.defaultSession = "niri";
 
   programs.dms-shell = {
-    enable = true;
+    enable = false;
     # Core features
     enableSystemMonitoring = true; # System monitoring widgets (dgop)
     enableDynamicTheming = true; # Wallpaper-based theming (matugen)
     enableAudioWavelength = true; # Audio visualizer (cava)
+  };
+
+  programs.noctalia = {
+    enable =  true;
+    systemd.enable =  true;
   };
 
   environment.systemPackages = with pkgs;
