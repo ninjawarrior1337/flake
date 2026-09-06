@@ -45,6 +45,7 @@
             go = "latest";
             rust = "latest"; # stable
             opencode = "latest";
+            "npm:@opencode-ai/cli" = "beta";
             node = "lts";
             claude = "latest"; # claude-code (registry alias)
             pi = "latest";
