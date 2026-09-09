@@ -14,8 +14,6 @@
       step-cli
       restic
       rclone
-
-      herdr
     ]
     ++ lib.optionals (pkgs.stdenv.hostPlatform.isDarwin) [
       ffmpeg

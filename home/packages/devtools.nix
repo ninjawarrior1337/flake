@@ -52,6 +52,7 @@
             node = "lts";
             claude = "latest"; # claude-code (registry alias)
             pi = "latest";
+            herdr = "latest";
             java = "temurin-25"; # Temurin LTS (mise sets JAVA_HOME on activate)
           };
         };
