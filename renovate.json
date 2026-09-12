@@ -21,19 +21,7 @@
       "labels": ["dependencies", "automated"]
     }
   ],
-  "customManagers": [
-    {
-      "customType": "regex",
-      "description": "Update the zed-editor version pin in flake.nix",
-      "managerFilePatterns": ["/^flake\\.nix$/"],
-      "matchStrings": [
-        "url = \"github:(?<depName>zed-industries/zed)\\?ref=(?<currentValue>v[0-9]+\\.[0-9]+\\.[0-9]+)\""
-      ],
-      "datasourceTemplate": "github-tags",
-      "versioningTemplate": "semver"
-    }
-  ],
-  "enabledManagers": ["nix", "custom.regex"],
+  "enabledManagers": ["nix"],
   "prHourlyLimit": 4,
   "prConcurrentLimit": 10
 }
