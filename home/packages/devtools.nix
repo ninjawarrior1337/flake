@@ -44,10 +44,9 @@
             uv = "latest";
             go = "latest";
             rust = "latest"; # stable
-            opencode = "latest";
-            "npm:@opencode-ai/cli" = {
-              version = "beta";
-              allow_builds = ["@opencode-ai/cli"];
+            "npm:@opencode/cli" = {
+              version = "latest";
+              allow_builds = ["@opencode/cli"];
             };
             node = "lts";
             claude = "latest"; # claude-code (registry alias)
