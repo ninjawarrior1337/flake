@@ -31,7 +31,7 @@
   hardware.bluetooth.powerOnBoot = true;
   services.blueman.enable = true;
   hardware.nvidia.open = true;
-
+  hardware.opentabletdriver.enable = true;
   hardware.flipperzero.enable = true;
 
   # Sunshine game streaming
