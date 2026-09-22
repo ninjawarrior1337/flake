@@ -7,6 +7,7 @@
     ../programs/spicetify.nix
     # ../programs/spotify.nix
     ../programs/hacking.nix
+    ../programs/t3code.nix
     # ../modules/gtk-theme.nix
     ../shell.nix
     ../git.nix
