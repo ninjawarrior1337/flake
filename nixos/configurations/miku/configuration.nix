@@ -34,6 +34,13 @@
   hardware.opentabletdriver.enable = true;
   hardware.flipperzero.enable = true;
 
+  # Grant the logged-in user access to Wacom tablets and the OpenTabletDriver
+  # (0ac3:ff0f) USB device via systemd-logind's uaccess tagging.
+  services.udev.extraRules = ''
+    SUBSYSTEM=="hidraw", ATTRS{idVendor}=="056a", TAG+="uaccess"
+    SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_device", ATTR{idVendor}=="0ac3", ATTR{idProduct}=="ff0f", TAG+="uaccess"
+  '';
+
   # Sunshine game streaming
   hardware.uinput.enable = true;
   services.sunshine = {
