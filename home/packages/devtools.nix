@@ -39,6 +39,7 @@
         # to build from source. miku has nix-ld, so precompiled glibc binaries run fine.
         globalConfig = {
           settings.all_compile = false;
+          settings.minimum_release_age = "0";
           # mise owns these (rust backend = rustup under the hood; toolchains in ~/.rustup)
           tools = {
             uv = "latest";
