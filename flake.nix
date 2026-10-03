@@ -50,7 +50,7 @@
 
         {
           nixpkgs.config.allowUnfree = true;
-          nix.nixPath = [
+          nix.settings.nix-path = [
             "nixpkgs=${nixpkgs}"
           ];
           nixpkgs.overlays = [
@@ -96,7 +96,7 @@
         ./home/nixosModule.nix
 
         {
-          nix.nixPath = [
+          nix.settings.nix-path = [
             "nixpkgs=${nixpkgs}"
           ];
           nixpkgs = {

@@ -42,9 +42,8 @@
 
   programs.dms-shell = {
     enable = false;
-    # Core features
-    enableDynamicTheming = true; # Wallpaper-based theming (matugen)
-    enableAudioWavelength = true; # Audio visualizer (cava)
+    # Theming (matugen) and the audio visualizer (cava) are now included in the
+    # default DMS environment. Exclude them via excludePackages if unwanted.
   };
 
   programs.noctalia = {
