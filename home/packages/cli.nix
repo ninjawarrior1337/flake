@@ -22,6 +22,7 @@
       # step-kms-plugin
 
       lsof
+      bubblewrap
       usbutils
       pciutils
       psmisc
