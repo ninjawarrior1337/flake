@@ -24,6 +24,9 @@
     ./zfs.nix
   ];
 
+  # IBM Plex Sans JP with built-in furigana, built offline with the furifont CLI.
+  fonts.packages = [pkgs.furifont-plex-sans];
+
   boot.binfmt.emulatedSystems = ["aarch64-linux"];
 
   hardware.enableRedistributableFirmware = true;

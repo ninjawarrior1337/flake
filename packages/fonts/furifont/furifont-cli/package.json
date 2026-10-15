@@ -1,0 +1,12 @@
+{
+  "name": "furifont-cli",
+  "version": "0.3.0",
+  "private": true,
+  "description": "Nix wrapper exposing the prebuilt furifont npm CLI offline",
+  "bin": {
+    "furifont": "./node_modules/furifont/bin.mjs"
+  },
+  "dependencies": {
+    "furifont": "0.3.0"
+  }
+}

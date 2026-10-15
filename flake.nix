@@ -129,6 +129,10 @@
       default = final: prev: {
         apple-fonts = final.callPackage ./packages/fonts/apple.nix {};
         corporate-logo = final.callPackage ./packages/fonts/corporate-logo.nix {};
+        furifont-plex-sans = final.callPackage ./packages/fonts/furifont {
+          base = final.ibm-plex.sans-jp + "/share/fonts/opentype/IBMPlexSansJP-Regular.otf";
+          family = "Furifont Plex Sans";
+        };
         agenix = inputs.agenix.packages.${final.stdenv.hostPlatform.system}.default;
         zen-browser = inputs.zen-browser.packages.${final.stdenv.hostPlatform.system}.default;
         helium = final.callPackage ./packages/helium.nix {};
@@ -145,6 +149,10 @@
       nebula-sans = pkgs.callPackage ./packages/fonts/nebula-sans.nix {};
       apple-fonts = pkgs.callPackage ./packages/fonts/apple.nix {};
       corporate-logo = pkgs.callPackage ./packages/fonts/corporate-logo.nix {};
+      furifont-plex-sans = pkgs.callPackage ./packages/fonts/furifont {
+        base = pkgs.ibm-plex.sans-jp + "/share/fonts/opentype/IBMPlexSansJP-Regular.otf";
+        family = "Furifont Plex Sans";
+      };
       helium = pkgs.callPackage ./packages/helium.nix {};
       kagi-cli = pkgs.callPackage ./packages/kagi-cli {};
       update-helium = pkgs.writeShellApplication {
