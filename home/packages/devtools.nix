@@ -53,6 +53,7 @@
             claude = "latest"; # claude-code (registry alias)
             pi = "latest";
             herdr = "latest";
+            vp = "latest"; # vite-plus (registry: npm:vite-plus)
             java = "temurin-25"; # Temurin LTS (mise sets JAVA_HOME on activate)
           };
         };
