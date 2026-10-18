@@ -44,15 +44,6 @@
     SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_device", ATTR{idVendor}=="0ac3", ATTR{idProduct}=="ff0f", TAG+="uaccess"
   '';
 
-  # Sunshine game streaming
-  hardware.uinput.enable = true;
-  services.sunshine = {
-    enable = true;
-    autoStart = true;
-    capSysAdmin = true; # needed for Wayland/KMS screen capture
-    openFirewall = true;
-  };
-
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -166,7 +157,6 @@
       "wheel"
       "docker"
       "dialout"
-      "uinput"
     ];
     shell = pkgs.zsh;
   };
