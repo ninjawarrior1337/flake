@@ -17,7 +17,7 @@
     kagi
     zen-browser
     voxtype-vulkan
-    llm-agents.t3code-desktop
+    llm-agents.t3code.unwrapped.desktop
   ];
 
   home.stateVersion = "24.05";
