@@ -11,7 +11,7 @@
   imports = [
     ../base.nix
     ./hardware-configuration.nix
-    ../../modules/lanzaboote.nix
+    ./limine.nix
     ../../modules/nvidia.nix
     ../../modules/gaming.nix
     ../../modules/ime.nix
@@ -44,8 +44,8 @@
     SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_device", ATTR{idVendor}=="0ac3", ATTR{idProduct}=="ff0f", TAG+="uaccess"
   '';
 
-  # Bootloader.
-  boot.loader.systemd-boot.enable = true;
+  # Bootloader (Limine, see ./limine.nix).
+  boot.loader.systemd-boot.enable = false;
   boot.loader.efi.canTouchEfiVariables = true;
 
   # Reduce shutdown watchdog timeout to prevent hanging
@@ -185,8 +185,6 @@
     # waydroid.enable = true;
   };
 
-  boot.loader.systemd-boot.configurationLimit = 3;
-
   nix.settings = {
     auto-optimise-store = true;
     trusted-users = [
@@ -304,6 +302,9 @@
 
     openiscsi
     distrobox
+
+    # For debugging and troubleshooting Secure Boot.
+    sbctl
 
     # flatpak stuff
     flatpak-builder

@@ -89,7 +89,7 @@ just up
 - **Agenix secrets** are managed via [agenix](https://github.com/ryantm/agenix). Ensure secrets are decrypted before building.
 - **`system.autoUpgrade`** is enabled on `miku` — it auto-updates from `github:ninjawarrior1337/flake` at 3:00 AM daily with reboot window 2:00–5:00 AM.
 - **`nh clean`** runs weekly on `miku` to garbage-collect old system generations (`--keep-since 4d --keep 3`).
-- **Lanzaboote** is used on `miku` for Secure Boot support (`nixos/modules/lanzaboote.nix`).
+- **Limine** is the bootloader on `miku` (`nixos/configurations/miku/limine.nix`), styled after treelar.xyz; it chainloads the Windows Boot Manager from the ESP.
 - **nix-darwin on shiki** is configured to use `miku` and `maru` as remote builders (SSH, `nix.buildMachines`).
 - **`nh` is installed via `home.packages`** (see `home/packages/cli.nix`) and enabled on `miku` via `programs.nh` (points at the flake checkout in the home directory).
 
@@ -116,6 +116,7 @@ Flake/
 │   │   ├── miku/              # Miku host config
 │   │   │   ├── configuration.nix
 │   │   │   ├── hardware-configuration.nix
+│   │   │   ├── limine.nix
 │   │   │   ├── nix-ld.nix
 │   │   │   └── zfs.nix
 │   │   ├── shiki/             # Shiki (macOS) config
@@ -132,7 +133,6 @@ Flake/
 │       ├── gnome/
 │       ├── hyprland/
 │       ├── ime.nix
-│       ├── lanzaboote.nix
 │       ├── nvidia.nix
 │       ├── plasma/
 │       ├── rtlsdr.nix
