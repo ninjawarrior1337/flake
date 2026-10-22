@@ -58,7 +58,7 @@ _: {
         name = "rfidresearchgroup/proxmark3/proxmark3";
         args = ["with-generic"];
       }
-      "python@3.12"
+      "python"
       "smartmontools"
       "tesseract"
       "typst"
