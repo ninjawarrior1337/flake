@@ -173,6 +173,17 @@
   # Or disable the firewall altogether.
   networking.firewall.enable = true;
 
+  # Trust the Tailnet — Tailnet peers are already authenticated/encrypted
+  # via WireGuard, so don't filter them like the open LAN/WAN.
+  networking.firewall.trustedInterfaces = ["tailscale0"];
+  # Open UDP 41641 for reliable Tailscale direct connections
+  # (otherwise peers fall back to slow DERP relays).
+  services.tailscale.openFirewall = true;
+
+  # Allow SSH remote forwards (-R) to bind to non-loopback addresses
+  # so other hosts can connect through miku (sshd GatewayPorts yes).
+  services.openssh.settings.GatewayPorts = "yes";
+
   virtualisation = {
     docker = {
       enable = true;
