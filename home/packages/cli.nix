@@ -29,8 +29,5 @@
       smartmontools
       fio
       ffmpeg-full
-
-      iftop
-      iotop
     ];
 }

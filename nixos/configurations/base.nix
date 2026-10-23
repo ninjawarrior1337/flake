@@ -35,7 +35,9 @@
     unzip
     curl
     dig
-    comma
+    iftop
+    iotop
+    glances
   ];
 
   programs.zsh.enable = true;
