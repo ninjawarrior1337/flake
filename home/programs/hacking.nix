@@ -13,9 +13,6 @@
     nmap
     masscan
     metasploit
-    (proxmark3.override {
-      withGeneric = true;
-    })
   ];
 
   # REA (https://rea.tools) native Ghidra provider looks up

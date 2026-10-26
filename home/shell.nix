@@ -23,6 +23,7 @@
 
   programs.nushell = {
     enable = true;
+    loadSessionVariables = true;
   };
 
   programs.starship = {
