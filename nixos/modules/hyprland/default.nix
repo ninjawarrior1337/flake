@@ -37,13 +37,26 @@
     wantedBy = ["default.target"];
   };
 
+  systemd.user.services.voxtype = {
+    description = "voxtype push-to-talk voice-to-text daemon";
+    after = ["graphical-session.target"];
+    partOf = ["graphical-session.target"];
+    wantedBy = ["graphical-session.target"];
+    serviceConfig = {
+      Type = "simple";
+      ExecStart = "${pkgs.voxtype-vulkan}/bin/voxtype daemon";
+      Restart = "on-failure";
+      RestartSec = 2;
+    };
+  };
+
   services.displayManager.gdm.enable = true;
   services.displayManager.defaultSession = "niri";
 
-  programs.dms-shell = {
+  programs.dux-shell = {
     enable = false;
     # Theming (matugen) and the audio visualizer (cava) are now included in the
-    # default DMS environment. Exclude them via excludePackages if unwanted.
+    # default Dux Shell environment. Exclude them via excludePackages if unwanted.
   };
 
   programs.noctalia = {
