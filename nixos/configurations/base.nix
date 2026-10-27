@@ -36,8 +36,10 @@
     curl
     dig
     iftop
-    iotop
     glances
+  ]
+  ++ lib.optionals pkgs.stdenv.isLinux [
+    iotop
   ];
 
   programs.zsh.enable = true;
