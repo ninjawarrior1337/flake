@@ -107,7 +107,6 @@ _: {
       "macfuse"
       "macs-fan-control"
       "microsoft-teams"
-      "mochi-diffusion"
       "moonlight"
       "mounty"
       "notion"
