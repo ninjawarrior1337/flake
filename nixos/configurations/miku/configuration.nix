@@ -48,12 +48,16 @@
   boot.loader.systemd-boot.enable = false;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  # Reduce shutdown watchdog timeout to prevent hanging
+  # Reduce shutdown watchdog timeout to prevent hanging.
+  # WatchdogDevice pins the shutdown watchdog to the real PCH watchdog
+  # (iTCO_wdt): /dev/watchdog otherwise routes to intel_oc_wdt, which
+  # never resets this board, so multi-hour shutdown hangs went unfixed.
   systemd.settings.Manager = {
     ShutdownWatchdogSec = "30s";
+    WatchdogDevice = "/dev/watchdog1";
   };
   boot.kernelParams = [
-    "reboot=efi"
+    "reboot=pci"
     "libata.noacpi=1"
   ];
 
@@ -251,12 +255,20 @@
     host = "192.168.0.3";
   in {
     description = "Login to iSCSI target ${tgt}";
+    # Order login before remote mounts (network-online -> login -> mount)
+    # so shutdown runs in reverse: /mnt/Games unmounts BEFORE iscsiadm
+    # --logout yanks the disk. Without this, logout can win the race,
+    # leaving ext4 on a dead device and hanging the reboot for hours.
     after = [
-      "network.target"
+      "network-online.target"
       "iscsid.service"
     ];
+    before = ["remote-fs-pre.target"];
     restartIfChanged = false;
-    wants = ["iscsid.service"];
+    wants = [
+      "network-online.target"
+      "iscsid.service"
+    ];
     serviceConfig = {
       Type = "oneshot";
       ExecStartPre = "${pkgs.openiscsi}/bin/iscsiadm -m discovery -t sendtargets -p ${host}";
