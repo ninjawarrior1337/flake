@@ -26,6 +26,7 @@
   services.gnome = {
     sushi.enable = true;
     gnome-keyring.enable = true;
+    at-spi2-core.enable = true;
   };
 
   systemd.user.services.playerctld = {
