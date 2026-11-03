@@ -22,7 +22,14 @@
     ../../modules/hyprland
     ./nix-ld.nix
     ./zfs.nix
+
+    inputs.hex.nixosModules.hex
   ];
+
+  programs.hex.enable = true;
+
+  # Test-fixed build, see `overlays.hex` in flake.nix.
+  programs.hex.package = pkgs.hex;
 
   # IBM Plex Sans JP with built-in furigana, built offline with the furifont CLI.
   fonts.packages = [pkgs.furifont-plex-sans];

@@ -20,6 +20,12 @@
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
 
     llm-agents.url = "github:numtide/llm-agents.nix";
+
+    # Local-first voice dictation. Follow our nixpkgs so Hex links against the
+    # same glibc as the system graphics drivers (see hex docs/nix.md).
+    hex.url = "github:anomalyco/hex";
+    hex.inputs.nixpkgs.follows = "nixpkgs";
+    hex.inputs.home-manager.follows = "home-manager";
   };
 
   outputs = {
@@ -50,6 +56,7 @@
           ];
           nixpkgs.overlays = [
             self.overlays.default
+            self.overlays.hex
             llm-agents.overlays.shared-nixpkgs
           ];
         }
@@ -133,6 +140,24 @@
         helium = final.callPackage ./packages/helium.nix {};
         kagi = final.callPackage ./packages/kagi-cli {};
       };
+
+      # Kept separate from `default` so hosts that don't ask for Hex never
+      # evaluate it (the upstream package is x86_64-linux only).
+      hex = final: prev:
+        prev.lib.optionalAttrs (prev.stdenv.hostPlatform.system == "x86_64-linux") {
+          hex = inputs.hex.packages.x86_64-linux.default.overrideAttrs (old: {
+            # Hex's dev branch currently has one UI test that fails inside the
+            # Nix sandbox: rune_ui::tests::the_wheel_scrolls_the_model_picker
+            # panics with "no element model-scroll". Keep the rest of the
+            # suite; drop this once the input is bumped past the upstream fix.
+            checkFlags =
+              (old.checkFlags or [])
+              ++ [
+                "--skip"
+                "rune_ui::tests::the_wheel_scrolls_the_model_picker"
+              ];
+          });
+        };
     };
 
     packages.x86_64-linux = let

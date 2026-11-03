@@ -38,18 +38,9 @@
     wantedBy = ["default.target"];
   };
 
-  systemd.user.services.voxtype = {
-    description = "voxtype push-to-talk voice-to-text daemon";
-    after = ["graphical-session.target"];
-    partOf = ["graphical-session.target"];
-    wantedBy = ["graphical-session.target"];
-    serviceConfig = {
-      Type = "simple";
-      ExecStart = "${pkgs.voxtype-vulkan}/bin/voxtype daemon";
-      Restart = "on-failure";
-      RestartSec = 2;
-    };
-  };
+  # voxtype was replaced by Hex (see programs.hex in
+  # ../../configurations/miku/configuration.nix); it provided the same
+  # push-to-talk dictation and would fight Hex over the hotkey.
 
   services.displayManager.gdm.enable = true;
   services.displayManager.defaultSession = "niri";
@@ -61,8 +52,8 @@
   };
 
   programs.noctalia = {
-    enable =  true;
-    systemd.enable =  true;
+    enable = true;
+    systemd.enable = true;
   };
 
   environment.systemPackages = with pkgs;
