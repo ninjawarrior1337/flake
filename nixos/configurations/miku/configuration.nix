@@ -326,9 +326,7 @@
         "--disable-features=UseSkiaRenderer"
       ];
     })
-    (discord.override {
-      withVencord = true;
-    })
+    discord
 
     openiscsi
     distrobox
