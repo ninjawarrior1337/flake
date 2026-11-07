@@ -1,8 +1,5 @@
 {
-  config,
   pkgs,
-  inputs,
-  user,
   ...
 }: {
   programs.hyprland = {
@@ -17,11 +14,6 @@
   services.gvfs.enable = true;
 
   environment.sessionVariables.NIXOS_OZONE_WL = "1";
-
-  programs.nautilus-open-any-terminal = {
-    enable = true;
-    terminal = "ghostty";
-  };
 
   services.gnome = {
     sushi.enable = true;
@@ -38,27 +30,23 @@
     wantedBy = ["default.target"];
   };
 
-  # voxtype was replaced by Hex (see programs.hex in
-  # ../../configurations/miku/configuration.nix); it provided the same
-  # push-to-talk dictation and would fight Hex over the hotkey.
-
   services.displayManager.gdm.enable = true;
-  services.displayManager.defaultSession = "niri";
+  services.displayManager.defaultSession = "hyprland";
 
   programs.dux-shell = {
-    enable = false;
-    # Theming (matugen) and the audio visualizer (cava) are now included in the
-    # default Dux Shell environment. Exclude them via excludePackages if unwanted.
+    enable = true;
+    systemd.enable = true;
   };
 
   programs.noctalia = {
-    enable = true;
+    enable = false;
     systemd.enable = true;
   };
 
   environment.systemPackages = with pkgs;
     [
       capitaine-cursors
+      bibata-cursors
       adwaita-icon-theme
       hyprpaper
       wiremix
