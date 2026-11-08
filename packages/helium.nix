@@ -6,12 +6,12 @@
   runCommand,
   commandLineArgs ? [],
 }: let
-  version = "0.19.4.1";
+  version = "0.21.1.1";
   pname = "helium";
 
   src = fetchurl {
     url = "https://github.com/imputnet/helium-linux/releases/download/${version}/helium-${version}-x86_64.AppImage";
-    hash = "sha256-Wy2zkrPth/JKqESTYFnWisqYvCBUjqqg3s+jwoCioKc=";
+    hash = "sha256-pivECBuZcJsxFxZc96vnER07VEZxqxcjL0KbmwVEs/o=";
   };
   appimageContents = appimageTools.extract {inherit pname version src;};
   unwrapped = appimageTools.wrapType2 {
