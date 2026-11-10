@@ -37,19 +37,27 @@
 
     user = "ninjawarrior1337";
 
-    overlays = {
-      default = final: prev: {
-        apple-fonts = final.callPackage ./packages/fonts/apple.nix {};
-        corporate-logo = final.callPackage ./packages/fonts/corporate-logo.nix {};
-        furifont-plex-sans = final.callPackage ./packages/fonts/furifont {
-          base = final.ibm-plex.sans-jp + "/share/fonts/opentype/IBMPlexSansJP-Regular.otf";
-          family = "Furifont Plex Sans";
-        };
-        agenix = inputs.agenix.packages.${final.stdenv.hostPlatform.system}.default;
-        zen-browser = inputs.zen-browser.packages.${final.stdenv.hostPlatform.system}.default;
-        helium = final.callPackage ./packages/helium.nix {};
-        kagi = final.callPackage ./packages/kagi-cli {};
+    # Packages that are exposed both as overlay attributes and as flake
+    # outputs. Defined once as a function of the nixpkgs instance they are
+    # built against, so the overlay and `perSystem.packages` stay in sync.
+    mkPackages = pkgs: {
+      apple-fonts = pkgs.callPackage ./packages/fonts/apple.nix {};
+      corporate-logo = pkgs.callPackage ./packages/fonts/corporate-logo.nix {};
+      furifont-plex-sans = pkgs.callPackage ./packages/fonts/furifont {
+        base = pkgs.ibm-plex.sans-jp + "/share/fonts/opentype/IBMPlexSansJP-Regular.otf";
+        family = "Furifont Plex Sans";
       };
+      helium = pkgs.callPackage ./packages/helium.nix {};
+      kagi-cli = pkgs.callPackage ./packages/kagi-cli {};
+    };
+
+    overlays = {
+      default = final: prev:
+        (mkPackages final)
+        // {
+          agenix = inputs.agenix.packages.${final.stdenv.hostPlatform.system}.default;
+          zen-browser = inputs.zen-browser.packages.${final.stdenv.hostPlatform.system}.default;
+        };
 
       # Kept separate from `default` so hosts that don't ask for Hex never
       # evaluate it (the upstream package is x86_64-linux only).
@@ -141,6 +149,7 @@
         inherit (pkgs) lib;
         isx86_64Linux = system == "x86_64-linux";
         isLinux = pkgs.stdenv.hostPlatform.isLinux;
+        sharedPackages = mkPackages pkgs;
       in {
         devShells.default = pkgs.mkShell {
           buildInputs = with pkgs; [
@@ -156,12 +165,7 @@
 
         packages =
           {
-            apple-fonts = pkgs.callPackage ./packages/fonts/apple.nix {};
-            corporate-logo = pkgs.callPackage ./packages/fonts/corporate-logo.nix {};
-            furifont-plex-sans = pkgs.callPackage ./packages/fonts/furifont {
-              base = pkgs.ibm-plex.sans-jp + "/share/fonts/opentype/IBMPlexSansJP-Regular.otf";
-              family = "Furifont Plex Sans";
-            };
+            inherit (sharedPackages) apple-fonts corporate-logo furifont-plex-sans;
             update-helium = pkgs.writeShellApplication {
               name = "update-helium";
               runtimeInputs = with pkgs; [
@@ -172,15 +176,13 @@
               text = builtins.readFile scripts/update-helium.sh;
             };
           }
-          # The miku system closure only exists for x86_64-linux, and the
-          # upstream Helium build is an x86_64 AppImage.
+          # The upstream Helium build is an x86_64 AppImage.
           // lib.optionalAttrs isx86_64Linux {
-            miku = nixosConfigurations.miku.config.system.build.toplevel;
-            helium = pkgs.callPackage ./packages/helium.nix {};
+            helium = sharedPackages.helium;
           }
           # kagi-cli only declares Linux support.
           // lib.optionalAttrs isLinux {
-            kagi-cli = pkgs.callPackage ./packages/kagi-cli {};
+            inherit (sharedPackages) kagi-cli;
           };
       };
     };

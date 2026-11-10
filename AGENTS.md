@@ -43,8 +43,8 @@ just boot
 ### Build a specific flake output directly
 
 ```bash
-# Build the miku toplevel (system closure) as a package
-nix build .#packages.x86_64-linux.miku
+# Build the miku toplevel (system closure)
+nix build .#nixosConfigurations.miku.config.system.build.toplevel
 ```
 
 ---

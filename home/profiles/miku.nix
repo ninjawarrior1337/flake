@@ -26,7 +26,7 @@
   };
 
   home.packages = with pkgs; [
-    kagi
+    kagi-cli
     zen-browser
     # voxtype-vulkan — replaced by Hex (programs.hex).
     llm-agents.t3code.unwrapped.desktop
