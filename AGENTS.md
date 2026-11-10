@@ -8,7 +8,6 @@ This repository is a **Nix flake** for managing NixOS, nix-darwin, and home-mana
 |-----------------|---------------|----------------------------------------------|-------------------|
 | `miku`          | NixOS         | `nixosConfigurations.miku`                   | `x86_64-linux`    |
 | `shiki`         | nix-darwin    | `darwinConfigurations."shiki"`               | `aarch64-darwin`  |
-| `thisismycomputernow` | NixOS ISO | `nixosConfigurations.thisismycomputernow`     | `x86_64-linux`    |
 
 ---
 
@@ -46,10 +45,6 @@ just boot
 ```bash
 # Build the miku toplevel (system closure) as a package
 nix build .#packages.x86_64-linux.miku
-
-# Build an ISO
-just build_iso
-# Equivalent: nix build .#images.thisismycomputernow
 ```
 
 ---
@@ -106,7 +101,7 @@ Flake/
 │   ├── nixosModule.nix        # Entry point imported by each host
 │   ├── packages/              # cli.nix, devtools.nix, utils.nix, default.nix
 │   ├── programs/              # chrome, firefox, spicetify, spotify, hacking
-│   ├── profiles/              # Per-host package sets (miku, shiki, rpi-nix, thisismycomputernow)
+│   ├── profiles/              # Per-host package sets (miku, shiki)
 │   ├── modules/               # gtk-theme.nix
 │   ├── shell.nix
 │   └── git.nix
@@ -119,13 +114,9 @@ Flake/
 │   │   │   ├── limine.nix
 │   │   │   ├── nix-ld.nix
 │   │   │   └── zfs.nix
-│   │   ├── shiki/             # Shiki (macOS) config
-│   │   │   ├── default.nix
-│   │   │   └── brew.nix
-│   │   ├── rpi3/              # Raspberry Pi 3 config
-│   │   │   ├── default.nix
-│   │   │   └── hardware-configuration.nix
-│   │   └── thisismycomputernow/ # ISO installer config (default.nix)
+│   │   └── shiki/             # Shiki (macOS) config
+│   │       ├── default.nix
+│   │       └── brew.nix
 │   └── modules/               # Reusable NixOS modules
 │       ├── darwin/
 │       ├── fonts.nix

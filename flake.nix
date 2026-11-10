@@ -95,32 +95,6 @@
           }
         ];
       };
-
-      thisismycomputernow = nixpkgs.lib.nixosSystem rec {
-        system = "x86_64-linux";
-        specialArgs = {
-          inherit inputs;
-          user = "nixos";
-        };
-        modules = [
-          "${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-graphical-gnome.nix"
-          ./nixos/configurations/thisismycomputernow
-          ./home/nixosModule.nix
-          home-manager.nixosModules.home-manager
-          {
-            nixpkgs.config.allowUnfree = true;
-            nixpkgs.overlays = [
-              overlays.default
-              (final: prev: {
-                unstable = import nixpkgs {
-                  inherit system;
-                  config.allowUnfree = true;
-                };
-              })
-            ];
-          }
-        ];
-      };
     };
 
     darwinConfigurations.shiki = nix-darwin.lib.darwinSystem {
@@ -157,9 +131,6 @@
 
       flake = {
         inherit nixosConfigurations darwinConfigurations overlays;
-
-        images.thisismycomputernow =
-          nixosConfigurations.thisismycomputernow.config.system.build.isoImage;
       };
 
       perSystem = {

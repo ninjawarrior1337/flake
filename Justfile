@@ -19,7 +19,3 @@ update: update-helium
     nix flake update
 
 up: update boot
-
-build_iso:
-    git add .
-    nix build .#images.thisismycomputernow
