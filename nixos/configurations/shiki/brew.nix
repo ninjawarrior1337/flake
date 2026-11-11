@@ -3,27 +3,47 @@ _: {
     enable = true;
     onActivation = {
       autoUpdate = true;
-      upgrade = true;
       cleanup = "uninstall";
-      # extraFlags = [
-      #   "--force-cleanup"
-      # ];
     };
     caskArgs = {
       no_quarantine = false;
     };
     taps = [
-      { name = "apple/apple"; trusted = true; }
-      { name = "borgbackup/tap"; trusted = true; }
-      { name = "emqx/mqttx"; trusted = true; }
+      {
+        name = "apple/apple";
+        trusted = true;
+      }
+      {
+        name = "borgbackup/tap";
+        trusted = true;
+      }
+      {
+        name = "emqx/mqttx";
+        trusted = true;
+      }
       "homebrew/cask"
       "homebrew/core"
       "homebrew/services"
-      { name = "hpedrorodrigues/tools"; trusted = true; }
-      { name = "localsend/localsend"; trusted = true; }
-      { name = "oven-sh/bun"; trusted = true; }
-      { name = "RfidResearchGroup/proxmark3"; trusted = true; }
-      { name = "garethgeorge/homebrew-backrest-tap"; trusted = true; }
+      {
+        name = "hpedrorodrigues/tools";
+        trusted = true;
+      }
+      {
+        name = "localsend/localsend";
+        trusted = true;
+      }
+      {
+        name = "oven-sh/bun";
+        trusted = true;
+      }
+      {
+        name = "RfidResearchGroup/proxmark3";
+        trusted = true;
+      }
+      {
+        name = "garethgeorge/homebrew-backrest-tap";
+        trusted = true;
+      }
     ];
     brews = [
       "aircrack-ng"
@@ -48,6 +68,7 @@ _: {
       "mas"
       "masscan"
       "megatools"
+      "mole"
       "mosh"
       "mpg123"
       "netcat"
