@@ -1,8 +1,12 @@
-{pkgs, config, ...}: {
+{
+  pkgs,
+  config,
+  ...
+}: {
   home.pointerCursor = {
     gtk.enable = true;
-    package = pkgs.capitaine-cursors;
-    name = "capitaine-cursors";
+    package = pkgs.bibata-cursors;
+    name = "Bibata-Modern-Ice";
     size = 32;
   };
 

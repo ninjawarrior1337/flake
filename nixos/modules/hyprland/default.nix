@@ -1,7 +1,4 @@
-{
-  pkgs,
-  ...
-}: {
+{pkgs, ...}: {
   programs.hyprland = {
     enable = true;
     xwayland.enable = true;
@@ -45,7 +42,6 @@
 
   environment.systemPackages = with pkgs;
     [
-      capitaine-cursors
       bibata-cursors
       adwaita-icon-theme
       hyprpaper

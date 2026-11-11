@@ -81,6 +81,7 @@ just up
 ## Important Notes
 
 - **`build`, `switch`, and `boot` targets `git add .` first** — Nix flakes only see tracked files, so this is done automatically by the Justfile.
+- **Dotfiles** live in `dotfiles/`, which mirrors the layout of `$HOME` (e.g. `dotfiles/.config/niri` → `~/.config/niri`). `home/modules/dotfiles.nix` defines named groups of paths and symlinks the selected ones with `mkOutOfStoreSymlink`, so edits in the checkout apply without a rebuild. Profiles opt in with `treelar.dotfiles.groups = ["desktop" "mise"];`; add new groups/paths to the `groups` attrset in that module. The checkout location defaults to `${config.home.homeDirectory}/.flake` and can be overridden with `treelar.dotfiles.root` (an absolute path; interpolate `config.home.homeDirectory` yourself).
 - **Agenix secrets** are managed via [agenix](https://github.com/ryantm/agenix). Ensure secrets are decrypted before building.
 - **`system.autoUpgrade`** is enabled on `miku` — it auto-updates from `github:ninjawarrior1337/flake` at 3:00 AM daily with reboot window 2:00–5:00 AM.
 - **`nh clean`** runs weekly on `miku` to garbage-collect old system generations (`--keep-since 4d --keep 3`).
@@ -97,14 +98,16 @@ Flake/
 ├── flake.nix                  # Main flake — all outputs defined here
 ├── flake.lock
 ├── Justfile                   # Convenience targets (build, switch, boot, update)
+├── dotfiles/                  # Dotfiles, mirroring the $HOME layout
 ├── home/                      # Home-manager module (shared)
 │   ├── nixosModule.nix        # Entry point imported by each host
-│   ├── packages/              # cli.nix, devtools.nix, utils.nix, default.nix
-│   ├── programs/              # chrome, firefox, spicetify, spotify, hacking
 │   ├── profiles/              # Per-host package sets (miku, shiki)
-│   ├── modules/               # gtk-theme.nix
-│   ├── shell.nix
-│   └── git.nix
+│   ├── modules/               # everything a profile can import:
+│   │                          #   cli.nix, dotfiles.nix, git.nix, shell.nix,
+│   │                          #   gtk-theme.nix, devtools/ (core + full),
+│   │                          #   applications/ (app bundles: chrome, firefox, hacking,
+│   │                          #   zed, dev, messaging, multimedia, spotify/ = plain
+│   │                          #   spotify + spicetify modules and their two packages)
 ├── nixos/
 │   ├── configurations/
 │   │   ├── base.nix           # Shared NixOS module

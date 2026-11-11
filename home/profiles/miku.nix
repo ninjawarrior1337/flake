@@ -6,15 +6,23 @@
   imports = [
     inputs.hex.homeManagerModules.hex
 
-    ../programs/chrome.nix
-    ../programs/spicetify.nix
-    # ../programs/spotify.nix
-    ../programs/hacking.nix
-    # ../modules/gtk-theme.nix
-    ../shell.nix
-    ../git.nix
-    ../packages
+    ../modules/shell.nix
+    ../modules/git.nix
+    ../modules/dotfiles.nix
+
+    ../modules/cli.nix
+    ../modules/devtools
+
+    ../modules/applications/chrome.nix
+    ../modules/applications/hacking.nix
+    ../modules/applications/messaging.nix
+    ../modules/applications/multimedia.nix
+    # Plain Spotify instead of spicetify: ../modules/applications/spotify
+    ../modules/applications/spotify/spicetify.nix
   ];
+
+  # Desktop configs plus the shared mise config.
+  treelar.dotfiles.groups = ["desktop" "mise"];
 
   programs.hex = {
     enable = true;
@@ -28,7 +36,6 @@
   home.packages = with pkgs; [
     kagi-cli
     zen-browser
-    # voxtype-vulkan — replaced by Hex (programs.hex).
     llm-agents.t3code.unwrapped.desktop
   ];
 
