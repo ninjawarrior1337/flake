@@ -9,6 +9,7 @@
     ../modules/shell.nix
     ../modules/git.nix
     ../modules/dotfiles.nix
+    ../modules/dms.nix
 
     ../modules/cli.nix
     ../modules/devtools
@@ -22,7 +23,9 @@
   ];
 
   # Desktop configs plus the shared mise config.
-  treelar.dotfiles.groups = ["desktop" "mise"];
+  treelar.dotfiles.groups = ["desktop" "mise" "wallpapers"];
+
+  treelar.dms.wallpaper.enable = true;
 
   programs.hex = {
     enable = true;

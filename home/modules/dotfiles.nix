@@ -28,6 +28,7 @@
       ".config/vicinae"
     ];
     mise = [".config/mise"];
+    wallpapers = [".wallpapers"];
   };
 
   selected = lib.concatMap (group: groups.${group} or []) config.treelar.dotfiles.groups;

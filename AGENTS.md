@@ -83,6 +83,7 @@ just up
 - **`build`, `switch`, and `boot` targets `git add .` first** — Nix flakes only see tracked files, so this is done automatically by the Justfile.
 - **Dotfiles** live in `dotfiles/`, which mirrors the layout of `$HOME` (e.g. `dotfiles/.config/niri` → `~/.config/niri`). `home/modules/dotfiles.nix` defines named groups of paths and symlinks the selected ones with `mkOutOfStoreSymlink`, so edits in the checkout apply without a rebuild. Profiles opt in with `treelar.dotfiles.groups = ["desktop" "mise"];`; add new groups/paths to the `groups` attrset in that module. The checkout location defaults to `${config.home.homeDirectory}/.flake` and can be overridden with `treelar.dotfiles.root` (an absolute path; interpolate `config.home.homeDirectory` yourself).
 - **Agenix secrets** are managed via [agenix](https://github.com/ryantm/agenix). Ensure secrets are decrypted before building.
+- **DMS wallpapers** are declarative on `miku` via `treelar.dms.wallpaper` (`home/modules/dms.nix`). It applies `dms ipc call wallpaper setFor <output> <path>` for each declared output during activation and from a user unit after `dms.service` starts (activation alone runs before the graphical session). The images are tracked in `dotfiles/.wallpapers` and linked to `~/.wallpapers` by the `wallpapers` dotfiles group.
 - **`system.autoUpgrade`** is enabled on `miku` — it auto-updates from `github:ninjawarrior1337/flake` at 3:00 AM daily with reboot window 2:00–5:00 AM.
 - **`nh clean`** runs weekly on `miku` to garbage-collect old system generations (`--keep-since 4d --keep 3`).
 - **Limine** is the bootloader on `miku` (`nixos/configurations/miku/limine.nix`), styled after treelar.xyz; it chainloads the Windows Boot Manager from the ESP.
@@ -103,8 +104,8 @@ Flake/
 │   ├── nixosModule.nix        # Entry point imported by each host
 │   ├── profiles/              # Per-host package sets (miku, shiki)
 │   ├── modules/               # everything a profile can import:
-│   │                          #   cli.nix, dotfiles.nix, git.nix, shell.nix,
-│   │                          #   gtk-theme.nix, devtools/ (core + full),
+│   │                          #   cli.nix, dms.nix, dotfiles.nix, git.nix,
+│   │                          #   shell.nix, gtk-theme.nix, devtools/ (core + full),
 │   │                          #   applications/ (app bundles: chrome, firefox, hacking,
 │   │                          #   zed, dev, messaging, multimedia, spotify/ = plain
 │   │                          #   spotify + spicetify modules and their two packages)
