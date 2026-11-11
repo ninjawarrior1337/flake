@@ -1,0 +1,18 @@
+[settings]
+all_compile = false
+minimum_release_age = "0"
+
+[tools]
+claude = "latest"
+go = "latest"
+herdr = "latest"
+java = "temurin-25"
+node = "lts"
+pi = "latest"
+rust = "latest"
+uv = "latest"
+vp = "latest"
+
+[tools."npm:@opencode/cli"]
+allow_builds = ["@opencode/cli"]
+version = "latest"

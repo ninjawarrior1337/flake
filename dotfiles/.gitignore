@@ -1,0 +1,13 @@
+# Runtime state written by the apps into their (symlinked) config dirs.
+# Kept out of git, but still present on disk because ~/.config/<app> points here.
+
+# dms / dux-shell
+.config/dms/plugins/
+.config/dms/.changelog-*
+.config/dms/.firstlaunch
+
+# hyprland: DMS restore points
+.config/hypr/.dms-backups/
+
+# niri: config snapshots written by the shell
+.config/niri/*.backup*

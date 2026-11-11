@@ -157,7 +157,6 @@
             bfg-repo-cleaner
             nh
             just
-            stow
           ];
         };
 

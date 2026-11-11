@@ -1,0 +1,20 @@
+{
+  "format_on_save": "on",
+  "lsp": {
+    "lua-language-server": {
+      "settings": {
+        "Lua": {
+          "runtime.version": "Lua 5.4",
+          "workspace.library": [
+            "/run/current-system/sw/share/hypr/stubs"
+          ],
+          "workspace.checkThirdParty": false,
+          "diagnostics.globals": [
+            "hl"
+          ],
+          "completion.autoRequire": false
+        }
+      }
+    }
+  }
+}

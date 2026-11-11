@@ -1,0 +1,9 @@
+{
+  "lockfileVersion": 1,
+  "plugins": {
+    "worldClockMulti": {
+      "repo": "https://github.com/szabolcsf/dms-world-clock-multi",
+      "commit": "7229958de9781b20fb27f48944f0f77bf891bf22"
+    }
+  }
+}

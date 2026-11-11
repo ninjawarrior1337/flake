@@ -1,0 +1,16 @@
+{
+  "$schema": "https://raw.githubusercontent.com/LuaLS/vscode-lua/master/setting/schema.json",
+  "runtime.version": "Lua 5.4",
+  "workspace.library": [
+    "/run/current-system/sw/share/hypr/stubs"
+  ],
+  "workspace.checkThirdParty": false,
+  "workspace.ignoreDir": [
+    ".dms-backups",
+    ".zed"
+  ],
+  "diagnostics.globals": [
+    "hl"
+  ],
+  "completion.autoRequire": false
+}

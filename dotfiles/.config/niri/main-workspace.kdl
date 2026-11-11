@@ -1,0 +1,64 @@
+// Keep game launchers and games together on the same workspace.
+workspace "main" {
+    open-on-output "Microstep MSI G27C5 0x30355253"
+}
+
+// Common game launchers.
+window-rule {
+    match app-id=r#"^(org\.prismlauncher\.PrismLauncher|com\.valvesoftware\.Steam|steam|com\.heroicgameslauncher\.hgl|heroic|net\.lutris\.Lutris|io\.itch\.itch)$"#
+    open-on-workspace "main"
+}
+
+// Overwatch (launched via Steam/Proton). It shares the generic
+// "steam_app_default" app-id with other Steam titles like Battle.net,
+// so match the window title as well.
+window-rule {
+    match app-id=r#"^steam_app_default$"# title=r#"(?i)overwatch"#
+    open-on-workspace "main"
+    open-fullscreen true
+}
+
+// Games running under gamescope (app-id is "gamescope").
+window-rule {
+    match app-id=r#"^gamescope$"#
+    open-on-workspace "main"
+}
+
+// Prism Launcher instances (window titles like "Minecraft * 1.20.x").
+window-rule {
+    match title=r#"[Mm]inecraft"#
+    open-on-workspace "main"
+    open-focused false
+}
+
+// Minecraft app-id varies by instance; match any containing "Minecraft".
+window-rule {
+    match app-id=r#"[Mm]inecraft"#
+    open-on-workspace "main"
+    open-focused false
+}
+
+// Overwatch 2 (launched through Battle.net under Wine/Proton).
+// Force the game window fullscreen on the main workspace even if it
+// would otherwise open windowed/borderless or land on another output.
+window-rule {
+    match app-id=r#"(?i)overwatch"#
+    match title=r#"^Overwatch( 2)?$"#
+
+    open-on-workspace "main"
+    open-fullscreen true
+}
+
+// Deadlock (launched via Steam/Proton). It also uses the generic
+// "steam_app_default" app-id, so match the window title as well.
+window-rule {
+    match app-id=r#"^steam_app_default$"# title=r#"(?i)^deadlock$"#
+    open-on-workspace "main"
+    open-fullscreen true
+}
+
+// Deadlock via a native/gamescope app-id.
+window-rule {
+    match app-id=r#"(?i)deadlock"#
+    open-on-workspace "main"
+}

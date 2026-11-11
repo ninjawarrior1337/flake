@@ -1,0 +1,23 @@
+{
+  "worldClock": {
+    "enabled": true,
+    "timezones": [
+      {
+        "timezone": "Asia/Tokyo",
+        "label": "TYO"
+      }
+    ],
+    "iconOnly": false,
+    "showAll": false,
+    "use24h": true
+  },
+  "worldClockMulti": {
+    "enabled": true,
+    "timezones": [
+      {
+        "timezone": "Asia/Tokyo",
+        "label": "🇯🇵"
+      }
+    ]
+  }
+}

@@ -1,0 +1,71 @@
+// This configuration is merged with the default vicinae configuration file, which you can obtain by running the `vicinae config default` command.
+// Every item defined in this file takes precedence over the values defined in the default config or any other imported file.
+//
+// You can make manual edits to this file, however you should keep in mind that this file may be written to by vicinae when a configuration change is made through the GUI.
+// When that happens, any custom comments or formatting will be lost.
+//
+// If you want to maintain a configuration file with your own comments and formatting, you should create a separate file and add it to the 'imports' array.
+//
+// Learn more about configuration at https://docs.vicinae.com/config
+
+{
+   "$schema": "https://vicinae.com/schemas/config.json",
+   "global_shortcuts": {
+      "toggle": "super+SPACE"
+   },
+   "theme": {
+      "dark": {
+         "name": "libadwaita-dark"
+      }
+   },
+   "launcher_window": {
+      "opacity": 0.87,
+      "compact_mode": {
+         "enabled": false
+      },
+      "material": "blur"
+   },
+   "providers": {
+      "@tonka3000/store.raycast.homeassistant": {
+         "preferences": {
+            "instance": "https://hass.treelar.xyz"
+         }
+      },
+      "applications": {
+         "preferences": {
+            "paths": [
+               "/home/ninjawarrior1337/.local/share/applications",
+               "/nix/store/6x1jyfy3qp33b6q5xizx4rxjvk94pgkx-vicinae-0.19.6/share/applications",
+               "/nix/store/47bvlqrx8yqw4fi9j4j4f599s9zc6q2w-cups-2.4.16/share/applications",
+               "/home/ninjawarrior1337/.local/share/flatpak/exports/share/applications",
+               "/var/lib/flatpak/exports/share/applications",
+               "/etc/profiles/per-user/ninjawarrior1337/share/applications",
+               "/run/current-system/sw/share/applications"
+            ]
+         }
+      },
+      "calculator": {
+         "preferences": {
+            "backend": "qalculate"
+         }
+      },
+      "files": {
+         "preferences": {
+            "autoIndexing": true,
+            "indexingPaths": [
+               "/home/ninjawarrior1337"
+            ],
+            "excludedIndexingPaths": []
+         }
+      },
+      "snippets": {
+         "preferences": {
+            "enabled": true,
+            "undo": true,
+            "layout": "",
+            "prePasteDelay": "0",
+            "keyDelay": "2"
+         }
+      }
+   }
+}
