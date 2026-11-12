@@ -11,7 +11,6 @@
 // include "dms/cursor.kdl"
 include "main-workspace.kdl"
 
-spawn-at-startup "dms" "run"
 spawn-at-startup "fcitx5" "-d"
 spawn-at-startup "discord"
 spawn-at-startup "vicinae" "server"
@@ -699,11 +698,16 @@ binds {
     // moving the mouse or pressing any other key.
     Mod+Shift+P { power-off-monitors; }
 
-    // Voice dictation: press to start, press again to stop and paste. niri has
-    // no press/release bind flags and no GlobalShortcuts portal, so this is a
-    // toggle rather than hold-to-talk (Hex's user service comes from
-    // programs.hex in the NixOS flake).
-    Mod+V { spawn "hex" "dictation" "toggle"; }
+    // Voice dictation: hold Mod+V to talk. niri's press/release bind sections
+    // (niri main; see the push-to-talk example in its default config) make
+    // this hold-to-talk: press starts a dictation, release finishes it and
+    // pastes the transcript. `start`/`stop` are used rather than `toggle` so a
+    // stray press while already recording can't stop it early. Hex's user
+    // service comes from programs.hex in the NixOS flake.
+    Mod+V {
+        press { spawn "hex" "dictation" "start"; }
+        release { spawn "hex" "dictation" "stop"; }
+    }
 
     // Paste the last dictation at the focused window without re-recording.
     Mod+Alt+V repeat=false { spawn "hex" "paste-last"; }
