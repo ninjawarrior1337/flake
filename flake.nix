@@ -25,8 +25,9 @@
     llm-agents.url = "github:numtide/llm-agents.nix";
     llm-agents.inputs.flake-parts.follows = "flake-parts";
 
-    # Local-first voice dictation. Follow our nixpkgs so Hex links against the
-    # same glibc as the system graphics drivers (see hex docs/nix.md).
+    niri.url = "github:niri-wm/niri/main";
+    niri.inputs.nixpkgs.follows = "nixpkgs";
+
     hex.url = "github:anomalyco/hex";
     hex.inputs.nixpkgs.follows = "nixpkgs";
     hex.inputs.home-manager.follows = "home-manager";
@@ -36,10 +37,6 @@
     inherit (inputs) nixpkgs home-manager nix-darwin llm-agents;
 
     user = "ninjawarrior1337";
-
-    # Packages that are exposed both as overlay attributes and as flake
-    # outputs. Defined once as a function of the nixpkgs instance they are
-    # built against, so the overlay and `perSystem.packages` stay in sync.
     mkPackages = pkgs: {
       apple-fonts = pkgs.callPackage ./packages/fonts/apple.nix {};
       corporate-logo = pkgs.callPackage ./packages/fonts/corporate-logo.nix {};

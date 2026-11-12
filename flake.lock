@@ -142,6 +142,27 @@
         "type": "github"
       }
     },
+    "niri": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1794461948,
+        "narHash": "sha256-P/HdsS7R6ix6dLbi05ZWmIUAaR9ZCM/6+9WyzpLBpvg=",
+        "owner": "niri-wm",
+        "repo": "niri",
+        "rev": "0c0faa570473165628743c6bb59b178e1281306a",
+        "type": "github"
+      },
+      "original": {
+        "owner": "niri-wm",
+        "ref": "main",
+        "repo": "niri",
+        "type": "github"
+      }
+    },
     "nix-darwin": {
       "inputs": {
         "nixpkgs": [
@@ -214,6 +235,7 @@
         "hex": "hex",
         "home-manager": "home-manager",
         "llm-agents": "llm-agents",
+        "niri": "niri",
         "nix-darwin": "nix-darwin",
         "nixpkgs": "nixpkgs_2",
         "spicetify-nix": "spicetify-nix",

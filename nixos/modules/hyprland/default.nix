@@ -1,4 +1,4 @@
-{pkgs, ...}: {
+{pkgs, inputs, ...}: {
   programs.hyprland = {
     enable = true;
     xwayland.enable = true;
@@ -6,6 +6,7 @@
 
   programs.niri = {
     enable = true;
+    package = inputs.niri.packages.${pkgs.stdenv.hostPlatform.system}.niri;
   };
 
   services.gvfs.enable = true;
