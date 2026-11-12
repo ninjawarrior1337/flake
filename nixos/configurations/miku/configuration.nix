@@ -198,7 +198,6 @@
   virtualisation = {
     docker = {
       enable = true;
-      storageDriver = "zfs";
     };
     podman = {
       enable = true;
