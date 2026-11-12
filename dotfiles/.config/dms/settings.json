@@ -87,16 +87,8 @@
         {
           "id": "workspaceSwitcher",
           "enabled": true,
-          "showSpecialWorkspaces": false,
-          "showOccupiedWorkspacesOnly": true,
-          "showWorkspaceApps": false,
-          "showWorkspaceName": false,
-          "showWorkspaceIndex": false,
-          "workspaceIndicatorRoundness": -1,
-          "workspaceIndicatorCompact": true,
           "workspaceIndicatorStyle": "lines",
-          "showWorkspacePadding": false,
-          "workspaceFollowFocus": false
+          "workspaceIndicatorCompact": true
         },
         {
           "id": "music",
@@ -206,7 +198,8 @@
   ],
   "configVersion": 42,
   "dmsWindowsFloatingSeeded": [
-    "hyprland"
+    "hyprland",
+    "niri"
   ],
   "currentThemeName": "dynamic",
   "currentThemeCategory": "dynamic",
