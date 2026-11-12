@@ -358,7 +358,7 @@
   "radiusMode": "scale",
   "monoFontFamily": "JetBrainsMono NF",
   "displayFontFamily": "Inter Display",
-  "matugenTargetMonitor": "DP-3",
+  "matugenTargetMonitor": "DP-4",
   "dashOptions": {
     "weather": {
       "widgets": [

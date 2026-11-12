@@ -84,19 +84,19 @@ in {
     monitors = lib.mkOption {
       type = lib.types.attrsOf lib.types.str;
       default = {
-        DP-1 = "${home}/.wallpapers/28196650227_bb0b3fe99c_o.jpg";
-        DP-3 = "${home}/.wallpapers/bafkreid7lqnirfgevjxsyneqn4q5xwh2pz33j6sq5zohtsftmnferjux4a.jpg";
-        HDMI-A-1 = "${home}/.wallpapers/29192376368_b70d7cd88b_o.jpg";
+        DP-4 = "${home}/.wallpapers/bafkreid7lqnirfgevjxsyneqn4q5xwh2pz33j6sq5zohtsftmnferjux4a.jpg";
+        DP-5 = "${home}/.wallpapers/28196650227_bb0b3fe99c_o.jpg";
+        HDMI-A-3 = "${home}/.wallpapers/29192376368_b70d7cd88b_o.jpg";
       };
       defaultText = lib.literalExpression ''
         {
-          DP-1 = "''${config.home.homeDirectory}/.wallpapers/28196650227_bb0b3fe99c_o.jpg";
-          DP-3 = "''${config.home.homeDirectory}/.wallpapers/bafkreid7lqnirfgevjxsyneqn4q5xwh2pz33j6sq5zohtsftmnferjux4a.jpg";
-          HDMI-A-1 = "''${config.home.homeDirectory}/.wallpapers/29192376368_b70d7cd88b_o.jpg";
+          DP-4 = "''${config.home.homeDirectory}/.wallpapers/bafkreid7lqnirfgevjxsyneqn4q5xwh2pz33j6sq5zohtsftmnferjux4a.jpg";
+          DP-5 = "''${config.home.homeDirectory}/.wallpapers/28196650227_bb0b3fe99c_o.jpg";
+          HDMI-A-3 = "''${config.home.homeDirectory}/.wallpapers/29192376368_b70d7cd88b_o.jpg";
         }
       '';
       description = ''
-        Output name (`DP-1`, `HDMI-A-1`, …) to wallpaper path. Each entry is
+        Output name (`DP-4`, `HDMI-A-3`, …) to wallpaper path. Each entry is
         applied with `dms ipc call wallpaper setFor <output> <path>`.
       '';
     };
@@ -111,7 +111,12 @@ in {
       Unit = {
         Description = "Apply declarative DMS wallpapers";
         After = ["dms.service"];
-        PartOf = ["graphical-session.target"];
+        # Track dms itself rather than graphical-session.target. PartOf on the
+        # target plus After=dms.service created a stop-ordering cycle
+        # (target -> wallpaper -> dms -> target), which made the target fail to
+        # stop at logout, so the next session never started dms. Tracking dms
+        # also re-applies wallpapers whenever dms restarts.
+        PartOf = ["dms.service"];
       };
       Service = {
         Type = "oneshot";

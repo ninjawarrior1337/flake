@@ -56,7 +56,7 @@ function M.focusInWorkspace(dir)
 end
 
 -- The monitor left/right of `mon`, decided by the monitors' horizontal centres, so
--- it follows the physical layout (HDMI-A-1 | DP-3 | DP-1) rather than their names.
+-- it follows the physical layout (HDMI-A-3 | DP-4 | DP-5) rather than their names.
 function M.monitorInDirection(mon, dir)
     local centre = mon.x + mon.width / 2
     local best, bestDistance

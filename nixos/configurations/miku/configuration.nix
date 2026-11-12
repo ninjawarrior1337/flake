@@ -216,7 +216,7 @@
   };
 
   system.autoUpgrade = {
-    enable = true;
+    enable = false;
     flake = "github:ninjawarrior1337/flake";
     dates = "3:00";
     flags = [
@@ -244,47 +244,48 @@
     };
   };
 
-  systemd.services.alsa-disable-auto-mute = {
-    description = "Update charge control threshold";
-    script = ''
-      ${pkgs.alsa-utils}/bin/amixer -c "PCH" sset "Auto-Mute Mode" Disabled
-    '';
-    wantedBy = ["graphical.target"]; # starts after login
-  };
-
-  services.openiscsi = {
-    enable = true;
-    name = "iqn.2016-04.com.open-iscsi:778adaaf88f6";
-  };
-
-  systemd.services.iscsi-login-miku-gd = let
-    tgt = "iqn.2024-07.xyz.treelar.maru:miku.gd";
-    host = "192.168.0.3";
-  in {
-    description = "Login to iSCSI target ${tgt}";
-    # Order login before remote mounts (network-online -> login -> mount)
-    # so shutdown runs in reverse: /mnt/Games unmounts BEFORE iscsiadm
-    # --logout yanks the disk. Without this, logout can win the race,
-    # leaving ext4 on a dead device and hanging the reboot for hours.
-    after = [
-      "network-online.target"
-      "iscsid.service"
-    ];
-    before = ["remote-fs-pre.target"];
-    restartIfChanged = false;
-    wants = [
-      "network-online.target"
-      "iscsid.service"
-    ];
-    serviceConfig = {
-      Type = "oneshot";
-      ExecStartPre = "${pkgs.openiscsi}/bin/iscsiadm -m discovery -t sendtargets -p ${host}";
-      ExecStart = "-${pkgs.openiscsi}/bin/iscsiadm -m node -T ${tgt} -p ${host} --login";
-      ExecStop = "${pkgs.openiscsi}/bin/iscsiadm -m node -T ${tgt} -p ${host} --logout";
-      RemainAfterExit = true;
-    };
-    wantedBy = ["multi-user.target"];
-  };
+#   systemd.services.alsa-disable-auto-mute = {
+#     description = "Update charge control threshold";
+#     script = ''
+#       exit 0;
+#       ${pkgs.alsa-utils}/bin/amixer -c "PCH" sset "Auto-Mute Mode" Disabled
+#     '';
+#     wantedBy = ["graphical.target"]; # starts after login
+#   };
+#
+#   services.openiscsi = {
+#     enable = true;
+#     name = "iqn.2016-04.com.open-iscsi:778adaaf88f6";
+#   };
+#
+#   systemd.services.iscsi-login-miku-gd = let
+#     tgt = "iqn.2024-07.xyz.treelar.maru:miku.gd";
+#     host = "192.168.0.3";
+#   in {
+#     description = "Login to iSCSI target ${tgt}";
+#     # Order login before remote mounts (network-online -> login -> mount)
+#     # so shutdown runs in reverse: /mnt/Games unmounts BEFORE iscsiadm
+#     # --logout yanks the disk. Without this, logout can win the race,
+#     # leaving ext4 on a dead device and hanging the reboot for hours.
+#     after = [
+#       "network-online.target"
+#       "iscsid.service"
+#     ];
+#     before = ["remote-fs-pre.target"];
+#     restartIfChanged = false;
+#     wants = [
+#       "network-online.target"
+#       "iscsid.service"
+#     ];
+#     serviceConfig = {
+#       Type = "oneshot";
+#       ExecStartPre = "${pkgs.openiscsi}/bin/iscsiadm -m discovery -t sendtargets -p ${host}";
+#       ExecStart = "-${pkgs.openiscsi}/bin/iscsiadm -m node -T ${tgt} -p ${host} --login";
+#       ExecStop = "${pkgs.openiscsi}/bin/iscsiadm -m node -T ${tgt} -p ${host} --logout";
+#       RemainAfterExit = true;
+#     };
+#     wantedBy = ["multi-user.target"];
+#   };
 
   environment.variables.SSL_CERT_FILE = "/etc/ssl/certs/ca-certificates.crt";
 
@@ -295,37 +296,7 @@
   environment.sessionVariables.XKB_CONFIG_ROOT = "${pkgs.xkeyboard-config}/share/X11/xkb";
 
   environment.systemPackages = with pkgs; [
-    (pkgs.helium.override {
-      commandLineArgs = [
-        # Native Wayland — avoid XWayland latency.
-        "--ozone-platform=wayland"
-
-        # NVIDIA GPUs are blocklisted by Chromium; override so the GPU
-        # process actually starts on Wayland.
-        "--ignore-gpu-blocklist"
-
-        # GPU rasterization keeps compositing on the GPU instead of
-        # software-rasterizing on the CPU.
-        "--enable-gpu-rasterization"
-
-        # Enable DMA-BUF zero-copy for video frames.  Works with recent
-        # nvidia-vaapi-driver (direct backend) and driver >= 610.
-        "--enable-zero-copy"
-
-        # Hardware video decode via VA-API on NVIDIA:
-        # - AcceleratedVideoDecodeLinuxGL: VA-API decode on the GL path.
-        # - AcceleratedVideoDecodeLinuxZeroCopyGL: DMA-BUF zero-copy decode.
-        # - VaapiOnNvidiaGPUs: Chromium gate that defaults to off for NVIDIA.
-        # - VaapiIgnoreDriverChecks: skip the built-in driver blocklist so
-        #   nvidia-vaapi-driver is allowed to initialize.
-        "--enable-features=AcceleratedVideoDecodeLinuxGL,AcceleratedVideoDecodeLinuxZeroCopyGL,VaapiOnNvidiaGPUs,VaapiIgnoreDriverChecks"
-
-        # Fall back to the Ganesh compositor instead of Skia.  Skia +
-        # NVIDIA VA-API still causes texture corruption on some heavy
-        # GPU-composited sites.  Remove this if Skia is stable for you.
-        "--disable-features=UseSkiaRenderer"
-      ];
-    })
+    helium
     discord
 
     openiscsi
