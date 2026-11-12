@@ -243,14 +243,23 @@
     };
   };
 
-#   systemd.services.alsa-disable-auto-mute = {
-#     description = "Update charge control threshold";
-#     script = ''
-#       exit 0;
-#       ${pkgs.alsa-utils}/bin/amixer -c "PCH" sset "Auto-Mute Mode" Disabled
-#     '';
-#     wantedBy = ["graphical.target"]; # starts after login
-#   };
+  # The ALC897 on this board reports the front headphone jack as present even
+  # with nothing plugged in, so ALSA auto-mute switches the rear line-out off
+  # ("Front Playback Switch" = off). Disabling auto-mute does not turn that
+  # switch back on, so unmute it explicitly as well.
+  systemd.services.alsa-disable-auto-mute = {
+    description = "Disable ALSA auto-mute and unmute the rear line-out";
+    wantedBy = ["multi-user.target"];
+    after = ["sound.target"];
+    serviceConfig = {
+      Type = "oneshot";
+      RemainAfterExit = true;
+    };
+    script = ''
+      ${pkgs.alsa-utils}/bin/amixer -c PCH sset "Auto-Mute Mode" Disabled
+      ${pkgs.alsa-utils}/bin/amixer -c PCH sset "Front" unmute
+    '';
+  };
 #
 #   services.openiscsi = {
 #     enable = true;
