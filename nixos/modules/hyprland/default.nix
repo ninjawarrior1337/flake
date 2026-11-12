@@ -32,7 +32,6 @@
 
   programs.dux-shell = {
     enable = true;
-    systemd.enable = true;
   };
 
   programs.noctalia = {

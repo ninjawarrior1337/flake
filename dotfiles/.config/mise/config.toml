@@ -12,6 +12,7 @@ pi = "latest"
 rust = "latest"
 uv = "latest"
 vp = "latest"
+python = "latest"
 
 [tools."npm:@opencode/cli"]
 allow_builds = ["@opencode/cli"]

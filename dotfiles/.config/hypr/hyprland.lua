@@ -66,6 +66,7 @@ local GAMING_WS      = tostring(GAMING_WS_ID)
 -- Or execute your favorite apps at launch like this:
 --
 hl.on("hyprland.start", function()
+    hl.exec_cmd("dms run")
     hl.exec_cmd("vicinae server")
     hl.exec_cmd("discord")
     hl.exec_cmd("fcitx5 -d --replace") -- input method (IME); --replace takes over a stale instance

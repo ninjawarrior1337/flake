@@ -11,6 +11,7 @@
 // include "dms/cursor.kdl"
 include "main-workspace.kdl"
 
+spawn-at-startup "dms" "run"
 spawn-at-startup "fcitx5" "-d"
 spawn-at-startup "discord"
 spawn-at-startup "vicinae" "server"
@@ -435,7 +436,7 @@ binds {
     Mod+Shift+Slash { show-hotkey-overlay; }
 
     // Suggested binds for running programs: terminal, app launcher, screen locker.
-    Mod+B {spawn-sh "helium";}
+    Mod+B repeat=false { spawn "helium" "--new-window"; }
     Mod+E {spawn "nautilus";}
     Mod+D {focus-workspace "chat";}
     Mod+T hotkey-overlay-title="Open a Terminal: ghostty" { spawn "ghostty"; }
@@ -677,8 +678,8 @@ binds {
     // Ctrl+Print { screenshot-screen; }
     // Alt+Print { screenshot-window; }
 
-    Mod+Shift+S {spawn-sh "noctalia msg screenshot-fullscreen";}
-    Mod+S {spawn-sh "noctalia msg screenshot-region";}
+    Mod+Shift+S {spawn "dms" "screenshot" "full";}
+    Mod+S {spawn "dms" "screenshot" "region";}
 
     // Applications such as remote-desktop clients and software KVM switches may
     // request that niri stops processing the keyboard shortcuts defined here

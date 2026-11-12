@@ -17,6 +17,12 @@
   unwrapped = appimageTools.wrapType2 {
     inherit pname version src;
 
+    # The FHS wrapper's bwrap sets PR_SET_PDEATHSIG when --die-with-parent is
+    # passed. niri (and other launchers that double-fork) kill the launching
+    # process immediately, so bwrap gets SIGKILLed and the app dies before it
+    # can open a window. Disable it so the sandbox is not tied to its launcher.
+    dieWithParent = false;
+
     extraInstallCommands = ''
       install -m 444 -D ${appimageContents}/helium.desktop $out/share/applications/helium.desktop
       install -m 444 -D ${appimageContents}/usr/share/icons/hicolor/256x256/apps/helium.png \

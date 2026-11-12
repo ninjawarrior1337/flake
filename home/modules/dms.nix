@@ -11,9 +11,9 @@
 # It runs in two places:
 #   - during home-manager activation, so a rebuild in a live session applies
 #     immediately;
-#   - from a systemd user unit after dms.service starts, so a rebuild that is
-#     only activated at boot still applies (home-manager activation runs before
-#     the graphical session).
+#   - from a systemd user unit at login, waiting for the compositor-spawned
+#     DMS, so a rebuild that is only activated at boot still applies
+#     (home-manager activation runs before the graphical session).
 #
 # The default images are tracked in dotfiles/.wallpapers and linked to
 # ~/.wallpapers by the `wallpapers` dotfiles group (see
@@ -43,8 +43,23 @@
 
     dms=${cfg.package}/bin/dms
 
-    # No shell running (e.g. activation at boot): the login unit will do it.
-    if ! "$dms" ipc call wallpaper getFor ${lib.escapeShellArg firstOutput} >/dev/null 2>&1; then
+    dms_ready() {
+      "$dms" ipc call wallpaper getFor ${lib.escapeShellArg firstOutput} >/dev/null 2>&1
+    }
+
+    # The login unit waits for DMS, which the compositor starts.
+    if [ "''${1:-}" = "--wait" ]; then
+      i=0
+      while ! dms_ready; do
+        i=$((i + 1))
+        if [ "$i" -ge 60 ]; then
+          echo "dms-wallpaper: DMS did not become ready, skipping" >&2
+          exit 0
+        fi
+        ${pkgs.coreutils}/bin/sleep 0.25
+      done
+    elif ! dms_ready; then
+      # No shell running (e.g. activation at boot): the login unit will do it.
       echo "dms-wallpaper: DMS is not running, skipping" >&2
       exit 0
     fi
@@ -110,17 +125,11 @@ in {
     systemd.user.services.dms-wallpaper = {
       Unit = {
         Description = "Apply declarative DMS wallpapers";
-        After = ["dms.service"];
-        # Track dms itself rather than graphical-session.target. PartOf on the
-        # target plus After=dms.service created a stop-ordering cycle
-        # (target -> wallpaper -> dms -> target), which made the target fail to
-        # stop at logout, so the next session never started dms. Tracking dms
-        # also re-applies wallpapers whenever dms restarts.
-        PartOf = ["dms.service"];
+        After = ["graphical-session.target"];
       };
       Service = {
         Type = "oneshot";
-        ExecStart = "${apply}";
+        ExecStart = "${apply} --wait";
         RemainAfterExit = true;
       };
       Install.WantedBy = ["graphical-session.target"];
