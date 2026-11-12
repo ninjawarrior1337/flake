@@ -120,6 +120,9 @@ environment {
     // GTK_IM_MODULE intentionally unset — GTK3/4 use text-input-v3 natively
     SDL_IM_MODULE "fcitx"
     _JAVA_AWT_WM_NONREPARENTING "1"
+    // Keep GTK4 off the Vulkan renderer: the NVIDIA Vulkan Wayland WSI
+    // segfaults inside wl_display dispatch during gdk_vulkan_context_begin_frame.
+    GSK_RENDERER "ngl"
 }
 
 // Settings that influence how windows are positioned and sized.
