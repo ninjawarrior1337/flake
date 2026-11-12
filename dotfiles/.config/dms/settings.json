@@ -414,5 +414,6 @@
   "osdVolumeEnabled": true,
   "matugenSourceMode": "dominant",
   "desktopWidgetInstances": [],
-  "soundVolumeChanged": false
+  "soundVolumeChanged": false,
+  "useAutoLocation": true
 }

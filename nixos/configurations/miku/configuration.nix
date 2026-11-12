@@ -63,6 +63,9 @@
     ShutdownWatchdogSec = "30s";
     WatchdogDevice = "/dev/watchdog1";
   };
+  # Track nixpkgs' newest mainline kernel instead of the default LTS-ish one.
+  boot.kernelPackages = pkgs.linuxPackages_latest;
+
   boot.kernelParams = [
     "reboot=pci"
     "libata.noacpi=1"
@@ -243,10 +246,6 @@
     };
   };
 
-  # The ALC897 on this board reports the front headphone jack as present even
-  # with nothing plugged in, so ALSA auto-mute switches the rear line-out off
-  # ("Front Playback Switch" = off). Disabling auto-mute does not turn that
-  # switch back on, so unmute it explicitly as well.
   systemd.services.alsa-disable-auto-mute = {
     description = "Disable ALSA auto-mute and unmute the rear line-out";
     wantedBy = ["multi-user.target"];
@@ -260,40 +259,6 @@
       ${pkgs.alsa-utils}/bin/amixer -c PCH sset "Front" unmute
     '';
   };
-#
-#   services.openiscsi = {
-#     enable = true;
-#     name = "iqn.2016-04.com.open-iscsi:778adaaf88f6";
-#   };
-#
-#   systemd.services.iscsi-login-miku-gd = let
-#     tgt = "iqn.2024-07.xyz.treelar.maru:miku.gd";
-#     host = "192.168.0.3";
-#   in {
-#     description = "Login to iSCSI target ${tgt}";
-#     # Order login before remote mounts (network-online -> login -> mount)
-#     # so shutdown runs in reverse: /mnt/Games unmounts BEFORE iscsiadm
-#     # --logout yanks the disk. Without this, logout can win the race,
-#     # leaving ext4 on a dead device and hanging the reboot for hours.
-#     after = [
-#       "network-online.target"
-#       "iscsid.service"
-#     ];
-#     before = ["remote-fs-pre.target"];
-#     restartIfChanged = false;
-#     wants = [
-#       "network-online.target"
-#       "iscsid.service"
-#     ];
-#     serviceConfig = {
-#       Type = "oneshot";
-#       ExecStartPre = "${pkgs.openiscsi}/bin/iscsiadm -m discovery -t sendtargets -p ${host}";
-#       ExecStart = "-${pkgs.openiscsi}/bin/iscsiadm -m node -T ${tgt} -p ${host} --login";
-#       ExecStop = "${pkgs.openiscsi}/bin/iscsiadm -m node -T ${tgt} -p ${host} --logout";
-#       RemainAfterExit = true;
-#     };
-#     wantedBy = ["multi-user.target"];
-#   };
 
   environment.variables.SSL_CERT_FILE = "/etc/ssl/certs/ca-certificates.crt";
 
