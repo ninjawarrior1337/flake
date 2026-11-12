@@ -19,8 +19,14 @@ rustPlatform.buildRustPackage rec {
   cargoHash = "sha256-gxGetdqaoJa/ZF1VnW6UXJyJfLBGZxZnyKpT/Qk/8Og=";
 
   patchPhase = ''
-    substituteInPlace src/lib.rs \
-      --replace 'config.toml' $out/etc/spotify-adblock/config.toml
+    runHook prePatch
+
+    while read -r file; do
+      substituteInPlace "$file" \
+        --replace-fail 'config.toml' "$out/etc/spotify-adblock/config.toml"
+    done < <(grep -rl 'config\.toml' src)
+
+    runHook postPatch
   '';
 
   installPhase = ''
