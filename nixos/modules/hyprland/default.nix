@@ -29,7 +29,7 @@
   };
 
   services.displayManager.gdm.enable = true;
-  services.displayManager.defaultSession = "hyprland";
+  services.displayManager.defaultSession = "niri";
 
   programs.dux-shell = {
     enable = true;
