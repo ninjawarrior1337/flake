@@ -414,6 +414,7 @@
   "osdVolumeEnabled": true,
   "matugenSourceMode": "dominant",
   "desktopWidgetInstances": [],
-  "soundVolumeChanged": false,
-  "useAutoLocation": true
+  "soundVolumeChanged": true,
+  "useAutoLocation": true,
+  "acSuspendTimeout": 10800
 }
