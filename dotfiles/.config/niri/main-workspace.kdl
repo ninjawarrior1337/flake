@@ -18,10 +18,14 @@ window-rule {
     open-fullscreen true
 }
 
-// Games running under gamescope (app-id is "gamescope").
+// Games running under gamescope (app-id is "gamescope" for the nested
+// X11/Wayland backends, "gamescope-wl" when it runs as an embedded
+// Wayland compositor). Open them fullscreen: gamescope sizes its output
+// to the window, so a tiled window would waste the game's resolution.
 window-rule {
-    match app-id=r#"^gamescope$"#
+    match app-id=r#"^gamescope(-wl)?$"#
     open-on-workspace "main"
+    open-fullscreen true
 }
 
 // Prism Launcher instances (window titles like "Minecraft * 1.20.x").
