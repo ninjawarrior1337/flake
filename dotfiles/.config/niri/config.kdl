@@ -12,7 +12,7 @@
 include "main-workspace.kdl"
 
 spawn-at-startup "fcitx5" "-d"
-spawn-at-startup "discord"
+spawn-sh-at-startup "discord"
 spawn-at-startup "vicinae" "server"
 
 input {
