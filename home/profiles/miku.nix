@@ -40,6 +40,17 @@
     kagi-cli
     zen-browser
     llm-agents.t3code.unwrapped.desktop
+
+    # OpenCode 2 desktop client (wraps the upstream .deb). The `opencode`
+    # CLI itself still comes from mise.
+    llm-agents.opencode2-desktop
+
+    # Upstream flake wraps the release AppImage (x86_64/aarch64 Linux only).
+    inputs.metrolist.packages.${stdenv.hostPlatform.system}.default
+
+    # `secret-tool` for Metrolist's saved-login flow; the keyring daemon
+    # itself comes from services.gnome.gnome-keyring (see modules/hyprland).
+    libsecret
   ];
 
   home.stateVersion = "24.05";

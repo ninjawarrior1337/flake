@@ -20,6 +20,30 @@
         "type": "github"
       }
     },
+    "bootvine": {
+      "inputs": {
+        "crane": [
+          "nixpkgs"
+        ],
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "rust-overlay": "rust-overlay"
+      },
+      "locked": {
+        "lastModified": 1794668284,
+        "narHash": "sha256-maMtdOgjIRWUpsNEPvmhmR0iHPAGy45IMUjBKImYZFU=",
+        "ref": "refs/heads/main",
+        "rev": "b13a132a95c8792756d64853c490787f0ae08d5f",
+        "revCount": 134,
+        "type": "git",
+        "url": "https://codeberg.org/wvhulle/bootvine"
+      },
+      "original": {
+        "type": "git",
+        "url": "https://codeberg.org/wvhulle/bootvine"
+      }
+    },
     "bun2nix": {
       "inputs": {
         "flake-parts": [
@@ -142,6 +166,26 @@
         "type": "github"
       }
     },
+    "metrolist": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1794788255,
+        "narHash": "sha256-oxypawHrr5mSkf8o5ald5rmt/RjtLP4buHGuohGEE1w=",
+        "owner": "MetrolistGroup",
+        "repo": "Metrolist",
+        "rev": "5b2fc2b88748ef0aec94320a8d853bba5dc125ef",
+        "type": "github"
+      },
+      "original": {
+        "owner": "MetrolistGroup",
+        "repo": "Metrolist",
+        "type": "github"
+      }
+    },
     "niri": {
       "inputs": {
         "nixpkgs": [
@@ -231,15 +275,38 @@
     "root": {
       "inputs": {
         "agenix": "agenix",
+        "bootvine": "bootvine",
         "flake-parts": "flake-parts",
         "hex": "hex",
         "home-manager": "home-manager",
         "llm-agents": "llm-agents",
+        "metrolist": "metrolist",
         "niri": "niri",
         "nix-darwin": "nix-darwin",
         "nixpkgs": "nixpkgs_2",
         "spicetify-nix": "spicetify-nix",
         "zen-browser": "zen-browser"
+      }
+    },
+    "rust-overlay": {
+      "inputs": {
+        "nixpkgs": [
+          "bootvine",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1794646145,
+        "narHash": "sha256-rpqDyUM/d5fACYB8W+wKxxO57ICWjjalzb2X25oFFkY=",
+        "owner": "oxalica",
+        "repo": "rust-overlay",
+        "rev": "5b87ee0513c29127a01ad06e9cb362ea5ce91e78",
+        "type": "github"
+      },
+      "original": {
+        "owner": "oxalica",
+        "repo": "rust-overlay",
+        "type": "github"
       }
     },
     "spicetify-nix": {

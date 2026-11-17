@@ -24,9 +24,14 @@
     ./zfs.nix
 
     inputs.hex.nixosModules.hex
+    inputs.bootvine.nixosModules.default
   ];
 
   programs.hex.enable = true;
+
+  # Live tree of pending systemd jobs on the boot console instead of the
+  # scrolling log; shown from the (systemd) initrd through shutdown.
+  services.bootvine.enable = true;
 
   # Test-fixed build, see `overlays.hex` in flake.nix.
   programs.hex.package = pkgs.hex;

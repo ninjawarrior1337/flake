@@ -31,6 +31,15 @@
     hex.url = "github:anomalyco/hex";
     hex.inputs.nixpkgs.follows = "nixpkgs";
     hex.inputs.home-manager.follows = "home-manager";
+
+    # systemd boot screen: live tree of pending jobs instead of log spew.
+    bootvine.url = "git+https://codeberg.org/wvhulle/bootvine";
+    bootvine.inputs.nixpkgs.follows = "nixpkgs";
+    bootvine.inputs.crane.follows = "nixpkgs";
+
+    # YouTube Music desktop client (wraps the upstream release AppImage).
+    metrolist.url = "github:MetrolistGroup/Metrolist";
+    metrolist.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs = inputs @ {flake-parts, ...}: let
