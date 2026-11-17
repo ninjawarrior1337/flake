@@ -36,7 +36,6 @@
     curl
     dig
     iftop
-    glances
   ]
   ++ lib.optionals pkgs.stdenv.isLinux [
     iotop
